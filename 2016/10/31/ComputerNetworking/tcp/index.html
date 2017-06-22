@@ -1,0 +1,1164 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="网络协议," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。
+UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。
+
+UDP是无连接的，因此在两个进程通信前没有握手过程。
+UDP提供不可靠的数据传送服务。
+UDP也不保证输出顺序。
+
+TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点
+
+面向连接的服务：在应用层的数据报开始流动之前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析TCP协议">
+<meta property="og:url" content="http://yoursite.com/2016/10/31/ComputerNetworking/tcp/index.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。
+UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。
+
+UDP是无连接的，因此在两个进程通信前没有握手过程。
+UDP提供不可靠的数据传送服务。
+UDP也不保证输出顺序。
+
+TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点
+
+面向连接的服务：在应用层的数据报开始流动之前">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/3.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/4.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/5.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/7.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/6.png?raw=true">
+<meta property="og:updated_time" content="2017-02-27T01:46:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析TCP协议">
+<meta name="twitter:description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。
+UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。
+
+UDP是无连接的，因此在两个进程通信前没有握手过程。
+UDP提供不可靠的数据传送服务。
+UDP也不保证输出顺序。
+
+TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点
+
+面向连接的服务：在应用层的数据报开始流动之前">
+<meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/3.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/31/ComputerNetworking/tcp/"/>
+
+
+
+
+
+  <title> 浅析TCP协议 | paine1690 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">paine1690</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/tcp/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="paine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="paine1690">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                浅析TCP协议
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-31T00:00:00+08:00">
+                2016-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/31/ComputerNetworking/tcp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/31/ComputerNetworking/tcp/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/10/31/ComputerNetworking/tcp/" class="leancloud_visitors" data-flag-title="浅析TCP协议">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、TCP简介"><a href="#一、TCP简介" class="headerlink" title="一、TCP简介"></a>一、TCP简介</h1><h2 id="1、TCP与UDP"><a href="#1、TCP与UDP" class="headerlink" title="1、TCP与UDP"></a>1、TCP与UDP</h2><p>TCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。</p>
+<p><strong>UDP</strong>是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。</p>
+<ul>
+<li>UDP是无连接的，因此在两个进程通信前没有握手过程。</li>
+<li>UDP提供不可靠的数据传送服务。</li>
+<li>UDP也不保证输出顺序。</li>
+</ul>
+<p><strong>TCP</strong>是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点</p>
+<ol>
+<li>面向连接的服务：在应用层的数据报开始流动之前，TCP让客户和服务器之间相互交换运输层控制信息。在握手阶段后，一个TCP连接就在两个进程的套接字之间建立了。而且这条接连是全双工的。</li>
+<li>可靠的数据传送服务：通信进程能够依靠TCP<strong>无差错、按适当顺序</strong>交付所有发送的数据。</li>
+<li>TCP还具有拥塞控制机制，这种机制虽然不一定能为通信进程带来直接好处，但能为因特网带来整体好处。</li>
+</ol>
+<h2 id="2、TCP报文"><a href="#2、TCP报文" class="headerlink" title="2、TCP报文"></a>2、TCP报文</h2><p> <img src="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/3.png?raw=true" alt="pic3"></p>
+<p>上图为TCP报文段结构，一般TCP的首部是20个字节，而UDP只有8个字节。</p>
+<p>具体的含义不用每个都知道，了解几个比较常用的就可以了。</p>
+<h3 id="源端口与目的端口"><a href="#源端口与目的端口" class="headerlink" title="源端口与目的端口"></a>源端口与目的端口</h3><p>主要用于多路复用与分解</p>
+<h3 id="序号和确认号"><a href="#序号和确认号" class="headerlink" title="序号和确认号"></a>序号和确认号</h3><p>序号和确认号TCP报文段首部中两个最重要的字段，它们是TCP可靠传输的关键部分。</p>
+<p>序列号用来标识TCP发端向TCP收端发送的数据字节流。</p>
+<p>确认号只有在ACK标志位为1的时候才有效。同时，它也表示从期望接收端接收的下一个字节的序列号</p>
+<h3 id="标志字段"><a href="#标志字段" class="headerlink" title="标志字段"></a>标志字段</h3><p>ACK用于指示确认号是有效的，即该报文包括一个对已被接收报文段的确认。</p>
+<p>RST、SYN、FIN用于连接建立和拆除，也就是三次握手和四次挥手。</p>
+<h1 id="二、连接管理"><a href="#二、连接管理" class="headerlink" title="二、连接管理"></a>二、连接管理</h1><h2 id="1、三次握手"><a href="#1、三次握手" class="headerlink" title="1、三次握手"></a>1、三次握手</h2><p>接下来就是最著名的TCP三次握手</p>
+<p> <img src="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/4.png?raw=true" alt="pic4"></p>
+<ul>
+<li><p><strong>第一步：</strong> 客户端TCP向服务器发送一个特殊的TCP报文。该报文不含应用层数据，但有两个关键信息。将首部中一个标志位SYN置为1，因此称此报文段为SYN报文段。另外，客户端会随机选取（为了避免安全性攻击）一个初始序列号client_isn，一起发送给服务器端。</p>
+</li>
+<li><p><strong>第二步：</strong> 服务器端接收到该SYN报文段后，就会分配TCP缓存和变量（没错，在三次握手完成之前就会分配缓存和变量，这也使得TCP容易遭受SYN洪泛攻击），然后返回一个也是不含应用层信息的报文段。</p>
+<p>这个报文段包含三个重要信息：首先，SYN比特位被置为1。其次，报文段的确认号字段被置为client_isn+1。最后，服务器选择自己的初始序列号server_isn。这个报文段被称为SYNACK报文段。</p>
+</li>
+<li><p><strong>第三步：</strong> 在收到SYNACK报文段后，客户端也开始分配缓存和变量，然后再向服务器发送最后一个确认报文段。因为连接已经建立，所以SYN会置为0，然后将server_isn+1作为确认号字段。</p>
+</li>
+</ul>
+<h2 id="2、SYN洪泛攻击"><a href="#2、SYN洪泛攻击" class="headerlink" title="2、SYN洪泛攻击"></a>2、SYN洪泛攻击</h2><p><strong>攻击原理：</strong></p>
+<p>SYN Flood是当前最流行的DoS（拒绝服务攻击）与DDoS（分布式拒绝服务攻击）的方式之一，这是一种利用TCP协议缺陷，发送大量伪造的TCP连接请求，常用假冒的IP或IP号段发来海量的请求连接的第一个握手包（SYN包），被攻击服务器回应第二个握手包（SYN+ACK包），因为对方是假冒IP，对方永远收不到包且不会回应第三个握手包。导致被攻击服务器保持大量SYN_RECV状态的“半连接”，并且会重试默认5次回应第二个握手包，塞满TCP等待连接队列，资源耗尽（CPU满负荷或内存不足），让正常的业务请求连接不进来。</p>
+<p><strong>防御手段：</strong></p>
+<p>一种比较有效的防御手段就是SYN cookie。</p>
+<ul>
+<li><p>当服务器收到一个SYN请求时，它并不知道这个请求是合法的还是攻击的，所以它不会直接分配缓存和变量。而是生成一个初始的TCP序列号，该序列号由SYN请求报文段的源和目的IP与端口号以及仅有服务器知道的秘密数经过一个复杂的哈希函数计算而成。这个被精心计算出来的序列号就被称为“cookie”，服务器将含有这个cookie的SYNACK分组返回给客户端。</p>
+</li>
+<li><p>如果客户是合法的，那么它将会返回一个ACK报文段。服务器收到ACK后需要验证它与前面的某个SYN是对应的，这时就要用到上面的cookie了。</p>
+<p>一个合法的ACK的确认字段，肯定是服务器返回的SYNACK中序号字段（就是上面计算出来的cookie）的值+1。所以服务器只需要再次根据源和目的IP与端口号按照上面的方法计算出cookie，因为源和目的IP与端口号没有改变，所以计算出来的cookie肯定与上面的相同，如果这个cookie值+1与ACK报文段中的确认字段相等，你们服务器就认为该ACK对应于前面的SYN，因此它是合法的。然后生成一个具有套接字的全开连接。</p>
+<p>如果客户是非法的也就是没有返回ACK报文段，那么服务器也并没有为它分配任何资源。</p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="3、四次挥手"><a href="#3、四次挥手" class="headerlink" title="3、四次挥手"></a>3、四次挥手</h2><p>接下来看一下TCP断开连接的过程，需要注意的一点是下图中的客户端与服务器不是绝对的，实际情况中任何一端都可以请求中断，我们习惯把先请求中断的叫做客户端。</p>
+<p> <img src="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/5.png?raw=true" alt="pic5"></p>
+<ul>
+<li>首先，客户端发送一个特殊的报文段，将首部中的FIN标志位置为1，说明客户端已经没有数据要发送了。该报文段也叫FIN报文段。</li>
+<li>服务器接受到FIN报文段后，回复一个确认报文段。但是服务器仍然可以向客户端发送数据。</li>
+<li>当服务器也没有数据要发送了，就会同样向客户端发送一个FIN报文段。</li>
+<li>最后，客户端对这个FIN报文段进行确认，在上图中可以看到，客户端发送ACK后没有直接关闭，而是计时等待一段时间后再关闭。最后，两台主机上的所有资源都被释放了。</li>
+</ul>
+<h2 id="3、状态序列"><a href="#3、状态序列" class="headerlink" title="3、状态序列"></a>3、状态序列</h2><p>整个过程Client端所经历的状态如下：</p>
+<p> <img src="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/7.png?raw=true" alt="pic7"></p>
+<p>而Server端所经历的过程如下：</p>
+<p> <img src="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/6.png?raw=true" alt="pic6"></p>
+<h2 id="4、常见问题"><a href="#4、常见问题" class="headerlink" title="4、常见问题"></a>4、常见问题</h2><h3 id="4-1、为什么是三次握手而不是两次？"><a href="#4-1、为什么是三次握手而不是两次？" class="headerlink" title="4.1、为什么是三次握手而不是两次？"></a>4.1、为什么是三次握手而不是两次？</h3><p>直接引用谢希仁版《计算机网络》中的例子:</p>
+<blockquote>
+<p>“已失效的连接请求报文段”的产生在这样一种情况下：client发出的第一个连接请求报文段并没有丢失，而是在某个网络结点长时间的滞留了，以致延误到连接释放以后的某个时间才到达server。本来这是一个早已失效的报文段。但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送ack包。</p>
+</blockquote>
+<h3 id="4-2、为什么是四次挥手三次握手"><a href="#4-2、为什么是四次挥手三次握手" class="headerlink" title="4.2、为什么是四次挥手三次握手"></a>4.2、为什么是四次挥手三次握手</h3><p>因为当Server端收到Client端的SYN连接请求报文后，可以直接发送SYN+ACK报文。其中ACK报文是用来应答的，SYN报文是用来同步的。但是关闭连接时，当Server端收到FIN报文时，很可能并不会立即关闭SOCKET，所以只能先回复一个ACK报文，告诉Client端，”你发的FIN报文我收到了”。只有等到我Server端所有的报文都发送完了，我才能发送FIN报文，因此不能一起发送。故需要四步握手。</p>
+<h3 id="4-3、计时等待"><a href="#4-3、计时等待" class="headerlink" title="4.3、计时等待"></a>4.3、计时等待</h3><p>在第四步中，客户端发送ACK报文段后会进入TIME_WAIT状态，这是因为如果客户端的ACK如果丢失了，它将重新发送，TIME_WAIT状态中所需要的时间是依赖于实现方法的。典型的值为30秒、1分钟和2分钟。等待之后连接正式关闭，并且所有的资源(包括端口号)都被释放。</p>
+<h3 id="4-4、CLOSE-WAIT状态"><a href="#4-4、CLOSE-WAIT状态" class="headerlink" title="4.4、CLOSE_WAIT状态"></a>4.4、CLOSE_WAIT状态</h3><p>在小米一面的时候面试官问知不知道CLOSE_WAIT状态，我回答说是四次挥手中的状态，然后解释了四次挥手的全过程。不知道面试官想问的到底是什么，后来上网查了一下发现关于这个状态是有一个比较常见的问题的，在这个<a href="http://blog.csdn.net/ximenying/article/details/1489810" target="_blank" rel="external">http://blog.csdn.net/ximenying/article/details/1489810</a>链接中。</p>
+<p>问题描述：</p>
+<blockquote>
+<p>不久前，我的Socket Client程序遇到了一个非常尴尬的错误。它本来应该在一个socket长连接上持续不断地向服务器发送数据，如果socket连接断开，那么程序会自动不断地重试建立连接。</p>
+<p>有一天发现程序在不断尝试建立连接，但是总是失败。用netstat查看，这个程序竟然有上千个socket连接处于CLOSE_WAIT状态，以至于达到了上限，所以无法建立新的socket连接了。</p>
+</blockquote>
+<p>CLOSE_WAIT产生的原因：</p>
+<blockquote>
+<p>当发起主动关闭的左边这方发送一个FIN过去后，右边被动关闭的这方要回应一个ACK，这个ACK是TCP回应的，而不是应用程序发送的，此时，被动关闭的一方就处于CLOSE_WAIT状态了。如果此时被动关闭的这一方不再继续调用closesocket,那么他就不会发送接下来的FIN，导致自己老是处于CLOSE_WAIT。只有被动关闭的这一方调用了closesocket,才会发送一个FIN给主动关闭的这一方，同时也使得自己的状态变迁为LAST_ACK。</p>
+</blockquote>
+<p>我觉得产生这个的原因应该就是：<strong>一端的Socket调用close后，另一端的Socket没有调用close</strong></p>
+<h3 id="4-5、长连接与短连接"><a href="#4-5、长连接与短连接" class="headerlink" title="4.5、长连接与短连接"></a>4.5、长连接与短连接</h3><p>面试官在问完上面那个问题后又问我知不知道长连接与短连接，所以我觉得这两者之间应该是有关联的面试官在提示我，上面那个问题描述中也说到socket长连接上不断发送数据，二者的定义如下：</p>
+<ul>
+<li>长连接：client方与server方先建立连接，连接建立后不断开，然后再进行报文发送和接收。这种方式下由于通讯连接一直存在。此种方式常用于P2P通信。</li>
+<li>短连接：Client方与server每进行一次报文收发交易时才进行通讯连接，交易完毕后立即断开连接。此方式常用于一点对多点通讯。</li>
+</ul>
+<p>操作过程：</p>
+<ul>
+<li>短连接：建立连接——数据传输——关闭连接…建立连接——数据传输——关闭连接</li>
+<li>长连接：建立连接——数据传输…（保持连接）…数据传输——关闭连接</li>
+</ul>
+<p>使用时机：</p>
+<ul>
+<li>长连接：短连接多用于操作频繁，点对点的通讯，而且连接数不能太多的情况。每个TCP连接的建立都需要三次握手，每个TCP连接的断开要四次握手。如果每次操作都要建立连接然后再操作的话处理速度会降低，所以每次操作下次操作时直接发送数据就可以了，不用再建立TCP连接。</li>
+<li>短连接：web网站的http服务一般都用短连接。因为长连接对于服务器来说要耗费一定的资源。像web网站这么频繁的成千上万甚至上亿客户端的连接用短连接更省一些资源。<br>试想如果都用长连接，而且同时用成千上万的用户，每个用户都占有一个连接的话，可想而知服务器的压力有多大。所以并发量大，但是每个用户又不需频繁操作的情况下需要短连接。总之：长连接和短连接的选择要视需求而定。</li>
+</ul>
+<h1 id="三、流量控制"><a href="#三、流量控制" class="headerlink" title="三、流量控制"></a>三、流量控制</h1><p>前面提到TCP在主机会建立缓存来接收数据，然后应用程序从缓存中将接收到的数据读出，所以如果应用程序由于某种原因无法立刻读取数据，而发送方又一直发送数据，就会使缓存溢出。在UDP中，这种现象确实会发生，但是TCP就不会，因为为了防止这种情况，TCP为应用程序提供了流量控制服务。</p>
+<h2 id="1、作用"><a href="#1、作用" class="headerlink" title="1、作用"></a>1、作用</h2><p>流量控制很容易与下面的拥塞控制混淆，虽然它们都是用于决定向对方发送数据的速率，但是它们是针对完全不同的原因而采取的措施。</p>
+<p><strong>流量控制</strong>是为了防止接收方缓存溢出而对发送方进行遏制。</p>
+<p><strong>拥塞控制</strong>是防止IP网络拥塞而对发送方进行遏制。</p>
+<h2 id="2、原理"><a href="#2、原理" class="headerlink" title="2、原理"></a>2、原理</h2><p>TCP通过让发送方维护一个称为<strong>接收窗口(rwnd)</strong>的变量来提供流量控制。它表示接收方还有多少可用的缓存空间。</p>
+<p>以主机A与B的TCP连接为例</p>
+<ul>
+<li>主机B把当前的rwnd值放入发送给A的报文段接收串口字段中，通知A它在该连接中还有多少缓存可用。</li>
+<li>A维护两个变量，表示A发送到连接中但是没有被确认的数据量，通过将未确认的数据量控制在rwnd以内，就可以保证A不会使B的接收缓存溢出。</li>
+<li>有一个小问题就是当B的接收缓存已满使得rwnd为0，那么A就不会再向B发送数据。这时如果B没有其他数据发送到A，那么即使它缓存出现空闲可以继续接收它也无法通知A，就会导致A一直无法发送数据。为例防止这种情况，TCP规范中要求：当B的接收窗口为0时，A继续发送只有一个字节数据的报文段。这些报文段会被接收方确认，如果缓存出现空闲，那么确认报文段中将含有一个非0的rwnd值，连接就可以继续了。</li>
+</ul>
+<h1 id="四、拥塞控制"><a href="#四、拥塞控制" class="headerlink" title="四、拥塞控制"></a>四、拥塞控制</h1><p>TCP还拥有拥塞控制机制，通过让发送方根据所感知到的网络拥塞程度来限制其能向连接方发送流量的速率。要实现该机制，只要考虑一下三个问题</p>
+<h2 id="1、发送方如何限制发送速率"><a href="#1、发送方如何限制发送速率" class="headerlink" title="1、发送方如何限制发送速率"></a>1、发送方如何限制发送速率</h2><p>TCP的发送方还会维持一个变量叫<strong>拥塞窗口(cwnd)</strong>，它与上面的rwnd很相似，都是对TCP发送方能向网络中发送的流量进行限制。在一个发送方中未被确认的数据量不会超过cwnd与rwnd的最小值。</p>
+<h2 id="2、如何感知网络拥堵"><a href="#2、如何感知网络拥堵" class="headerlink" title="2、如何感知网络拥堵"></a>2、如何感知网络拥堵</h2><p>首先定义发送方<strong>丢包事件</strong>：要么出现超时，要么收到来自接收方的3个冗余ACK。</p>
+<p>当出现过度拥塞时，沿着这条路径上的一台或多台路由器会出现缓存溢出，导致数据报被丢弃。丢弃的数据报会引发发送方的丢包事件，发送方就认为路径上出现了拥塞。</p>
+<h2 id="3、控制速率算法"><a href="#3、控制速率算法" class="headerlink" title="3、控制速率算法"></a>3、控制速率算法</h2><p>TCP的拥塞控制算法很复杂，恕我表达能力有限，不想写了。记住几个关键词就行了，慢启动、拥塞避免和快速恢复。</p>
+<p><strong>慢启动</strong>：当TCP连接开始时，cwnd的值通常被初始化为一个非常小的值，如果没有拥塞就直接翻倍，也就是说虽然发送速率起始很慢，但是在慢启动阶段以指数增长。直到发生丢包事件，记录下慢启动阈值ssthresh，设置为cwnd的一半，然后再次将cwnd设置为那个很小的值。</p>
+<p><strong>拥塞避免</strong>：在记录了ssthresh后，在指数增长阶段如果cwnd的值等于ssthresh了，那么如果再次翻倍，可能还会导致拥塞，所以就不会再指数增长了，而是线性增长，就是拥塞避免状态。</p>
+<p>正常来说，肯定是再次丢包后就重新开始慢启动了，但是它偏不。因为上面说到丢包有两个原因：超时或者受到三个冗余ACK。而对着两种情况的处理方法是不同的。对于超时，那么和慢启动一样，ssthresh更新为cwnd的一半，cwnd被设置为很小的值。但是如果是由冗余ACK造成的丢包，那么会将cwnd减一半，将ssthresh设置为cwnd的一半，然后进入快速恢复状态。</p>
+<p><strong>快速恢复</strong>：没太看明白。</p>
+<h1 id="五、TCP安全与SSL"><a href="#五、TCP安全与SSL" class="headerlink" title="五、TCP安全与SSL"></a>五、TCP安全与SSL</h1><p>见HTTPS</p>
+<h1 id="六、参考地址"><a href="#六、参考地址" class="headerlink" title="六、参考地址"></a>六、参考地址</h1><p><a href="http://blog.csdn.net/whuslei/article/details/6667471/" target="_blank" rel="external">http://blog.csdn.net/whuslei/article/details/6667471/</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_6d39b5be0101k6v4.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_6d39b5be0101k6v4.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络协议/" rel="tag"># 网络协议</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/31/ComputerNetworking/networking/" rel="next" title="计算机网络">
+                <i class="fa fa-chevron-left"></i> 计算机网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/31/ComputerNetworking/HTTPS/" rel="prev" title="浅析HTTPS协议">
+                浅析HTTPS协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/31/ComputerNetworking/tcp/"
+     data-title="浅析TCP协议"
+     data-content=""
+     data-url="http://yoursite.com/2016/10/31/ComputerNetworking/tcp/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/31/ComputerNetworking/tcp/"
+           data-title="浅析TCP协议" data-url="http://yoursite.com/2016/10/31/ComputerNetworking/tcp/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="paine" />
+          <p class="site-author-name" itemprop="name">paine</p>
+          <p class="site-description motion-element" itemprop="description">paine1690</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、TCP简介"><span class="nav-number">1.</span> <span class="nav-text">一、TCP简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、TCP与UDP"><span class="nav-number">1.1.</span> <span class="nav-text">1、TCP与UDP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、TCP报文"><span class="nav-number">1.2.</span> <span class="nav-text">2、TCP报文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#源端口与目的端口"><span class="nav-number">1.2.1.</span> <span class="nav-text">源端口与目的端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序号和确认号"><span class="nav-number">1.2.2.</span> <span class="nav-text">序号和确认号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标志字段"><span class="nav-number">1.2.3.</span> <span class="nav-text">标志字段</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、连接管理"><span class="nav-number">2.</span> <span class="nav-text">二、连接管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、三次握手"><span class="nav-number">2.1.</span> <span class="nav-text">1、三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、SYN洪泛攻击"><span class="nav-number">2.2.</span> <span class="nav-text">2、SYN洪泛攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、四次挥手"><span class="nav-number">2.3.</span> <span class="nav-text">3、四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、状态序列"><span class="nav-number">2.4.</span> <span class="nav-text">3、状态序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、常见问题"><span class="nav-number">2.5.</span> <span class="nav-text">4、常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1、为什么是三次握手而不是两次？"><span class="nav-number">2.5.1.</span> <span class="nav-text">4.1、为什么是三次握手而不是两次？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2、为什么是四次挥手三次握手"><span class="nav-number">2.5.2.</span> <span class="nav-text">4.2、为什么是四次挥手三次握手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3、计时等待"><span class="nav-number">2.5.3.</span> <span class="nav-text">4.3、计时等待</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4、CLOSE-WAIT状态"><span class="nav-number">2.5.4.</span> <span class="nav-text">4.4、CLOSE_WAIT状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5、长连接与短连接"><span class="nav-number">2.5.5.</span> <span class="nav-text">4.5、长连接与短连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、流量控制"><span class="nav-number">3.</span> <span class="nav-text">三、流量控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、作用"><span class="nav-number">3.1.</span> <span class="nav-text">1、作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、原理"><span class="nav-number">3.2.</span> <span class="nav-text">2、原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、拥塞控制"><span class="nav-number">4.</span> <span class="nav-text">四、拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、发送方如何限制发送速率"><span class="nav-number">4.1.</span> <span class="nav-text">1、发送方如何限制发送速率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、如何感知网络拥堵"><span class="nav-number">4.2.</span> <span class="nav-text">2、如何感知网络拥堵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、控制速率算法"><span class="nav-number">4.3.</span> <span class="nav-text">3、控制速率算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、TCP安全与SSL"><span class="nav-number">5.</span> <span class="nav-text">五、TCP安全与SSL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、参考地址"><span class="nav-number">6.</span> <span class="nav-text">六、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"paine1690"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

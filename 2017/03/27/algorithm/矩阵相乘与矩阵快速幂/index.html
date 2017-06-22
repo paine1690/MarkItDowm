@@ -1,0 +1,1076 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="网易实习生笔试题，神奇手环，最开始的方法只过了60%，后来想到可以用矩阵的方法来计算。
+一、矩阵相乘下面的矩阵统一用二维数组来表示，先实现两个矩阵相乘的方法。
+123456789101112131415161718192021222324252627282930313233343536373839404142public class Matrix &amp;#123;    /*     * 矩阵a与b相">
+<meta property="og:type" content="article">
+<meta property="og:title" content="矩阵相乘与矩阵快速幂">
+<meta property="og:url" content="http://yoursite.com/2017/03/27/algorithm/矩阵相乘与矩阵快速幂/index.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="网易实习生笔试题，神奇手环，最开始的方法只过了60%，后来想到可以用矩阵的方法来计算。
+一、矩阵相乘下面的矩阵统一用二维数组来表示，先实现两个矩阵相乘的方法。
+123456789101112131415161718192021222324252627282930313233343536373839404142public class Matrix &amp;#123;    /*     * 矩阵a与b相">
+<meta property="og:updated_time" content="2017-03-27T05:46:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="矩阵相乘与矩阵快速幂">
+<meta name="twitter:description" content="网易实习生笔试题，神奇手环，最开始的方法只过了60%，后来想到可以用矩阵的方法来计算。
+一、矩阵相乘下面的矩阵统一用二维数组来表示，先实现两个矩阵相乘的方法。
+123456789101112131415161718192021222324252627282930313233343536373839404142public class Matrix &amp;#123;    /*     * 矩阵a与b相">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/27/algorithm/矩阵相乘与矩阵快速幂/"/>
+
+
+
+
+
+  <title> 矩阵相乘与矩阵快速幂 | paine1690 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">paine1690</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/27/algorithm/矩阵相乘与矩阵快速幂/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="paine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="paine1690">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                矩阵相乘与矩阵快速幂
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-27T00:00:00+08:00">
+                2017-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/27/algorithm/矩阵相乘与矩阵快速幂/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/27/algorithm/矩阵相乘与矩阵快速幂/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/27/algorithm/矩阵相乘与矩阵快速幂/" class="leancloud_visitors" data-flag-title="矩阵相乘与矩阵快速幂">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>网易实习生笔试题，神奇手环，最开始的方法只过了60%，后来想到可以用矩阵的方法来计算。</p>
+<h1 id="一、矩阵相乘"><a href="#一、矩阵相乘" class="headerlink" title="一、矩阵相乘"></a>一、矩阵相乘</h1><p>下面的矩阵统一用二维数组来表示，先实现两个矩阵相乘的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Matrix</span> </span>&#123;</div><div class="line">    <span class="comment">/*</span></div><div class="line">     * 矩阵a与b相乘</div><div class="line">     * a的列数与b的行数相同才有意义</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] multi(<span class="keyword">int</span>[][] a, <span class="keyword">int</span>[][] b)&#123;</div><div class="line">        <span class="keyword">if</span>(a.length==<span class="number">0</span>||a[<span class="number">0</span>].length==<span class="number">0</span>||b.length==<span class="number">0</span>||b[<span class="number">0</span>].length==<span class="number">0</span>||a[<span class="number">0</span>].length!=b.length)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> m=a.length, n=b[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">int</span>[][] re=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n; j++)&#123;</div><div class="line">                <span class="keyword">int</span> sum=<span class="number">0</span>;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;b.length; x++)&#123;</div><div class="line">                    sum+=a[i][x]*b[x][j];</div><div class="line">                &#125;</div><div class="line">                re[i][j]=sum;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printMatrix</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] nums: matrix)&#123;</div><div class="line">            System.out.println(Arrays.toString(nums));</div><div class="line">        &#125;</div><div class="line">    &#125;	</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] m1=<span class="keyword">new</span> <span class="keyword">int</span>[][]&#123;</div><div class="line">            &#123;<span class="number">1</span>,<span class="number">2</span>&#125;,</div><div class="line">            &#123;<span class="number">3</span>,<span class="number">4</span>&#125;,</div><div class="line">            &#123;<span class="number">5</span>,<span class="number">6</span>&#125;</div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">int</span>[][] m2=<span class="keyword">new</span> <span class="keyword">int</span>[][]&#123;</div><div class="line">            &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;,</div><div class="line">            &#123;<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;</div><div class="line">        &#125;;</div><div class="line">        printMatrix(multi(m1, m2));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[9, 12, 15]</div><div class="line">[19, 26, 33]</div><div class="line">[29, 40, 51]</div></pre></td></tr></table></figure>
+<p>时间复杂度是O(n^3)</p>
+<h1 id="二、矩阵快速幂"><a href="#二、矩阵快速幂" class="headerlink" title="二、矩阵快速幂"></a>二、矩阵快速幂</h1><p>矩阵快速幂可以高效地计算矩阵，将O(n)的时间复杂度降到O(logn)。</p>
+<p>它的原理与数的快速幂是一样的，先来回忆一下数的快速幂</p>
+<h2 id="1、数的快速幂"><a href="#1、数的快速幂" class="headerlink" title="1、数的快速幂"></a>1、数的快速幂</h2><ol>
+<li>Pow(x, n)，leetcode原题</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">myPow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(n&lt;<span class="number">0</span>)&#123;</div><div class="line">        	<span class="keyword">if</span>(n==Integer.MIN_VALUE)&#123;</div><div class="line">        		<span class="keyword">return</span> <span class="number">1.0</span>/myPow(x,Integer.MAX_VALUE)*x;</div><div class="line">        	&#125;<span class="keyword">else</span>&#123;</div><div class="line">        		<span class="keyword">return</span> <span class="number">1.0</span>/myPow(x, -n);</div><div class="line">        	&#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</div><div class="line">        	<span class="keyword">return</span> <span class="number">1.0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">double</span> re=<span class="number">1.0</span>;</div><div class="line">        <span class="keyword">for</span>(; n&gt;<span class="number">0</span>; x*=x, n&gt;&gt;=<span class="number">1</span>)&#123;</div><div class="line">        	<span class="keyword">if</span>((n&amp;<span class="number">1</span>)==<span class="number">1</span>)&#123;</div><div class="line">        		re*=x;</div><div class="line">        	&#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它的原理就是x^n=x^(n1+n2+n3+…..)=x^n1*xn2*x^n3…,</p>
+<p>其中n=n1+n2+n3…   将n用二进制表示，则n1, n2, n3就可以表示为2^0, 2^1， 2^2….</p>
+<p>举个例子，x^5=x^4*x^1</p>
+<p>这样时间复杂度就从O(n)降到O(logn)。</p>
+<h2 id="2、矩阵快速幂"><a href="#2、矩阵快速幂" class="headerlink" title="2、矩阵快速幂"></a>2、矩阵快速幂</h2><p>矩阵快速幂的原理与上面是一样的，在编程之美2.9中也介绍到了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Matrix</span> </span>&#123;</div><div class="line">    <span class="comment">/*</span></div><div class="line">     * 矩阵a与b相乘</div><div class="line">     * a的列数与b的行数相同才有意义</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] multi(<span class="keyword">int</span>[][] a, <span class="keyword">int</span>[][] b)&#123;</div><div class="line">        <span class="keyword">if</span>(a.length==<span class="number">0</span>||a[<span class="number">0</span>].length==<span class="number">0</span>||b.length==<span class="number">0</span>||b[<span class="number">0</span>].length==<span class="number">0</span>||a[<span class="number">0</span>].length!=b.length)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> m=a.length, n=b[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">int</span>[][] re=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n; j++)&#123;</div><div class="line">                <span class="keyword">int</span> sum=<span class="number">0</span>;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;b.length; x++)&#123;</div><div class="line">                    sum+=a[i][x]*b[x][j];</div><div class="line">                &#125;</div><div class="line">                re[i][j]=sum;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printMatrix</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] nums: matrix)&#123;</div><div class="line">            System.out.println(Arrays.toString(nums));</div><div class="line">        &#125;</div><div class="line">    &#125;	</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">/*</span></div><div class="line">     * 计算矩阵的幂</div><div class="line">     * 方阵a的n次幂</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] matrixPow(<span class="keyword">int</span>[][] a, <span class="keyword">int</span> n)&#123;</div><div class="line">        <span class="keyword">if</span>(a.length==<span class="number">0</span>||a[<span class="number">0</span>].length==<span class="number">0</span>||a.length!=a[<span class="number">0</span>].length)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> len=a.length;</div><div class="line">        <span class="keyword">int</span>[][] re=<span class="keyword">new</span> <span class="keyword">int</span>[len][len];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; i++)&#123;<span class="comment">//单位阵</span></div><div class="line">            re[i][i]=<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">/*</span></div><div class="line">         * 这里需要注意一下，Java中二维数组是无法用clone实现深拷贝的</div><div class="line">         * 也就是说这个temp指向的内存和a是相同的</div><div class="line">         * 因为multi方法中每次都会返回一个新的数组，所以说a的内容不会被修改</div><div class="line">         * </div><div class="line">         */</div><div class="line">        <span class="keyword">int</span>[][] temp=a.clone();</div><div class="line">        <span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">if</span>((n&amp;<span class="number">1</span>)==<span class="number">1</span>)&#123;</div><div class="line">                re=multi(re, temp);</div><div class="line">            &#125;</div><div class="line">            temp=multi(temp, temp);</div><div class="line">            n&gt;&gt;=<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] matrix=<span class="keyword">new</span> <span class="keyword">int</span>[][]&#123;</div><div class="line">            &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;,</div><div class="line">            &#123;<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;,</div><div class="line">            &#123;<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>&#125;</div><div class="line">        &#125;;</div><div class="line">        printMatrix(matrixPow(matrix, <span class="number">4</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里又两点需要注意</p>
+<ol>
+<li>在注释中说到的clone方法无法实现二维数组的深拷贝，由于本例的特殊情况才这样写，正常情况下的二维数组拷贝应该遍历</li>
+<li>当把上面的参数从4改成8后，输出结果就已经出现负数了，说明已经溢出。而且实际上，即使n等于4的时候，temp中就已经出现负数了。所以可见矩阵乘法的增长速度非常大。在实际情况中，应该使用字符串表示才是最可靠的。</li>
+</ol>
+<h1 id="三、矩阵快速幂的应用"><a href="#三、矩阵快速幂的应用" class="headerlink" title="三、矩阵快速幂的应用"></a>三、矩阵快速幂的应用</h1><h2 id="1、斐波那契数列"><a href="#1、斐波那契数列" class="headerlink" title="1、斐波那契数列"></a>1、斐波那契数列</h2><p>最早接触到矩阵快速幂的时候应该就是编程之美2.9，斐波那契数列的问题。</p>
+<p>不会编辑公式，具体问题和与原理就不描述了，直接上代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MatrixApp</span> </span>&#123;	</div><div class="line">    <span class="comment">/*</span></div><div class="line">     * 计算第n个斐波那契数列</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] A=<span class="keyword">new</span> <span class="keyword">int</span>[][]&#123;</div><div class="line">            &#123;<span class="number">1</span>,<span class="number">1</span>&#125;,</div><div class="line">            &#123;<span class="number">1</span>,<span class="number">0</span>&#125;</div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">int</span>[][] An=Matrix.matrixPow(A, n-<span class="number">1</span>);</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> F1=<span class="number">1</span>, F0=<span class="number">0</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> F1*An[<span class="number">0</span>][<span class="number">0</span>]+F0*An[<span class="number">0</span>][<span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        System.out.println(fib(<span class="number">10</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>果然，当输入的n太大后，计算的就不准了，因为超过了int范围。</p>
+<h2 id="2、魔幻手环"><a href="#2、魔幻手环" class="headerlink" title="2、魔幻手环"></a>2、魔幻手环</h2><p>终于到了这个网易的笔试题，魔幻手环</p>
+<blockquote>
+<p>小易拥有一个拥有魔力的手环上面有n个数字(构成一个环),当这个魔力手环每次使用魔力的时候就会发生一种奇特的变化：每个数字会变成自己跟后面一个数字的和(最后一个数字的后面一个数字是第一个),一旦某个位置的数字大于等于100就马上对100取模(比如某个位置变为103,就会自动变为3).现在给出这个魔力手环的构成，请你计算出使用k次魔力之后魔力手环的状态。</p>
+</blockquote>
+<p><strong>输入描述:</strong></p>
+<blockquote>
+<p>输入数据包括两行：</p>
+<p>第一行为两个整数n(2 ≤ n ≤ 50)和k(1 ≤ k ≤ 2000000000),以空格分隔</p>
+<p>第二行为魔力手环初始的n个数，以空格分隔。范围都在0至99.</p>
+</blockquote>
+<p><strong>输出描述:</strong></p>
+<blockquote>
+<p>输出魔力手环使用k次之后的状态，以空格分隔，行末无空格。</p>
+</blockquote>
+<p><strong>输入例子:</strong></p>
+<blockquote>
+<p>3 2</p>
+<p>1 2 3</p>
+</blockquote>
+<p><strong>输出例子:</strong></p>
+<blockquote>
+<p>8 9 7</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;	</div><div class="line">    <span class="comment">/*</span></div><div class="line">     * 实习笔试 排队形 男生女生</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(String s)</span></span>&#123;</div><div class="line">        <span class="keyword">char</span>[] chars=s.toCharArray();</div><div class="line">        <span class="keyword">int</span> re1=<span class="number">0</span>, re2=<span class="number">0</span>, g=<span class="number">0</span>, b=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;chars.length; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(chars[i]==<span class="string">'G'</span>)&#123;</div><div class="line">                re1+=i-g;</div><div class="line">                g++;</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                re2+=i-b;</div><div class="line">                b++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        System.out.print(Math.min(re1, re2));</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/*</span></div><div class="line">     * 魔力手环</div><div class="line">     */	</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] multi(<span class="keyword">int</span>[][] a, <span class="keyword">int</span>[][] b)&#123;</div><div class="line">        <span class="keyword">if</span>(a.length==<span class="number">0</span>||a[<span class="number">0</span>].length==<span class="number">0</span>||b.length==<span class="number">0</span>||b[<span class="number">0</span>].length==<span class="number">0</span>||a[<span class="number">0</span>].length!=b.length)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> m=a.length, n=b[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">int</span>[][] re=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n; j++)&#123;</div><div class="line">                <span class="keyword">int</span> sum=<span class="number">0</span>;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;b.length; x++)&#123;</div><div class="line">                    sum+=a[i][x]*b[x][j]%<span class="number">100</span>;</div><div class="line">                &#125;</div><div class="line">                re[i][j]=sum%<span class="number">100</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span>[] nums=matrix[<span class="number">0</span>];</div><div class="line">        System.out.print(nums[<span class="number">0</span>]);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++)&#123;</div><div class="line">            System.out.print(<span class="string">" "</span>+nums[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] matrixPow(<span class="keyword">int</span>[][] a, <span class="keyword">int</span> n)&#123;</div><div class="line">        <span class="keyword">if</span>(a.length==<span class="number">0</span>||a[<span class="number">0</span>].length==<span class="number">0</span>||a.length!=a[<span class="number">0</span>].length)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> len=a.length;</div><div class="line">        <span class="keyword">int</span>[][] re=<span class="keyword">new</span> <span class="keyword">int</span>[len][len];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; i++)&#123;<span class="comment">//单位阵</span></div><div class="line">            re[i][i]=<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span>[][] temp=a.clone();</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">if</span>((n&amp;<span class="number">1</span>)==<span class="number">1</span>)&#123;</div><div class="line">                re=multi(re, temp);</div><div class="line">            &#125;</div><div class="line">            temp=multi(temp, temp);</div><div class="line">            n&gt;&gt;=<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">magicHoop</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> n, <span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] a=<span class="keyword">new</span> <span class="keyword">int</span>[n][n];</div><div class="line">        a[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</div><div class="line">        a[<span class="number">0</span>][n-<span class="number">1</span>]=<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;n; i++)&#123;</div><div class="line">            a[i][i]=<span class="number">1</span>;</div><div class="line">            a[i][i-<span class="number">1</span>]=<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        print(multi(<span class="keyword">new</span> <span class="keyword">int</span>[][]&#123;nums&#125;, matrixPow(a, k)));</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        <span class="keyword">int</span> n=sc.nextInt();</div><div class="line">        <span class="keyword">int</span> k=sc.nextInt();</div><div class="line">        <span class="keyword">int</span>[] nums=<span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</div><div class="line">            nums[i]=sc.nextInt();</div><div class="line">        &#125;</div><div class="line">        sc.close();</div><div class="line">        magicHoop(nums, n, k);		</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>题中特意加了超过100后取模，看来就是为了防止溢出。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/28/algorithm/一致性hash算法/" rel="next" title="一致性hash算法">
+                <i class="fa fa-chevron-left"></i> 一致性hash算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/01/OperatingSystem/linux系统中的chmod命令与文件权限/" rel="prev" title="Linux中的chmod命令与文件权限">
+                Linux中的chmod命令与文件权限 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/27/algorithm/矩阵相乘与矩阵快速幂/"
+     data-title="矩阵相乘与矩阵快速幂"
+     data-content=""
+     data-url="http://yoursite.com/2017/03/27/algorithm/矩阵相乘与矩阵快速幂/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/27/algorithm/矩阵相乘与矩阵快速幂/"
+           data-title="矩阵相乘与矩阵快速幂" data-url="http://yoursite.com/2017/03/27/algorithm/矩阵相乘与矩阵快速幂/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="paine" />
+          <p class="site-author-name" itemprop="name">paine</p>
+          <p class="site-description motion-element" itemprop="description">paine1690</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、矩阵相乘"><span class="nav-number">1.</span> <span class="nav-text">一、矩阵相乘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、矩阵快速幂"><span class="nav-number">2.</span> <span class="nav-text">二、矩阵快速幂</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、数的快速幂"><span class="nav-number">2.1.</span> <span class="nav-text">1、数的快速幂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、矩阵快速幂"><span class="nav-number">2.2.</span> <span class="nav-text">2、矩阵快速幂</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、矩阵快速幂的应用"><span class="nav-number">3.</span> <span class="nav-text">三、矩阵快速幂的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、斐波那契数列"><span class="nav-number">3.1.</span> <span class="nav-text">1、斐波那契数列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、魔幻手环"><span class="nav-number">3.2.</span> <span class="nav-text">2、魔幻手环</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"paine1690"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

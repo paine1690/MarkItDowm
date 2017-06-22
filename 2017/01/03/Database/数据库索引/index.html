@@ -1,0 +1,1239 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据库,索引," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。
+一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。
+最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库的索引">
+<meta property="og:url" content="http://yoursite.com/2017/01/03/Database/数据库索引/index.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。
+一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。
+最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/6.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/7.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/8.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/9.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/10.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/11.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/12.png?raw=true">
+<meta property="og:updated_time" content="2017-04-06T11:18:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库的索引">
+<meta name="twitter:description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。
+一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。
+最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
+<meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/6.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/03/Database/数据库索引/"/>
+
+
+
+
+
+  <title> 数据库的索引 | paine1690 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">paine1690</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Database/数据库索引/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="paine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="paine1690">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据库的索引
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T00:00:00+08:00">
+                2017-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/03/Database/数据库索引/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Database/数据库索引/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/01/03/Database/数据库索引/" class="leancloud_visitors" data-flag-title="数据库的索引">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。</p>
+<h1 id="一、基础知识"><a href="#一、基础知识" class="headerlink" title="一、基础知识"></a>一、基础知识</h1><h2 id="1、MYSQL存储引擎–MyISAM与InnoDB"><a href="#1、MYSQL存储引擎–MyISAM与InnoDB" class="headerlink" title="1、MYSQL存储引擎–MyISAM与InnoDB"></a>1、MYSQL存储引擎–MyISAM与InnoDB</h2><p>InnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。</p>
+<p>最常见的差别就是InnoDB支持<strong>事务处理</strong>和<strong>外键</strong>与<strong>行级锁</strong>。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供事务支持以及外部键等高级数据库功能。</p>
+<p>其他方面也有一些差别：</p>
+<ol>
+<li><p>InnoDB不支持FULLTEXT类型的索引。</p>
+</li>
+<li><p>InnoDB 中不保存表的具体行数</p>
+<p>也就是说，执行select count() from table时，InnoDB要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当count()语句包含 where条件时，两种表的操作是一样的。</p>
+</li>
+<li><p>对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引。</p>
+</li>
+<li><p>DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除。</p>
+</li>
+<li><p>LOAD TABLE FROM MASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性(例如外键)的表不适用。</p>
+</li>
+<li><p>InnoDB表的行锁也不是绝对的，假如在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表，例如update table set num=1 where name like “%aaa%”</p>
+<p>还有一种说法：</p>
+<blockquote>
+<p>InnoDB行锁是通过给索引上的索引项加锁来实现的，因此InnoDB这种行锁实现特点意味着：只有通过索引条件检索数据，InnoDB才使用行级锁，否则，InnoDB将使用表锁！</p>
+</blockquote>
+</li>
+<li><p>两者索引的实现方式也不同，下面会单独分析</p>
+</li>
+</ol>
+<p>个人感觉，InnoDB更高级一点，支持事务外键和行级锁等特性，但是也牺牲了一定的性能作为代价，对于写入操作不是很频繁的，MyISAM可能更灵活一点。</p>
+<p>参考的博客中给出了MyISAM的几点优势：</p>
+<ol>
+<li>平台上承载的大部分项目是读多写少的项目，而MyISAM的读性能是比Innodb强不少的。</li>
+<li>MyISAM的索引和数据是分开的，并且索引是有压缩的，内存使用率就对应提高了不少。能加载更多索引，而Innodb是索引和数据是紧密捆绑的，没有使用压缩从而会造成Innodb比MyISAM体积庞大不小。</li>
+<li>从接触的应用逻辑来说，select count(*) 和order by 是最频繁的，大概能占了整个sql总语句的60%以上的操作，而这种操作Innodb其实也是会锁表的，很多人以为Innodb是行级锁，那个只是where对它主键是有效，非主键的都会锁全表的。</li>
+</ol>
+<h2 id="2、B-树与B-树"><a href="#2、B-树与B-树" class="headerlink" title="2、B-树与B+树"></a>2、B-树与B+树</h2><p>B-TREE就是B树，B+TREE就是B+树，后者是前者的变种。</p>
+<p>B树的各种变种主要应用与操作系统中磁盘的读取，由于磁盘结构的特殊性，在读取数据时，磁头的定位到一页信息并读出的时间要比读出信息进行检查花的时间要多的多，所以应该尽量减少磁头的移动次数，而B树就是通过减少树的深度来做到这一点的。</p>
+<h3 id="2-1、B-TREE"><a href="#2-1、B-TREE" class="headerlink" title="2.1、B-TREE"></a>2.1、B-TREE</h3><p>B树是一种多路搜索树（并不是二叉的），一棵m阶的B 树：</p>
+<ol>
+<li>定义任意非叶子结点最多只有M个儿子；且M&gt;2；</li>
+<li>根结点的儿子数为[2, M]；</li>
+<li>除根结点以外的非叶子结点的儿子数为[M/2, M]；</li>
+<li>每个结点存放至少M/2-1（取上整）和至多M-1个关键字；（至少2个关键字）</li>
+<li>非叶子结点的关键字个数=指向儿子的指针个数-1；</li>
+<li>非叶子结点的关键字：K[1], K[2], …, K[M-1]；且K[i] &lt; K[i+1]；</li>
+<li>非叶子结点的指针：P[1], P[2], …, P[M]；其中P[1]指向关键字小于K[1]的子树，P[M]指向关键字大于K[M-1]的子树，其它P[i]指向关键字属于(K[i-1], K[i])的子树；</li>
+<li>所有叶子结点位于同一层；</li>
+</ol>
+<p>如：（M=3）</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/6.png?raw=true" alt=""></p>
+<p>B-树的搜索，从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点；</p>
+<p><strong>B-树的特点</strong>：</p>
+<ol>
+<li>关键字集合分布在整颗树中；</li>
+<li>任何一个关键字出现且只出现在一个结点中；</li>
+<li>搜索有可能在非叶子结点结束；</li>
+<li>其搜索性能等价于在关键字全集内做一次二分查找；</li>
+<li>自动层次控制；</li>
+</ol>
+<p>由于限制了除根结点以外的非叶子结点，至少含有M/2个儿子，确保了结点的至少利用率，其最低搜索性能为：</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/7.png?raw=true" alt="img"></p>
+<p>其中，M为设定的非叶子结点最多子树个数，N为关键字总数；</p>
+<p>所以B树的性能总是等价于二分查找（与M值无关），也就没有B树平衡的问题；</p>
+<p>由于M/2的限制，在插入结点时，如果结点已满，需要将结点分裂为两个各占M/2的结点；删除结点时，需将两个不足M/2的兄弟结点合并；</p>
+<h3 id="2-2、B-TREE"><a href="#2-2、B-TREE" class="headerlink" title="2.2、B+TREE"></a>2.2、B+TREE</h3><p>B+树是B-树的变体，也是一种多路搜索树：其定义基本与B-树同，除了：</p>
+<ol>
+<li>非叶子结点的子树指针与关键字个数相同；</li>
+<li>非叶子结点的子树指针P[i]，指向关键字值属于[K[i], K[i+1])的子树（B树是开区间）；</li>
+<li>为所有叶子结点增加一个链指针；</li>
+<li>所有关键字都在叶子结点出现；</li>
+</ol>
+<p>如：（M=3）</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/8.png?raw=true" alt=""></p>
+<p>B+的搜索与B-树也基本相同，区别是B+树只有达到叶子结点才命中（B树可以在非叶子结点命中），其性能也等价于在关键字全集做一次二分查找；</p>
+<p><strong>B+树的特点</strong>：</p>
+<ol>
+<li>所有关键字都出现在叶子结点的链表中（稠密索引），且链表中的关键字恰好是有序的；</li>
+<li>不可能在非叶子结点命中；</li>
+<li>非叶子结点相当于是叶子结点的索引（稀疏索引），叶子结点相当于是存储（关键字）数据的数据层；</li>
+<li>更适合文件索引系统；</li>
+</ol>
+<p>还有一种叫B*树，没有遇见过。</p>
+<h1 id="二、数据库索引"><a href="#二、数据库索引" class="headerlink" title="二、数据库索引"></a>二、数据库索引</h1><h2 id="1、索引的定义"><a href="#1、索引的定义" class="headerlink" title="1、索引的定义"></a>1、索引的定义</h2><p><strong>数据库索引</strong>，是数据库管理系统中一个排序的数据结构，以协助快速查询、更新数据库表中数据。它是用于提高数据库表数据访问速度的数据库对象。</p>
+<p>优点：</p>
+<ol>
+<li>通过创建唯一性索引，可以保证数据库表中每一行数据的唯一性。</li>
+<li>可以大大加快数据的检索速度，这也是创建索引的最主要的原因。</li>
+<li>可以加速表和表之间的连接，特别是在实现数据的参考完整性方面特别有意义。</li>
+<li>在使用分组和排序子句进行数据检索时，同样可以显著减少查询中分组和排序的时间。</li>
+<li>通过使用索引，可以在查询的过程中，使用优化隐藏器，提高系统的性能。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>创建索引和维护索引要耗费时间，这种时间随着数据量的增加而增加。</li>
+<li>索引需要占物理空间，除了数据表占数据空间之外，每一个索引还要占一定的物理空间，如果要建立聚簇索引，那么需要的空间就会更大。</li>
+<li>当对表中的数据进行增加、删除和修改的时候，索引也要动态的维护，这样就降低了数据的维护速度。</li>
+</ol>
+<h2 id="2、索引的分类"><a href="#2、索引的分类" class="headerlink" title="2、索引的分类"></a>2、索引的分类</h2><p>从不同的角度，索引可以有很多种分类</p>
+<h3 id="2-1、索引的种类"><a href="#2-1、索引的种类" class="headerlink" title="2.1、索引的种类"></a>2.1、索引的种类</h3><p>从使用上，索引可以分为普通索引，唯一索引，主键索引与组合索引</p>
+<ol>
+<li><p>普通索引：这是最基本的MySQL数据库索引，它没有任何限制</p>
+<ul>
+<li><p>创建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE INDEX indexName ON mytable(username(length));</div></pre></td></tr></table></figure>
+</li>
+<li><p>删除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DROP INDEX [indexName] ON mytable;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>唯一索引：它与前面的普通索引类似，不同的就是：MySQL数据库索引列的值必须唯一，但允许有空值。</p>
+<ul>
+<li><p>创建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE UNIQUE INDEX indexName ON mytable(username(length))</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建表的时候直接指定：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE mytable( ID INT NOT NULL, username VARCHAR(16) NOT NULL, UNIQUE [indexName] (username(length)) );</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+</li>
+<li><p>主键索引：它是一种特殊的唯一索引，不允许有空值。</p>
+<ul>
+<li><p>一般是在建表的时候同时创建主键索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE mytable( ID INT NOT NULL, username VARCHAR(16) NOT NULL, PRIMARY KEY(ID) );</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW INDEX FROM mytable;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>组合索引：</p>
+<p>也叫复合索引：Mysql从左到右的使用索引中的字段，一个查询可以只使用索引中的一部份，但<strong>只能是最左侧部分</strong>。例如索引是key index (a,b,c)。可以支持a | a, b |a, b, c 3种组合进行查找，但不支持b, c进行查找。当最左侧字段是常量引用时，索引就十分有效。</p>
+<ul>
+<li><p>创建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">create index idx1 on table1(col1,col2,col3)</div></pre></td></tr></table></figure>
+</li>
+<li><p>查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from table1 where col1= A and col2= B and col3 = C</div></pre></td></tr></table></figure>
+<p>这时候查询优化器,不在扫描表了，而是直接的从索引中拿数据，因为索引中有这些数据，这叫覆盖式查询，这样的查询速度非常快。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>利用索引中的附加列，可以缩小搜索的范围，但使用一个具有两列的索引不同于使用两个单独的索引。复合索引的结构与电话簿类似，它首先按姓氏对雇员进行排序，然后按名字对所有姓氏相同的雇员进行排序。如果您知道姓氏，电话簿将非常有用，如果您知道名字和姓氏，电话簿则更为有用，但如果只知道名字而不知道姓氏，电话簿将没有用处。</p>
+<p>关于复合索引的注意事项：</p>
+<ol>
+<li><p>对于复合索引，在查询使用时，最好将条件顺序按找索引的顺序，这样效率最高：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from table1 where col1=A AND col2=B AND col3=D</div></pre></td></tr></table></figure>
+<pre><code>如果使用` where col2=B AND col1=A` 或者 `where col2=B` 将不会使用索引
+</code></pre></li>
+<li><p>对一张表来说,如果有一个复合索引 on (col1,col2),就没有必要同时建立一个单索引 on col1;</p>
+</li>
+<li><p>如果查询条件需要,可以在已有单索引 on col1的情况下,添加复合索引on (col1,col2),对于效率有一定的提高</p>
+</li>
+<li><p>同时建立多字段(包含5、6个字段)的复合索引没有特别多的好处,相对而言,建立多个窄字段(仅包含一个,或顶多2个字段)的索引可以达到更好的效率和灵活性</p>
+</li>
+</ol>
+<h3 id="2-2、索引的结构"><a href="#2-2、索引的结构" class="headerlink" title="2.2、索引的结构"></a>2.2、索引的结构</h3><p>按照索引的结构，可以分为聚集索引与非聚集索引：</p>
+<ol>
+<li>聚集索引，表数据按照索引的顺序来存储的。对于聚集索引，叶子结点即存储了真实的数据行，不再有另外单独的数据页。一个表只能包含一个聚集索引。</li>
+<li>非聚集索引，表数据存储顺序与索引顺序无关。对于非聚集索引，叶结点包含索引字段值及指向数据页数据行的逻辑指针，该层紧邻数据页，其行数量与数据表行数据量一致。</li>
+</ol>
+<h3 id="2-3、索引的实现"><a href="#2-3、索引的实现" class="headerlink" title="2.3、索引的实现"></a>2.3、索引的实现</h3><p>从实现方式上，索引分为：</p>
+<ol>
+<li>B-Tree 索引 </li>
+<li>Hash 索引</li>
+<li>Fulltext 索引 </li>
+<li>R-Tree 索引</li>
+</ol>
+<h1 id="三、索引的实现"><a href="#三、索引的实现" class="headerlink" title="三、索引的实现"></a>三、索引的实现</h1><p>在 MySQL 中，主要有四种类型的索引，分别为： <strong>B-Tree 索引， Hash 索引， Fulltext 索引和 R-Tree 索引</strong>。我们主要分析B-Tree 索引。</p>
+<p>参考的博客中说了很多，但是并不是很赞同。按照我的理解，下面介绍的两个引擎的索引都是通过B+树实现的，因为每次查找都是到了叶子节点才找到最后的结果，区别只是在于叶子节点中到底有没有存放数据。</p>
+<h2 id="1、MyISAM的索引实现"><a href="#1、MyISAM的索引实现" class="headerlink" title="1、MyISAM的索引实现"></a>1、MyISAM的索引实现</h2><p><strong>MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。</strong></p>
+<h3 id="1-1、主键索引"><a href="#1-1、主键索引" class="headerlink" title="1.1、主键索引"></a>1.1、主键索引</h3><p>MyISAM引擎使用B+Tree作为索引结构，<strong>叶节点的data域存放的是数据记录的地址</strong>。下图是MyISAM主键索引的原理图：</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/9.png?raw=true" alt=""></p>
+<p>这里设表一共有三列，假设我们以Col1为主键，图myisam1是一个MyISAM表的主索引（Primary key）示意。可以看出MyISAM的索引文件仅仅保存数据记录的地址。</p>
+<h3 id="1-2、辅助索引"><a href="#1-2、辅助索引" class="headerlink" title="1.2、辅助索引"></a>1.2、辅助索引</h3><p>这个辅助索引我觉得就是上面说的普通索引。</p>
+<p><strong>在MyISAM中，主索引和辅助索引（Secondary key）在结构上没有任何区别，只是主索引要求key是唯一的，而辅助索引的key可以重复。</strong>如果我们在Col2上建立一个辅助索引，则此索引的结构如下图所示：</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/10.png?raw=true" alt=""></p>
+<p>同样也是一颗B+Tree，data域保存数据记录的地址。因此，<strong>MyISAM中索引检索的算法为首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其data域的值，然后以data域的值为地址，读取相应数据记录。</strong></p>
+<p>MyISAM的索引方式也叫做“<strong>非聚集</strong>”的，之所以这么称呼是为了与InnoDB的聚集索引区分。</p>
+<h2 id="2、InnoDB的索引实现"><a href="#2、InnoDB的索引实现" class="headerlink" title="2、InnoDB的索引实现"></a>2、InnoDB的索引实现</h2><p>虽然InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同.</p>
+<h3 id="2-1、主键索引"><a href="#2-1、主键索引" class="headerlink" title="2.1、主键索引"></a>2.1、主键索引</h3><p>MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而<strong>在InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构</strong>，这棵树的叶节点data域保存了完整的数据记录。这个<strong>索引的key是数据表的主键</strong>，因此<strong>InnoDB表数据文件本身就是主索引</strong>。</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/11.png?raw=true" alt=""></p>
+<p>可以看到叶节点包含了完整的数据记录。这种索引叫做<strong>聚集索引</strong>。因为InnoDB的数据文件本身要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。</p>
+<h3 id="2-2、辅助索引"><a href="#2-2、辅助索引" class="headerlink" title="2.2、辅助索引"></a>2.2、辅助索引</h3><p>InnoDB的所有辅助索引都引用主键作为data域。例如，下图为定义在Col3上的一个辅助索引：</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/12.png?raw=true" alt=""></p>
+<p>普通索引中不会保存行的物理位置，而是保存主键的值，所以通过”二级索引”进行查找是先找到主键，再找到行，要进行二次索引查找。</p>
+<h2 id="3、对比"><a href="#3、对比" class="headerlink" title="3、对比"></a>3、对比</h2><p> <strong>InnoDB索引</strong>和<strong>MyISAM索引</strong>的区别：</p>
+<ul>
+<li>一是主索引的区别，InnoDB的数据文件本身就是索引文件。而MyISAM的索引和数据是分开的。</li>
+<li>二是辅助索引的区别：InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别。</li>
+</ul>
+<p><strong>InnoDB 表是基于聚簇索引建立的</strong>。因此InnoDB 的索引能提供一种非常快速的主键查找性能。不过，它的辅助索引（Secondary Index， 也就是非主键索引）也会包含主键列，所以，如果主键定义的比较大，其他索引也将很大。如果想在表上定义 、很多索引，则<strong>争取尽量把主键定义得小一些</strong>。InnoDB 不会压缩索引。</p>
+<p>文字符的ASCII码作为比较准则。<strong>聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。</strong></p>
+<p>不同存储引擎的索引实现方式对于正确使用和优化索引都非常有帮助，例如知道了InnoDB的索引实现后，就很容易明白：</p>
+<ol>
+<li>为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。</li>
+<li>用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一棵B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效，而使用自增字段作为主键则是一个很好的选择。</li>
+</ol>
+<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://blog.csdn.net/xifeijian/article/details/20316775" target="_blank" rel="external">http://blog.csdn.net/xifeijian/article/details/20316775</a></p>
+<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6530142/" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/article/details/6530142/</a></p>
+<p><a href="http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html" target="_blank" rel="external">http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html</a></p>
+<p><a href="http://blog.csdn.net/kennyrose/article/details/7532032" target="_blank" rel="external">http://blog.csdn.net/kennyrose/article/details/7532032</a></p>
+<p><a href="http://database.51cto.com/art/201005/202796.htm" target="_blank" rel="external">http://database.51cto.com/art/201005/202796.htm</a></p>
+<p><a href="http://www.cnblogs.com/zlcxbb/p/5757245.html" target="_blank" rel="external">http://www.cnblogs.com/zlcxbb/p/5757245.html</a></p>
+<p><a href="http://www.cnblogs.com/lovekingly/p/3962284.html" target="_blank" rel="external">http://www.cnblogs.com/lovekingly/p/3962284.html</a></p>
+<p><a href="http://blog.itpub.net/24383181/viewspace-692973/" target="_blank" rel="external">http://blog.itpub.net/24383181/viewspace-692973/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/索引/" rel="tag"># 索引</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/03/Database/数据库事务与隔离级别/" rel="next" title="数据库事务与隔离级别">
+                <i class="fa fa-chevron-left"></i> 数据库事务与隔离级别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" rel="prev" title="数据库中的乐观锁与悲观锁">
+                数据库中的乐观锁与悲观锁 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/01/03/Database/数据库索引/"
+     data-title="数据库的索引"
+     data-content=""
+     data-url="http://yoursite.com/2017/01/03/Database/数据库索引/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/03/Database/数据库索引/"
+           data-title="数据库的索引" data-url="http://yoursite.com/2017/01/03/Database/数据库索引/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="paine" />
+          <p class="site-author-name" itemprop="name">paine</p>
+          <p class="site-description motion-element" itemprop="description">paine1690</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、基础知识"><span class="nav-number">1.</span> <span class="nav-text">一、基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、MYSQL存储引擎–MyISAM与InnoDB"><span class="nav-number">1.1.</span> <span class="nav-text">1、MYSQL存储引擎–MyISAM与InnoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、B-树与B-树"><span class="nav-number">1.2.</span> <span class="nav-text">2、B-树与B+树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、B-TREE"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1、B-TREE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、B-TREE"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2、B+TREE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、数据库索引"><span class="nav-number">2.</span> <span class="nav-text">二、数据库索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、索引的定义"><span class="nav-number">2.1.</span> <span class="nav-text">1、索引的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、索引的分类"><span class="nav-number">2.2.</span> <span class="nav-text">2、索引的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、索引的种类"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1、索引的种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、索引的结构"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2、索引的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3、索引的实现"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3、索引的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、索引的实现"><span class="nav-number">3.</span> <span class="nav-text">三、索引的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、MyISAM的索引实现"><span class="nav-number">3.1.</span> <span class="nav-text">1、MyISAM的索引实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1、主键索引"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1、主键索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、辅助索引"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2、辅助索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、InnoDB的索引实现"><span class="nav-number">3.2.</span> <span class="nav-text">2、InnoDB的索引实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、主键索引"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1、主键索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、辅助索引"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2、辅助索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、对比"><span class="nav-number">3.3.</span> <span class="nav-text">3、对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考地址"><span class="nav-number">4.</span> <span class="nav-text">四、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"paine1690"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

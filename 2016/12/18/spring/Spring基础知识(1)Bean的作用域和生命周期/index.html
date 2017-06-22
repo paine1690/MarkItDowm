@@ -1,0 +1,1177 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一、Spring容器在Spring中，Bean的是一个非常广义的概念，任何的Java对象、Java组件都被当成Bean处理。 Spring容器负责创建Bean实例，所以需要知道每个Bean的实现类，Java程序面向接口编程，无须关心Bean实例的实现类；但是Spring容器必须能够精确知道每个Bean实例的实现类，因此Spring配置文件必须精确配置Bean实例的实现类。
+1、BeanFactor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring基础知识（一）：Bean的作用域和生命周期">
+<meta property="og:url" content="http://yoursite.com/2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/index.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="一、Spring容器在Spring中，Bean的是一个非常广义的概念，任何的Java对象、Java组件都被当成Bean处理。 Spring容器负责创建Bean实例，所以需要知道每个Bean的实现类，Java程序面向接口编程，无须关心Bean实例的实现类；但是Spring容器必须能够精确知道每个Bean实例的实现类，因此Spring配置文件必须精确配置Bean实例的实现类。
+1、BeanFactor">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/spring/6.png?raw=true">
+<meta property="og:updated_time" content="2017-02-18T03:30:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring基础知识（一）：Bean的作用域和生命周期">
+<meta name="twitter:description" content="一、Spring容器在Spring中，Bean的是一个非常广义的概念，任何的Java对象、Java组件都被当成Bean处理。 Spring容器负责创建Bean实例，所以需要知道每个Bean的实现类，Java程序面向接口编程，无须关心Bean实例的实现类；但是Spring容器必须能够精确知道每个Bean实例的实现类，因此Spring配置文件必须精确配置Bean实例的实现类。
+1、BeanFactor">
+<meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/spring/6.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/"/>
+
+
+
+
+
+  <title> Spring基础知识（一）：Bean的作用域和生命周期 | paine1690 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">paine1690</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="paine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="paine1690">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring基础知识（一）：Bean的作用域和生命周期
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-18T00:00:00+08:00">
+                2016-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/" class="leancloud_visitors" data-flag-title="Spring基础知识（一）：Bean的作用域和生命周期">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、Spring容器"><a href="#一、Spring容器" class="headerlink" title="一、Spring容器"></a>一、Spring容器</h1><p>在Spring中，Bean的是一个非常广义的概念，任何的Java对象、Java组件都被当成Bean处理。 Spring容器负责创建Bean实例，所以需要知道每个Bean的实现类，Java程序面向接口编程，无须关心Bean实例的实现类；但是Spring容器必须能够精确知道每个Bean实例的实现类，因此Spring配置文件必须精确配置Bean实例的实现类。</p>
+<h2 id="1、BeanFactory与ApplicationContext"><a href="#1、BeanFactory与ApplicationContext" class="headerlink" title="1、BeanFactory与ApplicationContext"></a>1、BeanFactory与ApplicationContext</h2><p>Spring的容器有很多，可以归为两个不同的类型</p>
+<ul>
+<li>一类是实现BeanFactory接口的简单容器系列，这系列容器只实现了容器的最基本功能</li>
+<li>另一类是ApplicationContext应用上下文是BeanFactory的子接口，它作为容器的高级形态而存在。 </li>
+</ul>
+<h3 id="BeanFactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h3><p>BeanFactory接口包含以下几个基本方法：</p>
+<ul>
+<li>Boolean containBean(String name):判断Spring容器是否包含id为name的Bean实例。</li>
+<li><t> getBean(Class<t> requiredType):获取Spring容器中属于requiredType类型的唯一的Bean实例。</t></t></li>
+<li>Object getBean(String name)：返回Sprin容器中id为name的Bean实例。</li>
+<li><t> T getBean(String name,Class requiredType)：返回容器中id为name,并且类型为requiredType的Bean</t></li>
+<li>Class &lt;?&gt; getType(String name)：返回容器中指定Bean实例的类型。</li>
+</ul>
+<p>这个容器基本很少使用，基本都是使用更高级的ApplicationContext容器。</p>
+<h3 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h3><p>ApplicationContext作为BeanFactory的子接口，使用它作为Spring容器会更加方便，它主要有如下几个实现类：</p>
+<ul>
+<li>FileSystemXmlApplicationContext：以基于文件系统的XML配置文件创建ApplicationContext实例。</li>
+<li>ClassPathXmlApplicationContext：以类加载路径下的XML配置文件创建的ApplicationContext实例。</li>
+<li>AnnotationConfigApplicationContext：以基于Java注解为配置创建的ApplicationContext实例。</li>
+</ul>
+<p>创建Spring容器实例时，必须提供Spring容器管理的Bean的详细配置信息。Spring的配置信息通常采用xml配置文件来设置，因此，创建BeanFactory实例时，应该提供XML配置文件作为参数。</p>
+<p>XML配置文件通常使用Resource对象传入。Resource接口是Spring提供的资源访问接口，通过使用该接口，Spring能够以简单、透明的方式访问磁盘、类路径以及网络上的资源。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ApplicationContext ctx=<span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"bean.xml"</span>);  </div><div class="line">ApplicationContext ctx1=<span class="keyword">new</span> FileSystemXmlApplicationContext(<span class="string">"c:/bean.xml"</span>);</div><div class="line">ApplicationContext ctx2=<span class="keyword">new</span> AnnotationConfigApplicationContext(ApplicationContextConfig.class);</div></pre></td></tr></table></figure>
+<h1 id="二、Bean的生命周期"><a href="#二、Bean的生命周期" class="headerlink" title="二、Bean的生命周期"></a>二、Bean的生命周期</h1><h2 id="1、接口的分类"><a href="#1、接口的分类" class="headerlink" title="1、接口的分类"></a>1、接口的分类</h2><p>Bean的完整生命周期经历了各种方法调用，这些方法可以划分为以下几类：</p>
+<ol>
+<li><p>Bean自身的方法：这个包括了Bean本身调用的方法和通过配置文件中<code>&lt;bean&gt;</code>的</p>
+<ul>
+<li>init-method</li>
+<li>destroy-method指定的方法</li>
+</ul>
+</li>
+<li><p>Bean级生命周期接口方法</p>
+<ul>
+<li><p>BeanNameAware</p>
+</li>
+<li><p>BeanFactoryAware</p>
+</li>
+<li><p>InitializingBean</p>
+</li>
+<li><p>DiposableBean</p>
+<p>这些接口的方法</p>
+</li>
+</ul>
+</li>
+<li><p>容器级生命周期接口方法</p>
+<ul>
+<li><p>InstantiationAwareBeanPostProcessor </p>
+</li>
+<li><p>BeanPostProcessor </p>
+<p>这两个接口，一般称它们的实现类为“后处理器”。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="2、启动步骤"><a href="#2、启动步骤" class="headerlink" title="2、启动步骤"></a>2、启动步骤</h2><ol>
+<li><h3 id="Bean的建立"><a href="#Bean的建立" class="headerlink" title="Bean的建立"></a>Bean的建立</h3><p>容器寻找Bean的定义信息并将其实例化。看过源码都知道，容器首先将Bean的定义信息以BeanDefinition的形式存储，等第一次getBean的时候再将其实例化并完成下面的依赖注入过程。</p>
+</li>
+<li><h3 id="属性注入"><a href="#属性注入" class="headerlink" title="属性注入"></a>属性注入</h3><p>使用依赖注入，Spring将值和bean的引用注入到bean对应的属性中。</p>
+</li>
+<li><h3 id="BeanNameAware的setBeanName-："><a href="#BeanNameAware的setBeanName-：" class="headerlink" title="BeanNameAware的setBeanName()："></a>BeanNameAware的setBeanName()：</h3><p>如果bean实现了org.springframework.beans.BeanNameAware接口，Spring将bean的ID传递给setBeanName()方法。</p>
+</li>
+<li><h3 id="BeanFactoryAware的setBeanFactory-："><a href="#BeanFactoryAware的setBeanFactory-：" class="headerlink" title="BeanFactoryAware的setBeanFactory()："></a>BeanFactoryAware的setBeanFactory()：</h3><p>如果bean实现了org.springframework.beans.factory.BeanFactoryAware接口，Spring将调用setBeanName()方法，将BeanFactory容器实例传入。</p>
+</li>
+<li><h3 id="BeanPostProcessors的ProcessBeforeInitialization"><a href="#BeanPostProcessors的ProcessBeforeInitialization" class="headerlink" title="BeanPostProcessors的ProcessBeforeInitialization()"></a>BeanPostProcessors的ProcessBeforeInitialization()</h3><p>如果有org.springframework.beans.factory.config.BeanPostProcessors和Bean关联，那么其postProcessBeforeInitialization()方法将被将被调用。</p>
+</li>
+<li><h3 id="InitializingBean的afterPropertiesSet"><a href="#InitializingBean的afterPropertiesSet" class="headerlink" title="InitializingBean的afterPropertiesSet()"></a>InitializingBean的afterPropertiesSet()</h3><p>如果Bean类已实现org.springframework.beans.factory.InitializingBean接口，则执行他的afterProPertiesSet()方法。</p>
+</li>
+<li><h3 id="Bean定义文件中定义init-method："><a href="#Bean定义文件中定义init-method：" class="headerlink" title="Bean定义文件中定义init-method："></a>Bean定义文件中定义init-method：</h3><p>如果bean使用init-method生命了初始化方法，该方法也会被调用</p>
+</li>
+<li><h3 id="BeanPostProcessors的ProcessaAfterInitialization"><a href="#BeanPostProcessors的ProcessaAfterInitialization" class="headerlink" title="BeanPostProcessors的ProcessaAfterInitialization()"></a>BeanPostProcessors的ProcessaAfterInitialization()</h3><p>如果有任何的BeanPostProcessors实例与Bean实例关联，则执行BeanPostProcessors实例的ProcessaAfterInitialization()方法</p>
+</li>
+<li><h3 id="就绪"><a href="#就绪" class="headerlink" title="就绪"></a>就绪</h3><p>此时，Bean已准备就绪，可以被应用程序使用了，它们将一直驻留在容器中，直到该容器被销毁。</p>
+</li>
+<li><h3 id="DisposableBean的destroy"><a href="#DisposableBean的destroy" class="headerlink" title="DisposableBean的destroy()"></a>DisposableBean的destroy()</h3><p>在容器关闭时，如果Bean类有实现org.springframework.beans.factory.DisposableBean接口，Spring将调用他的destroy()方法。</p>
+</li>
+<li><h3 id="Bean定义文件中定义destroy-method"><a href="#Bean定义文件中定义destroy-method" class="headerlink" title="Bean定义文件中定义destroy-method"></a>Bean定义文件中定义destroy-method</h3><p>如果bean使用destroy-method生命了初始化方法，该方法也会被调用</p>
+</li>
+</ol>
+<h2 id="3、总结"><a href="#3、总结" class="headerlink" title="3、总结"></a>3、总结</h2><p>这个生命周期是在是太复杂了，需要很长时间才能理清他们之间的逻辑关系。</p>
+<h3 id="BeanNameAware、ApplicationContextAware和BeanFactoryAware"><a href="#BeanNameAware、ApplicationContextAware和BeanFactoryAware" class="headerlink" title="BeanNameAware、ApplicationContextAware和BeanFactoryAware"></a><strong>BeanNameAware、ApplicationContextAware和BeanFactoryAware</strong></h3><p>这三个接口放在一起写，是因为它们是一组的，作用相似。</p>
+<p>“Aware”的意思是”感知到的”，那么这三个接口的意思也不难理解：</p>
+<ol>
+<li>实现BeanNameAware接口的Bean，在Bean加载的过程中可以获取到该Bean的id</li>
+<li>实现ApplicationContextAware接口的Bean，在Bean加载的过程中可以获取到Spring的ApplicationContext，这个尤其重要，ApplicationContext是Spring应用上下文，从ApplicationContext中可以获取包括任意的Bean在内的大量Spring容器内容和信息</li>
+<li>实现BeanFactoryAware接口的Bean，在Bean加载的过程中可以获取到加载该Bean的BeanFactory</li>
+</ol>
+<p>从上面的调用顺序可以看出，在bean实例化并设置属性之后，紧接着就是先调用这三个接口相关的方法。</p>
+<h3 id="InitialingBean和DisposableBean"><a href="#InitialingBean和DisposableBean" class="headerlink" title="InitialingBean和DisposableBean"></a><strong>InitialingBean和DisposableBean</strong></h3><p>InitialingBean是一个接口，提供了一个唯一的方法afterPropertiesSet()。</p>
+<p>DisposableBean也是一个接口，提供了一个唯一的方法destory()。</p>
+<p>这两个接口是一组的，功能类似，因此放在一起：前者顾名思义在Bean属性都设置完毕后调用afterPropertiesSet()方法做一些初始化的工作，后者在Bean生命周期结束前调用destory()方法做一些收尾工作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifecycleBean</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span>, <span class="title">DisposableBean</span> </span>&#123;</div><div class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unused"</span>)</div><div class="line">    <span class="keyword">private</span> String lifeCycleBeanName;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLifeCycleBeanName</span><span class="params">(String lifeCycleBeanName)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Enter LifecycleBean.setLifeCycleBeanName(), lifeCycleBeanName = "</span> + lifeCycleBeanName);</div><div class="line">        <span class="keyword">this</span>.lifeCycleBeanName = lifeCycleBeanName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Enter LifecycleBean.destroy()"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Enter LifecycleBean.afterPropertiesSet()"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beanStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Enter LifecycleBean.beanStart()"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beanEnd</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Enter LifecycleBean.beanEnd()"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Enter LifecycleBean.setLifeCycleBeanName(), lifeCycleBeanName = lifeCycleBean</div><div class="line">Enter LifecycleBean.afterPropertiesSet()</div><div class="line">Enter LifecycleBean.beanStart()</div><div class="line">Enter LifecycleBean.destroy()</div><div class="line">Enter LifecycleBean.beanEnd()</div></pre></td></tr></table></figure>
+<p>执行结果和我们想的一样，afterPropertiesSet()方法就如同它的名字所表示的那样，是<strong>在Bean的属性都被设置完毕之后，才会调用</strong>。</p>
+<ol>
+<li>InitializingBean接口、Disposable接口可以和init-method、destory-method配合使用，接口执行顺序优先于配置</li>
+<li>InitializingBean接口、Disposable接口底层使用<strong>类型强转.方法名()</strong>进行直接方法调用，init-method、destory-method底层<strong>使用反射</strong>。</li>
+<li>一但bean实现了InitializingBean接口，那么这个bean的代码就和Spring耦合到一起了，因此不鼓励使用接口的形式。</li>
+</ol>
+<h3 id="BeanPostProcessor"><a href="#BeanPostProcessor" class="headerlink" title="BeanPostProcessor"></a><strong>BeanPostProcessor</strong></h3><p>之前的InitializingBean、DisposableBean、FactoryBean包括init-method和destory-method，针对的都是某个Bean控制其初始化的操作，而似乎没有一种办法可以针对每个Bean的生成前后做一些逻辑操作，PostProcessor则帮助我们做到了这一点</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/spring/6.png?raw=true" alt=""></p>
+<p>BeanPostProcess接口有两个方法，都可以见名知意：</p>
+<ol>
+<li>postProcessBeforeInitialization：在初始化Bean之前</li>
+<li>postProcessAfterInitialization：在初始化Bean之后</li>
+</ol>
+<p>值得注意的是，<strong>这两个方法是有返回值的，不要返回null，否则getBean的时候拿不到对象</strong>。</p>
+<p>写一段测试代码，首先定义一个普通的Bean，为了后面能区分，给Bean加一个属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonBean</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String commonName;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCommonName</span><span class="params">(String commonName)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.commonName = commonName;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initMethod</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Enter CommonBean.initMethod(), commonName = "</span> + commonName);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>定义一个PostProcess，实现BeanPostProcess接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> 五月的仓颉 http://www.cnblogs.com/xrq730/p/5721366.html</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostProcessorBean</span> <span class="keyword">implements</span> <span class="title">BeanPostProcessor</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Enter ProcessorBean.postProcessAfterInitialization()\n"</span>);</div><div class="line">        <span class="keyword">return</span> bean;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Enter ProcessorBean.postProcessBeforeInitialization()"</span>);</div><div class="line">        <span class="keyword">return</span> bean;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>配置一个spring.xml，给CommonBean的commonName赋予不同的值以区分：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line">&lt;beans xmlns="http://www.springframework.org/schema/beans"</div><div class="line">    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</div><div class="line">    xsi:schemaLocation="http://www.springframework.org/schema/beans</div><div class="line">    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"&gt;</div><div class="line">    </div><div class="line">    &lt;bean id="common0" class="org.xrq.bean.common.CommonBean" init-method="initMethod"&gt;</div><div class="line">        &lt;property name="commonName" value="common0"/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line">    </div><div class="line">    &lt;bean id="common1" class="org.xrq.bean.common.CommonBean" init-method="initMethod"&gt;</div><div class="line">        &lt;property name="commonName" value="common1"/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line">    </div><div class="line">    &lt;bean id="postProcessorBean" class="org.xrq.bean.processor.PostProcessorBean" /&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>运行一个Spring容器， 初始化结果为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Enter ProcessorBean.postProcessBeforeInitialization()</div><div class="line">Enter CommonBean.initMethod(), commonName = common0</div><div class="line">Enter ProcessorBean.postProcessAfterInitialization()</div><div class="line"></div><div class="line">Enter ProcessorBean.postProcessBeforeInitialization()</div><div class="line">Enter CommonBean.initMethod(), commonName = common1</div><div class="line">Enter ProcessorBean.postProcessAfterInitialization()</div><div class="line"></div><div class="line">Enter ProcessorBean.postProcessBeforeInitialization()</div><div class="line">Enter ProcessorBean.postProcessAfterInitialization()</div></pre></td></tr></table></figure>
+<p>看到每个Bean初始化前后都会分别执行postProcessorBeforeInitiallization()方法与postProcessorAfterInitialization()方法，最后两行出现原因是，PostProcessorBean本身也是一个Bean。</p>
+<p>注意:</p>
+<ol>
+<li><p>这两个方法分别叫before和after，而中间的Initialization过程就是上面说到的各个bean实现的InitializingBean接口和inti-method方法。</p>
+</li>
+<li><p>BeanFactory和ApplicationContext对待bean后置处理器稍有不同。ApplicationContext会自动检测在配置文件中实现了BeanPostProcessor接口的所有bean，并把它们注册为后置处理器，然后在容器创建bean的适当时候调用它，因此部署一个后置处理器同部署其他的bean并没有什么区别。而使用BeanFactory实现的时候，bean 后置处理器必须通过代码显式地去注册。</p>
+<p>​</p>
+</li>
+</ol>
+<h2 id="4、再次总结一下"><a href="#4、再次总结一下" class="headerlink" title="4、再次总结一下"></a>4、再次总结一下</h2><p>现在bean的生命周期各个阶段应该就很清晰了，上面的步骤对应一下几个大的阶段</p>
+<h3 id="实例化与属性"><a href="#实例化与属性" class="headerlink" title="实例化与属性"></a>实例化与属性</h3><p>对应步骤1和2</p>
+<h3 id="Aware相关的三个方法"><a href="#Aware相关的三个方法" class="headerlink" title="Aware相关的三个方法"></a>Aware相关的三个方法</h3><p>BeanNameAware、ApplicationContextAware和BeanFactoryAware三个接口的方法，对应上面的步骤3和4，应该还有一个的里面没有写上</p>
+<h3 id="BeanPostProcessor后置处理器"><a href="#BeanPostProcessor后置处理器" class="headerlink" title="BeanPostProcessor后置处理器"></a>BeanPostProcessor后置处理器</h3><p>这个接口是容器级别的，对所有的bean都起作用，也就是说每个bean初始化的时候都会检测实现这个接口的bean。</p>
+<p>而这个接口对应两个方法，postProcessBeforeInitialization和postProcessAfterInitialization，分别对应上面的步骤5和8，因为一个是before一个是after，而中间的步骤6和7就是下面的各个bean自己实现的接口或者方法</p>
+<h3 id="InitializingBean接口和init-method"><a href="#InitializingBean接口和init-method" class="headerlink" title="InitializingBean接口和init-method"></a>InitializingBean接口和init-method</h3><p>InitializingBean接口可以和init-method配合使用，接口执行顺序优先于配置，也就是上面的步骤6和步骤7他们的区别上面已经介绍过。</p>
+<h3 id="准备就绪"><a href="#准备就绪" class="headerlink" title="准备就绪"></a>准备就绪</h3><p>至此bean已经可以使用，可以看出大体分为上面的四个阶段</p>
+<h3 id="销毁"><a href="#销毁" class="headerlink" title="销毁"></a>销毁</h3><p>销毁阶段相对简单，因为没有上面的后置处理器，就是Disposable接口的方法和destory-method，两者的顺序和左右与InitializingBean接口和init-method都很类似，对应上面的步骤10和步骤11.</p>
+<h1 id="三、Bean的作用域"><a href="#三、Bean的作用域" class="headerlink" title="三、Bean的作用域"></a>三、Bean的作用域</h1><p>当通过Spring容器创建一个Bean实例时，不仅可以完成Bean实例的实例化，还可以为Bean指定特定的作用域。<strong>Spring支持如下5种作用域：</strong></p>
+<ul>
+<li><strong>singleton</strong>：单例模式，在整个Spring IoC容器中，使用singleton定义的Bean将只有一个实例</li>
+<li><strong>prototype</strong>：原型模式，每次通过容器的getBean方法获取prototype定义的Bean时，都将产生一个新的Bean实例</li>
+<li><strong>request</strong>：对于每次HTTP请求，使用request定义的Bean都将产生一个新实例，即每次HTTP请求将会产生不同的Bean实例。只有在Web应用中使用Spring时，该作用域才有效</li>
+<li><strong>session</strong>：对于每次HTTP Session，使用session定义的Bean豆浆产生一个新实例。同样只有在Web应用中使用Spring时，该作用域才有效</li>
+<li><strong>globalsession</strong>：每个全局的HTTP Session，使用session定义的Bean都将产生一个新实例。典型情况下，仅在使用portlet context的时候有效。同样只有在Web应用中使用Spring时，该作用域才有效</li>
+</ul>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h3 id="1、定义不同作用域的java类"><a href="#1、定义不同作用域的java类" class="headerlink" title="1、定义不同作用域的java类"></a>1、定义不同作用域的java类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="meta">@Scope</span>( <span class="string">"session"</span>)  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SessionObj</span> </span>&#123;  </div><div class="line">  </div><div class="line">&#125;  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="meta">@Scope</span>( <span class="string">"request"</span>)  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestObj</span> </span>&#123;  </div><div class="line">  </div><div class="line">&#125;  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="meta">@Scope</span>( <span class="string">"prototype"</span>)  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrototypeObj</span> </span>&#123;  </div><div class="line">  </div><div class="line">&#125;  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="meta">@Scope</span>( <span class="string">"singleton"</span>)  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonObj</span> </span>&#123;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2、注入到controller"><a href="#2、注入到controller" class="headerlink" title="2、注入到controller"></a>2、注入到controller</h3><p>由于controller是单例的，因此必须通过实现ApplicationContextAware接口，直接从容器中取出对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Controller</span>  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> <span class="keyword">implements</span> <span class="title">ApplicationContextAware</span> </span>&#123;  </div><div class="line">  </div><div class="line">    <span class="keyword">private</span> RequestObj RequestObj;  </div><div class="line">  </div><div class="line">    <span class="keyword">private</span> SessionObj SessionObj;  </div><div class="line">  </div><div class="line">    <span class="keyword">private</span> PrototypeObj PrototypeObj;  </div><div class="line">  </div><div class="line">    <span class="keyword">private</span> SingletonObj SingletonObj;  </div><div class="line">  </div><div class="line">    <span class="keyword">private</span> ApplicationContext applicationContext;  </div><div class="line">  </div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)  </div><div class="line">    <span class="meta">@ResponseBody</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;  </div><div class="line">        print();  </div><div class="line">        <span class="keyword">return</span> <span class="string">"Welcome"</span>;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;  </div><div class="line">        System.out.println(<span class="string">"first  time singleton is :"</span> + getSingletonObj());  </div><div class="line">        System.out.println(<span class="string">"second time singleton is :"</span> + getSingletonObj());  </div><div class="line">  </div><div class="line">        System.out.println(<span class="string">"first  time prototype is :"</span> + getPrototypeObj());  </div><div class="line">        System.out.println(<span class="string">"second time prototype is :"</span> + getPrototypeObj());  </div><div class="line">  </div><div class="line">        System.out.println(<span class="string">"first  time request is :"</span> + getRequestObj());  </div><div class="line">        System.out.println(<span class="string">"second time request is :"</span> + getRequestObj());  </div><div class="line">  </div><div class="line">        System.out.println(<span class="string">"first  time session is :"</span> + getSessionObj());  </div><div class="line">        System.out.println(<span class="string">"second time session is :"</span> + getSessionObj());  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span>  </span></div><div class="line">            <span class="keyword">throws</span> BeansException &#123;  </div><div class="line">        <span class="keyword">this</span>.applicationContext = applicationContext;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> RequestObj <span class="title">getRequestObj</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> applicationContext.getBean(RequestObj.class);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRequestObj</span><span class="params">(RequestObj requestObj)</span> </span>&#123;  </div><div class="line">        RequestObj = requestObj;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> SessionObj <span class="title">getSessionObj</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> applicationContext.getBean(SessionObj.class);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSessionObj</span><span class="params">(SessionObj sessionObj)</span> </span>&#123;  </div><div class="line">        SessionObj = sessionObj;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> PrototypeObj <span class="title">getPrototypeObj</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> applicationContext.getBean(PrototypeObj.class);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrototypeObj</span><span class="params">(PrototypeObj prototypeObj)</span> </span>&#123;  </div><div class="line">        PrototypeObj = prototypeObj;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> SingletonObj <span class="title">getSingletonObj</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> applicationContext.getBean(SingletonObj.class);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSingletonObj</span><span class="params">(SingletonObj singletonObj)</span> </span>&#123;  </div><div class="line">        SingletonObj = singletonObj;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3、运行结果"><a href="#3、运行结果" class="headerlink" title="3、运行结果"></a>3、运行结果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//使用chrome第一次打印数据：  </span></div><div class="line">first  time singleton is :com.fb.po.SingletonObj@<span class="number">1e3223</span>e  </div><div class="line">second time singleton is :com.fb.po.SingletonObj@<span class="number">1e3223</span>e  </div><div class="line">first  time prototype is :com.fb.po.PrototypeObj@<span class="number">3e683f</span>  </div><div class="line">second time prototype is :com.fb.po.PrototypeObj@<span class="number">12e18</span>d7  </div><div class="line">first  time request is :com.fb.po.RequestObj@<span class="number">1</span>d45706  </div><div class="line">second time request is :com.fb.po.RequestObj@<span class="number">1</span>d45706  </div><div class="line">first  time session is :com.fb.po.SessionObj@<span class="number">9</span>a6b2e  </div><div class="line">second time session is :com.fb.po.SessionObj@<span class="number">9</span>a6b2e  </div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line"><span class="comment">//使用chrome打印第二次数据  </span></div><div class="line">first  time singleton is :com.fb.po.SingletonObj@<span class="number">1e3223</span>e  </div><div class="line">second time singleton is :com.fb.po.SingletonObj@<span class="number">1e3223</span>e  </div><div class="line">first  time prototype is :com.fb.po.PrototypeObj@<span class="number">122e5</span>be  </div><div class="line">second time prototype is :com.fb.po.PrototypeObj@<span class="number">192</span>add  </div><div class="line">first  time request is :com.fb.po.RequestObj@<span class="number">4</span>d1b6c  </div><div class="line">second time request is :com.fb.po.RequestObj@<span class="number">4</span>d1b6c  </div><div class="line">first  time session is :com.fb.po.SessionObj@<span class="number">9</span>a6b2e  </div><div class="line">second time session is :com.fb.po.SessionObj@<span class="number">9</span>a6b2e  </div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line"><span class="comment">//使用IE打印第三次数据  </span></div><div class="line">first  time singleton is :com.fb.po.SingletonObj@<span class="number">1e3223</span>e  </div><div class="line">second time singleton is :com.fb.po.SingletonObj@<span class="number">1e3223</span>e  </div><div class="line">first  time prototype is :com.fb.po.PrototypeObj@<span class="number">10f</span>1ecb  </div><div class="line">second time prototype is :com.fb.po.PrototypeObj@<span class="number">1</span>aeb990  </div><div class="line">first  time request is :com.fb.po.RequestObj@<span class="number">18</span>a1e7  </div><div class="line">second time request is :com.fb.po.RequestObj@<span class="number">18</span>a1e7  </div><div class="line">first  time session is :com.fb.po.SessionObj@<span class="number">12</span>d5c55  </div><div class="line">second time session is :com.fb.po.SessionObj@<span class="number">12</span>d5c55</div></pre></td></tr></table></figure>
+<h3 id="4、结果分析"><a href="#4、结果分析" class="headerlink" title="4、结果分析"></a>4、结果分析</h3><p>从结果来看，单例的bean的三次的数据都是打印一样的（默认的bean的级别就是单例）；</p>
+<p>prototype的bean每次的数据都是不一样的，每次请求的时候调用两次结果都不一样。</p>
+<p>request的bean在每次request的时候都不一致，但是同一次request返回的数据是一致的。</p>
+<p>session的bean在前两次结果一致，最后一次数据不一致，和session的节奏是一致的。</p>
+<h3 id="5、总结"><a href="#5、总结" class="headerlink" title="5、总结"></a>5、总结</h3><p>如果不指定Bean的作用域，Spring默认使用singleton作用域。Java在创建Java实例时，需要进行内存申请；销毁实例时，需要完成垃圾回收，这些工作都会导致系统开销的增加。因此，prototype作用域Bean的创建、销毁代价比较大。而singleton作用域的Bean实例一旦创建成功，可以重复使用。因此，除非必要，否则尽量避免将Bean被设置成prototype作用域。</p>
+<p>现在开发应用大多数都是无状态的，所以单例多线程是比较好的实现方式，多例的比较有利于保存状态，完全没必要。</p>
+<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://gaddma.iteye.com/blog/2037038" target="_blank" rel="external">http://gaddma.iteye.com/blog/2037038</a></p>
+<p><a href="http://www.cnblogs.com/zrtqsk/p/3735273.html" target="_blank" rel="external">http://www.cnblogs.com/zrtqsk/p/3735273.html</a></p>
+<p><a href="http://developer.51cto.com/art/201104/255961.htm" target="_blank" rel="external">http://developer.51cto.com/art/201104/255961.htm</a></p>
+<p><a href="http://www.cnblogs.com/xrq730/p/5721366.html" target="_blank" rel="external">http://www.cnblogs.com/xrq730/p/5721366.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/16/Java/Java中的四种引用/" rel="next" title="Java中的四种引用">
+                <i class="fa fa-chevron-left"></i> Java中的四种引用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/19/Java/浅析Servlet/" rel="prev" title="浅析Servlet">
+                浅析Servlet <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/"
+     data-title="Spring基础知识（一）：Bean的作用域和生命周期"
+     data-content=""
+     data-url="http://yoursite.com/2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/"
+           data-title="Spring基础知识（一）：Bean的作用域和生命周期" data-url="http://yoursite.com/2016/12/18/spring/Spring基础知识(1)Bean的作用域和生命周期/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="paine" />
+          <p class="site-author-name" itemprop="name">paine</p>
+          <p class="site-description motion-element" itemprop="description">paine1690</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Spring容器"><span class="nav-number">1.</span> <span class="nav-text">一、Spring容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、BeanFactory与ApplicationContext"><span class="nav-number">1.1.</span> <span class="nav-text">1、BeanFactory与ApplicationContext</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanFactory"><span class="nav-number">1.1.1.</span> <span class="nav-text">BeanFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ApplicationContext"><span class="nav-number">1.1.2.</span> <span class="nav-text">ApplicationContext</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Bean的生命周期"><span class="nav-number">2.</span> <span class="nav-text">二、Bean的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、接口的分类"><span class="nav-number">2.1.</span> <span class="nav-text">1、接口的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、启动步骤"><span class="nav-number">2.2.</span> <span class="nav-text">2、启动步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean的建立"><span class="nav-number">2.2.1.</span> <span class="nav-text">Bean的建立</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性注入"><span class="nav-number">2.2.2.</span> <span class="nav-text">属性注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanNameAware的setBeanName-："><span class="nav-number">2.2.3.</span> <span class="nav-text">BeanNameAware的setBeanName()：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanFactoryAware的setBeanFactory-："><span class="nav-number">2.2.4.</span> <span class="nav-text">BeanFactoryAware的setBeanFactory()：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanPostProcessors的ProcessBeforeInitialization"><span class="nav-number">2.2.5.</span> <span class="nav-text">BeanPostProcessors的ProcessBeforeInitialization()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InitializingBean的afterPropertiesSet"><span class="nav-number">2.2.6.</span> <span class="nav-text">InitializingBean的afterPropertiesSet()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean定义文件中定义init-method："><span class="nav-number">2.2.7.</span> <span class="nav-text">Bean定义文件中定义init-method：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanPostProcessors的ProcessaAfterInitialization"><span class="nav-number">2.2.8.</span> <span class="nav-text">BeanPostProcessors的ProcessaAfterInitialization()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#就绪"><span class="nav-number">2.2.9.</span> <span class="nav-text">就绪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DisposableBean的destroy"><span class="nav-number">2.2.10.</span> <span class="nav-text">DisposableBean的destroy()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean定义文件中定义destroy-method"><span class="nav-number">2.2.11.</span> <span class="nav-text">Bean定义文件中定义destroy-method</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、总结"><span class="nav-number">2.3.</span> <span class="nav-text">3、总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanNameAware、ApplicationContextAware和BeanFactoryAware"><span class="nav-number">2.3.1.</span> <span class="nav-text">BeanNameAware、ApplicationContextAware和BeanFactoryAware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InitialingBean和DisposableBean"><span class="nav-number">2.3.2.</span> <span class="nav-text">InitialingBean和DisposableBean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanPostProcessor"><span class="nav-number">2.3.3.</span> <span class="nav-text">BeanPostProcessor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、再次总结一下"><span class="nav-number">2.4.</span> <span class="nav-text">4、再次总结一下</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化与属性"><span class="nav-number">2.4.1.</span> <span class="nav-text">实例化与属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aware相关的三个方法"><span class="nav-number">2.4.2.</span> <span class="nav-text">Aware相关的三个方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanPostProcessor后置处理器"><span class="nav-number">2.4.3.</span> <span class="nav-text">BeanPostProcessor后置处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InitializingBean接口和init-method"><span class="nav-number">2.4.4.</span> <span class="nav-text">InitializingBean接口和init-method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备就绪"><span class="nav-number">2.4.5.</span> <span class="nav-text">准备就绪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#销毁"><span class="nav-number">2.4.6.</span> <span class="nav-text">销毁</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Bean的作用域"><span class="nav-number">3.</span> <span class="nav-text">三、Bean的作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.1.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、定义不同作用域的java类"><span class="nav-number">3.1.1.</span> <span class="nav-text">1、定义不同作用域的java类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、注入到controller"><span class="nav-number">3.1.2.</span> <span class="nav-text">2、注入到controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、运行结果"><span class="nav-number">3.1.3.</span> <span class="nav-text">3、运行结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、结果分析"><span class="nav-number">3.1.4.</span> <span class="nav-text">4、结果分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、总结"><span class="nav-number">3.1.5.</span> <span class="nav-text">5、总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考地址"><span class="nav-number">4.</span> <span class="nav-text">四、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"paine1690"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

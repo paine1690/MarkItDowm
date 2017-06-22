@@ -1,0 +1,1153 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java基础知识," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一、异常1、类继承结构在 Java 中，所有的异常都有一个共同的祖先 Throwable（可抛出）。Throwable 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。
+
+从图中可以看出，Throwable有两个子类，Error(错误)和Exception(异常)。二者都是 Java 异常处理的重要子类，各自都包含大量子类。
+
+Error（错误）:程序无法处理的错误，表示运">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的异常机制">
+<meta property="og:url" content="http://yoursite.com/2016/12/15/Java/Java中的异常机制/index.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="一、异常1、类继承结构在 Java 中，所有的异常都有一个共同的祖先 Throwable（可抛出）。Throwable 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。
+
+从图中可以看出，Throwable有两个子类，Error(错误)和Exception(异常)。二者都是 Java 异常处理的重要子类，各自都包含大量子类。
+
+Error（错误）:程序无法处理的错误，表示运">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/3.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/4.png?raw=true">
+<meta property="og:updated_time" content="2017-02-18T03:09:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java中的异常机制">
+<meta name="twitter:description" content="一、异常1、类继承结构在 Java 中，所有的异常都有一个共同的祖先 Throwable（可抛出）。Throwable 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。
+
+从图中可以看出，Throwable有两个子类，Error(错误)和Exception(异常)。二者都是 Java 异常处理的重要子类，各自都包含大量子类。
+
+Error（错误）:程序无法处理的错误，表示运">
+<meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/3.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/15/Java/Java中的异常机制/"/>
+
+
+
+
+
+  <title> Java中的异常机制 | paine1690 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">paine1690</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/15/Java/Java中的异常机制/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="paine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="paine1690">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java中的异常机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-15T00:00:00+08:00">
+                2016-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/15/Java/Java中的异常机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/15/Java/Java中的异常机制/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/12/15/Java/Java中的异常机制/" class="leancloud_visitors" data-flag-title="Java中的异常机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、异常"><a href="#一、异常" class="headerlink" title="一、异常"></a>一、异常</h1><h2 id="1、类继承结构"><a href="#1、类继承结构" class="headerlink" title="1、类继承结构"></a>1、类继承结构</h2><p>在 Java 中，所有的异常都有一个共同的祖先 Throwable（可抛出）。Throwable 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/java/3.png?raw=true" alt=""></p>
+<p>从图中可以看出，Throwable有两个子类，Error(错误)和Exception(异常)。二者都是 Java 异常处理的重要子类，各自都包含大量子类。</p>
+<ul>
+<li><p>Error（错误）:程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。例如，Java虚拟机运行错误（Virtual MachineError），当 JVM 不再有继续执行操作所需的内存资源时，将出现 OutOfMemoryError。这些异常发生时，Java虚拟机（JVM）一般会选择线程终止。</p>
+<p>这些错误表示故障发生于虚拟机自身、或者发生在虚拟机试图执行应用时，如Java虚拟机运行错误（Virtual MachineError）、类定义错误（NoClassDefFoundError）等。这些错误是不可查的，因为它们在应用程序的控制和处理能力之 外，而且绝大多数是程序运行时不允许出现的状况。对于设计合理的应用程序来说，即使确实发生了错误，本质上也不应该试图去处理它所引起的异常状况。在 Java中，错误通过Error的子类描述。</p>
+</li>
+<li><p>Exception（异常）:是程序本身可以处理的异常。</p>
+<p> Exception 类有一个重要的子类 RuntimeException。RuntimeException 类及其子类表示“JVM 常用操作”引发的错误。例如，若试图使用空值对象引用、除数为零或数组越界，则分别引发运行时异常（NullPointerException、ArithmeticException）和 ArrayIndexOutOfBoundException。</p>
+</li>
+<li><p>注意：异常和错误的区别：异常能被程序本身可以处理，错误是无法处理。</p>
+</li>
+</ul>
+<h2 id="2、运行时异常与非运行时异常"><a href="#2、运行时异常与非运行时异常" class="headerlink" title="2、运行时异常与非运行时异常"></a>2、运行时异常与非运行时异常</h2><p>通常，Java的异常(包括Exception和Error)分为<strong>可查的异常（checked exceptions）和不可查的异常（unchecked exceptions）</strong>。这两个概念和运行时异常与非运行时异常差不多，但是有一点区别。</p>
+<ul>
+<li><p>可查异常（编译器要求必须处置的异常）：也就是非运行时异常。正确的程序在运行中，很容易出现的、情理可容的异常状况。可查异常虽然是异常状况，但在一定程度上它的发生是可以预计的，而且一旦发生这种异常状况，就必须采取某种方式进行处理。</p>
+<p>除了RuntimeException及其子类以外，其他的Exception类及其子类都属于可查异常。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用try-catch语句捕获它，要么用throws子句声明抛出它，否则编译不会通过。</p>
+</li>
+<li><p>不可查异常(编译器不要求强制处置的异常):包括运行时异常（RuntimeException与其子类）和错误（Error）。</p>
+</li>
+</ul>
+<p>下图中粉色的就是可检查异常，(checked exceptions)。而不可查异常就是运行时异常加上错误。</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/java/4.png?raw=true" alt=""></p>
+<h1 id="二、异常处理机制"><a href="#二、异常处理机制" class="headerlink" title="二、异常处理机制"></a>二、异常处理机制</h1><p>与异常有关的几个关键字有</p>
+<ul>
+<li>throws</li>
+<li>throw</li>
+<li>try</li>
+<li>catch</li>
+<li>finally</li>
+</ul>
+<h2 id="1、throws与throw"><a href="#1、throws与throw" class="headerlink" title="1、throws与throw"></a>1、throws与throw</h2><p> throws总是出现在一个函数头中，用来标明该成员函数可能抛出的各种异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>throw总是出现在函数体中，用来抛出一个异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> Exception();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序会在throw语句后立即终止，它后面的语句执行不到，然后在包含它的所有try块中（可能在上层调用函数中）从里向外寻找含有与其匹配的catch子句的try块。</p>
+<p>如果一个函数体中有throw语句或者调用了一个带有throws的方法，那么这个方法也必须加上throws表明它可能抛出的异常。</p>
+<h2 id="2、try与catch"><a href="#2、try与catch" class="headerlink" title="2、try与catch"></a>2、try与catch</h2><p>如果方法不想抛出异常，可以在自己的函数体内将可能出现的异常捕获并处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> Exception();</div><div class="line">&#125;</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">try</span>&#123;</div><div class="line">        fun1();</div><div class="line">    &#125;<span class="keyword">catch</span>(Exception e)&#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>catch语句的参数类似于方法的声明，包括一个例外类型和一个例外对象。例外类型必须为Throwable类的子类，它指明了catch语句所处理的例外类型，例外对象则由运行时系统在try所指定的代码块中生成并被捕获，大括号中包含对象的处理，其中可以调用对象的方法。  </p>
+<p>catch语句可以有多个，分别处理不同类的例外。Java运行时系统从上到下分别对每个catch语句处理的例外类型进行检测，直到找到类型相匹配的catch语句为止。这里，类型匹配指catch所处理的例外类型与生成的例外对象的类型完全一致或者是它的父类，因此，catch语句的排列顺序应该是从特殊到一般。  </p>
+<h2 id="3、finally"><a href="#3、finally" class="headerlink" title="3、finally"></a>3、finally</h2><p>try所限定的代码中，当抛弃一个例外时，其后的代码不会被执行。通过finally语句可以指定一块代码。无论try所指定的程序块中抛弃或不抛弃例外，也无论catch语句的例外类型是否与所抛弃的例外的类型一致，finally所指定的代码都要被执行，它提供了统一的出口。通常在finally语句中可以进行资源的清除工作。如关闭打开的文件等。  </p>
+<ul>
+<li>不论是return还是抛出异常，finally中的代码都会被执行。</li>
+</ul>
+<ul>
+<li>如果执行到return后再执行finally，return的值不会被改变</li>
+</ul>
+<h1 id="三、虚拟机错误"><a href="#三、虚拟机错误" class="headerlink" title="三、虚拟机错误"></a>三、虚拟机错误</h1><p>开始对这里的理解有些误区，以为虚拟机抛出的也是异常，经过上面的学习才知道在类继承关系上是属于错误。从控制台中也可以看出确实是Error二部是Exception。</p>
+<p>在了解虚拟机异常之前，首先要知道JVM的运行时数据区域</p>
+<ol>
+<li>程序计数器：是一块较小的内存空间，线程间相互独立</li>
+<li>Java虚拟机栈：也是线程私有的。每个方法执行的时候都会有一个栈帧，方法调用到执行完成的过程就是栈帧从虚拟机栈中入栈和出栈的过程。</li>
+<li>本地方法栈：与虚拟机栈作用相似，用于Native方法，有些虚拟机中将二者合二为一。</li>
+<li>Java堆：内存中最大的一块，所有新对象都在这里创建。还可以细分为新生代和老年代。</li>
+<li>方法区：和堆一样，是所有线程共享的，用于存储已经被加载的类信息、常量、静态变量等。也称为永久代。</li>
+<li>运行时常量池：方法区的一部分，存放编译期生成的各种字面量和符号引用。</li>
+<li>直接内存：直接内存并不是虚拟机内存的一部分，也不虚拟机的分配。比如NIO中的直接内存</li>
+</ol>
+<p>JVM主要会产生OutOfMemory和StackOverFlow两种异常，严格的说，是java.lang.StackOverflowError和java.lang.OutOfMemoryError两种错误。</p>
+<p>顺便说一下，下面的程序主要来自深入理解Java虚拟机这本书，SOF这个异常的例子确实是运行试验过，不过OOM这个异常把电脑跑的卡死了都没出现，不知道是不是因为虚拟机的参数设置问题还是怎么了。</p>
+<h2 id="1、Java堆溢出"><a href="#1、Java堆溢出" class="headerlink" title="1、Java堆溢出"></a>1、Java堆溢出</h2><p>堆是存放实例对象和数组的地方，当对象多过设置的堆大小，同时避免GC回收即可。最大内存块Xmx和最小内存块Xms一样，堆就不可扩展了。将new出的对象放到List中可防止GC回收。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* </span></div><div class="line"> * VM args: -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError  </div><div class="line"> * Xms equals Xmx lead to head value can't extend </div><div class="line"> */  </div><div class="line"><span class="keyword">import</span> java.util.ArrayList;  </div><div class="line"><span class="keyword">import</span> java.util.List;  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapOOM</span> </span>&#123;  </div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OOMObject</span> </span>&#123;  </div><div class="line">      </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </div><div class="line">        List&lt;OOMObject&gt; list = <span class="keyword">new</span> ArrayList&lt;OOMObject&gt;();  </div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;  </div><div class="line">            list.add(<span class="keyword">new</span> OOMObject());  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="2、虚拟机栈和本地方法栈溢出"><a href="#2、虚拟机栈和本地方法栈溢出" class="headerlink" title="2、虚拟机栈和本地方法栈溢出"></a>2、虚拟机栈和本地方法栈溢出</h2><p>HotSpot虚拟机不区分虚拟机栈和本地方法栈</p>
+<p>关于虚拟机栈和本地方法栈，Java虚拟机规范种描述了两种异常：</p>
+<ul>
+<li>如果线程请求的栈深度大于虚拟机所能承受的最大深度，将抛出StackOverFlow异常</li>
+<li>如果虚拟机在扩展栈时无法申请到足够的内存空间，则抛出OutOfMemory异常</li>
+</ul>
+<h3 id="StackOverFlow"><a href="#StackOverFlow" class="headerlink" title="StackOverFlow"></a>StackOverFlow</h3><p>当请求的栈深度超过JVM允许最大深度即可，用Xss设置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* </span></div><div class="line"> *VM args: -Xss128K </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaVMStackSOF</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> stackLength = <span class="number">1</span>;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stackLeak</span><span class="params">()</span> </span>&#123;  </div><div class="line">        stackLength++;  </div><div class="line">        stackLeak();  </div><div class="line">    &#125;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;  </div><div class="line">        JavaVMStackSOF oom = <span class="keyword">new</span> JavaVMStackSOF();  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            oom.stackLeak();  </div><div class="line">        &#125; <span class="keyword">catch</span>(Throwable e) &#123;  </div><div class="line">            System.out.println(<span class="string">"stack length:"</span> + oom.stackLength);  </div><div class="line">            <span class="keyword">throw</span> e;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在递归时如果结束判断写的有问题就会出现这种情况</p>
+<h3 id="OutOfMemory"><a href="#OutOfMemory" class="headerlink" title="OutOfMemory"></a>OutOfMemory</h3><p>不断创建线程，因为虚拟机栈是线程私有的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* </span></div><div class="line"> * VM args: -Xss2M </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaVMStackOOM</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dontStop</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;  </div><div class="line">              </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stackLeakByThread</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;  </div><div class="line">            Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;  </div><div class="line">                <span class="meta">@Override</span>  </div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  </div><div class="line">                    dontStop();  </div><div class="line">                &#125;  </div><div class="line">            &#125;);  </div><div class="line">            thread.start();  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </div><div class="line">        JavaVMStackOOM oom = <span class="keyword">new</span> JavaVMStackOOM();  </div><div class="line">        oom.stackLeakByThread();  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为每个线程的栈分配的内存越大，反而越容易产生内存溢出异常。</p>
+<p>因为每个线程分配到的栈容量越大，可以建立的线程数量就越少，建立线程时就越容易把剩下的内存耗尽。</p>
+<h2 id="3、方法区和运行时常量池溢出"><a href="#3、方法区和运行时常量池溢出" class="headerlink" title="3、方法区和运行时常量池溢出"></a>3、方法区和运行时常量池溢出</h2><p>由于运行时常量池是方法区的一部分，所以他们属于一类</p>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>方法区用于存放Class的相关信息，如类名、访问修饰符、常量池、字段描述、方法描述等。</p>
+<p>当前很多主流框架如Spring、Hibernate在对类进行增强时，都用到了CGLib这类字节码技术，增强的类越多，就需要越大的方法区来保证动态生成的Class可以载入内存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* </span></div><div class="line"> * VM args: -XX:PermSize=10M -XX:MaxPermSize=10M </div><div class="line"> */  </div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;  </div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.Enhancer;  </div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodInterceptor;  </div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodProxy;  </div><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaMethodAreaOOM</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;  </div><div class="line">            Enhancer enhancer = <span class="keyword">new</span> Enhancer();  </div><div class="line">            enhancer.setSuperclass(OOMObject.class);  </div><div class="line">            enhancer.setUseCache(<span class="keyword">false</span>);  </div><div class="line">            enhancer.setCallback(<span class="keyword">new</span> MethodInterceptor() &#123;  </div><div class="line">                <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object obj, Method method, Object[] args, MethodProxy proxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;  </div><div class="line">                    <span class="keyword">return</span> proxy.invokeSuper(obj, args);  </div><div class="line">                &#125;  </div><div class="line">            &#125;);  </div><div class="line">            enhancer.create();  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">static</span> class <span class="title">OOMObject</span><span class="params">()</span> </span>&#123;  </div><div class="line">      </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>CGLib是一个强大的，高性能，高质量的Code生成类库，它可以在运行期扩展Java类与实现Java接口。Hibernate用它来实现PO(Persistent Object 持久化对象)字节码的动态生成。</p>
+</blockquote>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>使用String.interm()填充常量池。intern的作用是如果该常量不再常量池中，则添加到常量池，否则返回该常量引用。常量池是方法区一部分，运行时可限制方法区PermSize和最大方法区MaxPermSize大小</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* </span></div><div class="line"> * VM args: -XX:PermSize=10M -XX:MaxPermSize=10M </div><div class="line"> */  </div><div class="line">   </div><div class="line"><span class="keyword">import</span> java.util.List;  </div><div class="line"><span class="keyword">import</span> java.util.ArrayList;  </div><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RuntimeConstantPoolOOM</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </div><div class="line">        <span class="comment">//keep reference,avoid GC collect  </span></div><div class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();  </div><div class="line">        <span class="comment">//10M PermSize in integer range enough to lead to OOM  </span></div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;  </div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;  </div><div class="line">            list.add(String.valueOf(i++).intern());  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结一下</p>
+<table>
+<thead>
+<tr>
+<th>溢出点</th>
+<th>异常</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>虚拟机栈</td>
+<td>SOF</td>
+<td>方法递归调用</td>
+</tr>
+<tr>
+<td>虚拟机栈</td>
+<td>OOM</td>
+<td>线程太多</td>
+</tr>
+<tr>
+<td>方法区或运行时常量池</td>
+<td>OOM</td>
+<td>类太多或常量太多</td>
+</tr>
+<tr>
+<td>堆</td>
+<td>OOM</td>
+<td>对象太多</td>
+</tr>
+</tbody>
+</table>
+<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://blog.csdn.net/renfufei/article/details/16344847" target="_blank" rel="external">http://blog.csdn.net/renfufei/article/details/16344847</a></p>
+<p><a href="http://blog.csdn.net/hguisu/article/details/6155636" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/6155636</a></p>
+<p><a href="http://blog.csdn.net/ronawilliam/article/details/3299676" target="_blank" rel="external">http://blog.csdn.net/ronawilliam/article/details/3299676</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java基础知识/" rel="tag"># Java基础知识</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/12/MultiThreading/Java中的死锁/" rel="next" title="Java中的死锁">
+                <i class="fa fa-chevron-left"></i> Java中的死锁
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/15/Java/Object类与深浅克隆/" rel="prev" title="Java中的Object类与深浅克隆">
+                Java中的Object类与深浅克隆 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/15/Java/Java中的异常机制/"
+     data-title="Java中的异常机制"
+     data-content=""
+     data-url="http://yoursite.com/2016/12/15/Java/Java中的异常机制/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/15/Java/Java中的异常机制/"
+           data-title="Java中的异常机制" data-url="http://yoursite.com/2016/12/15/Java/Java中的异常机制/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="paine" />
+          <p class="site-author-name" itemprop="name">paine</p>
+          <p class="site-description motion-element" itemprop="description">paine1690</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、异常"><span class="nav-number">1.</span> <span class="nav-text">一、异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、类继承结构"><span class="nav-number">1.1.</span> <span class="nav-text">1、类继承结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、运行时异常与非运行时异常"><span class="nav-number">1.2.</span> <span class="nav-text">2、运行时异常与非运行时异常</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、异常处理机制"><span class="nav-number">2.</span> <span class="nav-text">二、异常处理机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、throws与throw"><span class="nav-number">2.1.</span> <span class="nav-text">1、throws与throw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、try与catch"><span class="nav-number">2.2.</span> <span class="nav-text">2、try与catch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、finally"><span class="nav-number">2.3.</span> <span class="nav-text">3、finally</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、虚拟机错误"><span class="nav-number">3.</span> <span class="nav-text">三、虚拟机错误</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、Java堆溢出"><span class="nav-number">3.1.</span> <span class="nav-text">1、Java堆溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、虚拟机栈和本地方法栈溢出"><span class="nav-number">3.2.</span> <span class="nav-text">2、虚拟机栈和本地方法栈溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#StackOverFlow"><span class="nav-number">3.2.1.</span> <span class="nav-text">StackOverFlow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OutOfMemory"><span class="nav-number">3.2.2.</span> <span class="nav-text">OutOfMemory</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、方法区和运行时常量池溢出"><span class="nav-number">3.3.</span> <span class="nav-text">3、方法区和运行时常量池溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区"><span class="nav-number">3.3.1.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">3.3.2.</span> <span class="nav-text">运行时常量池</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考地址"><span class="nav-number">4.</span> <span class="nav-text">四、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"paine1690"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,1160 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="源码,Spring,SpringMVC," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="学习完IOC容器的初始化，来看一下SpringMVC的实现。
+一、Spring MVC的请求处理流程首先必须知道Spring MVC处理请求的流程，从接受请求到生成响应，关于这个流程有很多种说法，虽然有略微差别但主体思路都是相同的，找到一个比较直观的图片
+
+
+首先用户发送请求——&amp;gt;DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC（一）：请求处理流程与关键类">
+<meta property="og:url" content="http://yoursite.com/2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/index.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="学习完IOC容器的初始化，来看一下SpringMVC的实现。
+一、Spring MVC的请求处理流程首先必须知道Spring MVC处理请求的流程，从接受请求到生成响应，关于这个流程有很多种说法，虽然有略微差别但主体思路都是相同的，找到一个比较直观的图片
+
+
+首先用户发送请求——&amp;gt;DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/spring/1.png?raw=true">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/spring/2.png?raw=true">
+<meta property="og:updated_time" content="2017-02-18T03:28:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringMVC（一）：请求处理流程与关键类">
+<meta name="twitter:description" content="学习完IOC容器的初始化，来看一下SpringMVC的实现。
+一、Spring MVC的请求处理流程首先必须知道Spring MVC处理请求的流程，从接受请求到生成响应，关于这个流程有很多种说法，虽然有略微差别但主体思路都是相同的，找到一个比较直观的图片
+
+
+首先用户发送请求——&amp;gt;DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一">
+<meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/spring/1.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/"/>
+
+
+
+
+
+  <title> SpringMVC（一）：请求处理流程与关键类 | paine1690 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">paine1690</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="paine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="paine1690">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SpringMVC（一）：请求处理流程与关键类
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-09T00:00:00+08:00">
+                2017-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/" class="leancloud_visitors" data-flag-title="SpringMVC（一）：请求处理流程与关键类">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习完IOC容器的初始化，来看一下SpringMVC的实现。</p>
+<h1 id="一、Spring-MVC的请求处理流程"><a href="#一、Spring-MVC的请求处理流程" class="headerlink" title="一、Spring MVC的请求处理流程"></a>一、Spring MVC的请求处理流程</h1><p>首先必须知道Spring MVC处理请求的流程，从接受请求到生成响应，关于这个流程有很多种说法，虽然有略微差别但主体思路都是相同的，找到一个比较直观的图片</p>
+<p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/spring/1.png?raw=true" alt=""></p>
+<ol>
+<li>首先用户发送请求——&gt;DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一访问点，进行全局的流程控制；</li>
+<li>DispatcherServlet——&gt;HandlerMapping， HandlerMapping将会把请求映射为HandlerExecutionChain对象（包含一个Handler处理器（页面控制器）对象、多个HandlerInterceptor拦截器）对象，通过这种策略模式，很容易添加新的映射策略；</li>
+<li>DispatcherServlet——&gt;HandlerAdapter，DispatcherServlet 根据获得的Handler，选择一个合适的HandlerAdapter。HandlerAdapter将会把处理器包装为适配器，从而支持多种类型的处理器，即适配器设计模式的应用，从而很容易支持很多类型的处理器；</li>
+<li>HandlerAdapter——&gt;处理器功能处理方法的调用，HandlerAdapter将会根据适配的结果调用真正的处理器的功能处理方法，完成功能处理；</li>
+<li>Handler执行完成后，返回一个ModelAndView对象（包含模型数据、逻辑视图名）；</li>
+<li>ModelAndView的逻辑视图名——&gt; ViewResolver， ViewResolver将把逻辑视图名解析为具体的View，通过这种策略模式，很容易更换其他视图技术；</li>
+<li>View——&gt;渲染，View会根据传进来的Model模型数据进行渲染，此处的Model实际是一个Map数据结构，因此很容易支持其他视图技术；</li>
+<li>返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。</li>
+</ol>
+<h1 id="二、源码中的相关类与接口"><a href="#二、源码中的相关类与接口" class="headerlink" title="二、源码中的相关类与接口"></a>二、源码中的相关类与接口</h1><p>上面这个经典的流程就是SpringMVC的核心，这其中涉及到几个关键的类和接口。</p>
+<h2 id="1、DispatcherServlet"><a href="#1、DispatcherServlet" class="headerlink" title="1、DispatcherServlet"></a>1、DispatcherServlet</h2><p>从流程中可以看见，DispatcherServlet是整个流程的核心，先来看一下它的继承关系：</p>
+<p> <img src="https://github.com/paine1690/HelloWorld/blob/master/pic/spring/2.png?raw=true" alt="QQ截图20170109110308"></p>
+<p>它继承自HttpServlet，也就是说它是一个标准的Servlet，所以它的使用方法就是在web.xml中配置，然后再web容器初始化的时候加载。</p>
+<p>这个类中定义了整个处理流程，后面再详细分析它。</p>
+<h2 id="2、HandlerMapping"><a href="#2、HandlerMapping" class="headerlink" title="2、HandlerMapping"></a>2、HandlerMapping</h2><h3 id="2-1、源码"><a href="#2-1、源码" class="headerlink" title="2.1、源码"></a>2.1、源码</h3><p>DispatcherServlet处理请求的第一步就是根据url来获取相应的HandlerExecutionChain ，它是一个接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> org.springframework.web.servlet;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HandlerMapping</span> </span>&#123;</div><div class="line"></div><div class="line">    String PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE = HandlerMapping.class.getName() + <span class="string">".pathWithinHandlerMapping"</span>;</div><div class="line"></div><div class="line">    String BEST_MATCHING_PATTERN_ATTRIBUTE = HandlerMapping.class.getName() + <span class="string">".bestMatchingPattern"</span>;</div><div class="line"></div><div class="line"></div><div class="line">    String INTROSPECT_TYPE_LEVEL_MAPPING = HandlerMapping.class.getName() + <span class="string">".introspectTypeLevelMapping"</span>;</div><div class="line"></div><div class="line"></div><div class="line">    String URI_TEMPLATE_VARIABLES_ATTRIBUTE = HandlerMapping.class.getName() + <span class="string">".uriTemplateVariables"</span>;</div><div class="line"></div><div class="line">    String MATRIX_VARIABLES_ATTRIBUTE = HandlerMapping.class.getName() + <span class="string">".matrixVariables"</span>;</div><div class="line"></div><div class="line">    String PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE = HandlerMapping.class.getName() + <span class="string">".producibleMediaTypes"</span>;</div><div class="line"></div><div class="line">    <span class="function">HandlerExecutionChain <span class="title">getHandler</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> Exception</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个接口中有一堆字符串，还有唯一一个关键的方法：</p>
+<blockquote>
+<p>HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception;</p>
+</blockquote>
+<p>它会返回一个HandlerExecutionChain对象。</p>
+<h3 id="2-2、调用"><a href="#2-2、调用" class="headerlink" title="2.2、调用"></a>2.2、调用</h3><p>而它在哪里进行调用呢？回到DispatcherServlet的处理流程，当，由标准Servlet类处理方法doGet或者doPost，</p>
+<ul>
+<li>DispatcherServlet中有一个HandlerMapping类的List</li>
+<li>DispatcherServlet接收到web请求后会遍历这个List</li>
+<li>该web请求的HttpServletRequest对象为参数，依次调用其getHandler方法，第一个不为null的调用结果，将被返回。</li>
+</ul>
+<p>DispatcherServlet类中的这个方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** List of HandlerMappings used by this servlet */</span></div><div class="line"><span class="keyword">private</span> List&lt;HandlerMapping&gt; handlerMappings;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> HandlerExecutionChain <span class="title">getHandler</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    <span class="keyword">for</span> (HandlerMapping hm : <span class="keyword">this</span>.handlerMappings) &#123;</div><div class="line">        <span class="keyword">if</span> (logger.isTraceEnabled()) &#123;</div><div class="line">            logger.trace(</div><div class="line">                    <span class="string">"Testing handler map ["</span> + hm + <span class="string">"] in DispatcherServlet with name '"</span> + getServletName() + <span class="string">"'"</span>);</div><div class="line">        &#125;</div><div class="line">        HandlerExecutionChain handler = hm.getHandler(request);</div><div class="line">        <span class="keyword">if</span> (handler != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> handler;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-3、作用"><a href="#2-3、作用" class="headerlink" title="2.3、作用"></a>2.3、作用</h3><p>上面这个方法就对应了流程中的第二步，一个web请求经过处理后，会得到一个HandlerExecutionChain对象，这就是SpringMVC对URl映射给出的回答。需要留意的是，HandlerMapping接口的getHandler方法参数是HttpServletRequest，这意味着，HandlerMapping的实现类可以利用HttpServletRequest中的所有信息来做出这个HandlerExecutionChain对象的生成”决策“。这包括，请求头、url路径、cookie、session、参数等等一切你从一个web请求中可以得到的任何东西（最常用的是url路径）。</p>
+<p>SpirngMVC的第一个扩展点，就出现在这里。我们可以编写任意的HandlerMapping实现类，依据任何策略来决定一个web请求到HandlerExecutionChain对象的生成。</p>
+<p>这里涉及到一个设计模式：<strong>策略模式</strong></p>
+<h3 id="2-4、策略模式"><a href="#2-4、策略模式" class="headerlink" title="2.4、策略模式"></a>2.4、策略模式</h3><p>策略模式属于对象的行为模式。其用意是针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。</p>
+<p>这个模式涉及到三个角色：</p>
+<ul>
+<li><strong>环境(Context)角色：</strong>持有一个Strategy的引用。对应的就是DispatcherServlet，它持有多个策略，根据不同的请求进行判断。</li>
+<li><strong>抽象策略(Strategy)角色：</strong>这是一个抽象角色，通常由一个接口或抽象类实现。此角色给出所有的具体策略类所需的接口。对应的就是HandlerMapping接口。</li>
+<li><strong>具体策略(ConcreteStrategy)角色：</strong>包装了相关的算法或行为。对应一个具体的HandlerMapping实现类。</li>
+</ul>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>策略模式提供了管理相关的算法族的办法。策略类的等级结构定义了一个算法或行为族。恰当使用继承可以把公共的代码移到父类里面，从而避免代码重复</li>
+<li>使用策略模式可以避免使用多重条件(if-else)语句。多重条件语句不易维护，它把采取哪一种算法或采取哪一种行为的逻辑与算法或行为的逻辑混合在一起，统统列在一个多重条件语句里面，比使用继承的办法还要原始和落后。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>客户端必须知道所有的策略类，并自行决定使用哪一个策略类。这就意味着客户端必须理解这些算法的区别，以便适时选择恰当的算法类。换言之，策略模式只适用于客户端知道算法或行为的情况。对应的就是DispatcherServlet中有一个HandlerMapping的List。</li>
+<li>由于策略模式把每个具体的策略实现都单独封装成为类，如果备选的策略很多的话，那么对象的数目就会很可观。</li>
+</ul>
+<h2 id="3、HandlerExecutionChain"><a href="#3、HandlerExecutionChain" class="headerlink" title="3、HandlerExecutionChain"></a>3、HandlerExecutionChain</h2><p>如果getHandler的返回不为null，那么则返回它的HandlerExecutionChain对象。</p>
+<p>从名字可以直观的看得出，这个对象是一个执行链的封装。熟悉Struts2的都知道，Action对象也是被层层拦截器包装，这里可以做个类比，说明SpringMVC确实是吸收了Struts2的部分设计思想。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> org.springframework.web.servlet;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HandlerExecutionChain</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Log logger = LogFactory.getLog(HandlerExecutionChain.class);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object handler;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> HandlerInterceptor[] interceptors;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> List&lt;HandlerInterceptor&gt; interceptorList;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> interceptorIndex = -<span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HandlerExecutionChain</span><span class="params">(Object handler)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(handler, (HandlerInterceptor[]) <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HandlerExecutionChain</span><span class="params">(Object handler, HandlerInterceptor... interceptors)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> HandlerExecutionChain) &#123;</div><div class="line">            HandlerExecutionChain originalChain = (HandlerExecutionChain) handler;</div><div class="line">            <span class="keyword">this</span>.handler = originalChain.getHandler();</div><div class="line">            <span class="keyword">this</span>.interceptorList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            CollectionUtils.mergeArrayIntoCollection(originalChain.getInterceptors(), <span class="keyword">this</span>.interceptorList);</div><div class="line">            CollectionUtils.mergeArrayIntoCollection(interceptors, <span class="keyword">this</span>.interceptorList);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">this</span>.handler = handler;</div><div class="line">            <span class="keyword">this</span>.interceptors = interceptors;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getHandler</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.handler;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptor</span><span class="params">(HandlerInterceptor interceptor)</span> </span>&#123;</div><div class="line">        initInterceptorList().add(interceptor);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(HandlerInterceptor... interceptors)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!ObjectUtils.isEmpty(interceptors)) &#123;</div><div class="line">            initInterceptorList().addAll(Arrays.asList(interceptors));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> List&lt;HandlerInterceptor&gt; <span class="title">initInterceptorList</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.interceptorList == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">this</span>.interceptorList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.interceptors != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="comment">// An interceptor array specified through the constructor</span></div><div class="line">                <span class="keyword">this</span>.interceptorList.addAll(Arrays.asList(<span class="keyword">this</span>.interceptors));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.interceptors = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.interceptorList;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> HandlerInterceptor[] getInterceptors() &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.interceptors == <span class="keyword">null</span> &amp;&amp; <span class="keyword">this</span>.interceptorList != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">this</span>.interceptors = <span class="keyword">this</span>.interceptorList.toArray(<span class="keyword">new</span> HandlerInterceptor[<span class="keyword">this</span>.interceptorList.size()]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.interceptors;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">applyPreHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        HandlerInterceptor[] interceptors = getInterceptors();</div><div class="line">        <span class="keyword">if</span> (!ObjectUtils.isEmpty(interceptors)) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; interceptors.length; i++) &#123;</div><div class="line">                HandlerInterceptor interceptor = interceptors[i];</div><div class="line">                <span class="keyword">if</span> (!interceptor.preHandle(request, response, <span class="keyword">this</span>.handler)) &#123;</div><div class="line">                    triggerAfterCompletion(request, response, <span class="keyword">null</span>);</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">this</span>.interceptorIndex = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">applyPostHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, ModelAndView mv)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        HandlerInterceptor[] interceptors = getInterceptors();</div><div class="line">        <span class="keyword">if</span> (!ObjectUtils.isEmpty(interceptors)) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = interceptors.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">                HandlerInterceptor interceptor = interceptors[i];</div><div class="line">                interceptor.postHandle(request, response, <span class="keyword">this</span>.handler, mv);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">triggerAfterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Exception ex)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">        HandlerInterceptor[] interceptors = getInterceptors();</div><div class="line">        <span class="keyword">if</span> (!ObjectUtils.isEmpty(interceptors)) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="keyword">this</span>.interceptorIndex; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">                HandlerInterceptor interceptor = interceptors[i];</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    interceptor.afterCompletion(request, response, <span class="keyword">this</span>.handler, ex);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">catch</span> (Throwable ex2) &#123;</div><div class="line">                    logger.error(<span class="string">"HandlerInterceptor.afterCompletion threw exception"</span>, ex2);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">applyAfterConcurrentHandlingStarted</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</div><div class="line">        HandlerInterceptor[] interceptors = getInterceptors();</div><div class="line">        <span class="keyword">if</span> (!ObjectUtils.isEmpty(interceptors)) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = interceptors.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">                <span class="keyword">if</span> (interceptors[i] <span class="keyword">instanceof</span> AsyncHandlerInterceptor) &#123;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        AsyncHandlerInterceptor asyncInterceptor = (AsyncHandlerInterceptor) interceptors[i];</div><div class="line">                        asyncInterceptor.afterConcurrentHandlingStarted(request, response, <span class="keyword">this</span>.handler);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">                        logger.error(<span class="string">"Interceptor ["</span> + interceptors[i] + <span class="string">"] failed in afterConcurrentHandlingStarted"</span>, ex);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.handler == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">"HandlerExecutionChain with no handler"</span>;</div><div class="line">        &#125;</div><div class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">        sb.append(<span class="string">"HandlerExecutionChain with handler ["</span>).append(<span class="keyword">this</span>.handler).append(<span class="string">"]"</span>);</div><div class="line">        <span class="keyword">if</span> (!CollectionUtils.isEmpty(<span class="keyword">this</span>.interceptorList)) &#123;</div><div class="line">            sb.append(<span class="string">" and "</span>).append(<span class="keyword">this</span>.interceptorList.size()).append(<span class="string">" interceptor"</span>);</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.interceptorList.size() &gt; <span class="number">1</span>) &#123;</div><div class="line">                sb.append(<span class="string">"s"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sb.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有点长，关键地方是最上面的两个属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Object handler;</div><div class="line"></div><div class="line"><span class="keyword">private</span> HandlerInterceptor[] interceptors;</div></pre></td></tr></table></figure>
+<p>正如上面流程中说的。一个HandlerExecutionChain对象包含一个Handler处理器（页面控制器）对象、多个HandlerInterceptor拦截器对象。</p>
+<p>和Strust2中的实现一样，下面的过程都将围绕这个执行链展开。</p>
+<h2 id="4、HandlerInterceptor"><a href="#4、HandlerInterceptor" class="headerlink" title="4、HandlerInterceptor"></a>4、HandlerInterceptor</h2><p>下面看一下拦截器，它是一个接口，里面有三个方法，这个在项目确实使用过，比如实现用户角色判断，就需要自己定义一个拦截器</p>
+<p>看一下在项目中自己写的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInterceptor</span> <span class="keyword">extends</span> <span class="title">HandlerInterceptorAdapter</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        System.out.println(<span class="string">"&gt;&gt;&gt;MyInterceptor&gt;&gt;&gt;&gt;&gt;"</span>+request.getRequestURI());</div><div class="line">        <span class="keyword">if</span>(request.getRequestURI().equals(<span class="string">"/psxt"</span>)||request.getRequestURI().equals(<span class="string">"/psxt/login"</span>)</div><div class="line">        		||request.getRequestURI().equals(<span class="string">"/psxt/superadmin"</span>)</div><div class="line">        		||request.getRequestURI().equals(<span class="string">"/psxt/schooladmin"</span>)</div><div class="line">        		||request.getRequestURI().equals(<span class="string">"/psxt/teacheradmin"</span>))&#123;</div><div class="line">        	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        User user = (User) request.getSession().getAttribute(SessionKey.USERNAME.name());</div><div class="line">        <span class="keyword">if</span>(user==<span class="keyword">null</span>||user.getRole()==<span class="number">0</span>)&#123;</div><div class="line">        	response.sendRedirect(request.getContextPath() + <span class="string">"/psxt302"</span>);</div><div class="line">        	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里只重写了一个方法，用于用户角色的判断，而这个接口实际上有三个方法，用于重写，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> org.springframework.web.servlet;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.web.method.HandlerMethod;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HandlerInterceptor</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(</span></span></div><div class="line">            HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(</span></span></div><div class="line">            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从这三个方法的名称也可以看出，主要是围绕handler的执行展开：</p>
+<ul>
+<li>在真正调用其handler对象前，HandlerInterceptor接口实现类组成的数组将会被遍历，其preHandle方法会被依次调用，然后真正的handler对象将被调用。</li>
+<li>handler对象被调用后，就生成了需要的响应数据，在将处理结果写到HttpServletResponse对象之前（SpringMVC称为渲染视图），其postHandle方法会被依次调用。</li>
+<li>视图渲染完成后，最后afterCompletion方法会被依次调用，整个web请求的处理过程就结束了。</li>
+</ul>
+<p>HandlerInterceptor，是SpringMVC的第二个扩展点的暴露，通过自定义拦截器，我们可以在一个请求被真正处理之前、请求被处理但还没输出到响应中、请求已经被输出到响应中之后这三个时间点去做任何我们想要做的事情。Struts2框架的成功，就是源于这种拦截器的设计，SpringMVC吸收了这种设计思想，并推陈出新，更合理的划分了三个不同的时间点，从而给web请求处理这个流程，提供了更大的扩展性。</p>
+<h2 id="5、HandlerAdapter"><a href="#5、HandlerAdapter" class="headerlink" title="5、HandlerAdapter"></a>5、HandlerAdapter</h2><p>接下来就是这个handler了，涉及到一个接口HandlerAdapter。感觉这个接口和HandlerMapping很像，采用和它一样的分析方式</p>
+<h3 id="5-1、源码"><a href="#5-1、源码" class="headerlink" title="5.1、源码"></a>5.1、源码</h3><p>接口定义的源代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> org.springframework.web.servlet;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HandlerAdapter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Object handler)</span></span>;</div><div class="line"></div><div class="line">    <span class="function">ModelAndView <span class="title">handle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">long</span> <span class="title">getLastModified</span><span class="params">(HttpServletRequest request, Object handler)</span></span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="5-2、调用"><a href="#5-2、调用" class="headerlink" title="5.2、调用"></a>5.2、调用</h3><p>在DispatcherServlet中，除了上面提到的HandlerMapping实现类的列表，同样也注册了一个HandlerAdapter实现类组成的列表，有代码为证。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** List of HandlerMappings used by this servlet */</span></div><div class="line"><span class="keyword">private</span> List&lt;HandlerMapping&gt; handlerMappings;</div><div class="line"></div><div class="line"><span class="comment">/** List of HandlerAdapters used by this servlet */</span></div><div class="line"><span class="keyword">private</span> List&lt;HandlerAdapter&gt; handlerAdapters;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> HandlerAdapter <span class="title">getHandlerAdapter</span><span class="params">(Object handler)</span> <span class="keyword">throws</span> ServletException </span>&#123;</div><div class="line">    <span class="keyword">for</span> (HandlerAdapter ha : <span class="keyword">this</span>.handlerAdapters) &#123;</div><div class="line">        <span class="keyword">if</span> (logger.isTraceEnabled()) &#123;</div><div class="line">            logger.trace(<span class="string">"Testing handler adapter ["</span> + ha + <span class="string">"]"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (ha.supports(handler)) &#123;</div><div class="line">            <span class="keyword">return</span> ha;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> ServletException(<span class="string">"No adapter for handler ["</span> + handler +</div><div class="line">            <span class="string">"]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="5-3、作用"><a href="#5-3、作用" class="headerlink" title="5.3、作用"></a>5.3、作用</h3><p>HandlerExecutionChain中的handler对象会被作为参数传递进去，在DispatcherServlet类中注册的HandlerAdapter实现类列表会被遍历，然后返回第一个supports方法返回true的HandlerAdapter对象，用这个HandlerAdapter实现类中的handle方法处理handler对象，并返回ModelAndView这个包含了视图和数据的对象。</p>
+<p>HandlerAdapter就是SpringMVC提供的第三个扩展点，你可以提供自己的实现类来处理handler对象。</p>
+<h3 id="5-4、适配器模式"><a href="#5-4、适配器模式" class="headerlink" title="5.4、适配器模式"></a>5.4、适配器模式</h3><p>这里又涉及到一个适配器模式：</p>
+<blockquote>
+<p>适配器模式把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作。</p>
+</blockquote>
+<p>模式所涉及的角色有：</p>
+<ul>
+<li><strong>目标(Target)角色：</strong>这就是所期待得到的接口。注意：由于这里讨论的是类适配器模式，因此目标不可以是类。</li>
+<li><strong>源(Adapee)角色：</strong>现在需要适配的类。</li>
+<li><strong>适配器(Adaper)角色：</strong>适配器类是本模式的核心。适配器把源接口转换成目标接口。显然，这一角色不可以是接口，而必须是具体类。</li>
+</ul>
+<p>虽然这个接口的名字中带有Adapter，但是不知道这里到底是不是适配器模式，详细的分析可以参考</p>
+<p><a href="http://zouruixin.iteye.com/blog/1441846" target="_blank" rel="external">http://zouruixin.iteye.com/blog/1441846</a>，觉得这个讲解的很明白。</p>
+<p>正如上面流程中说到的HandlerAdapter将会把处理器包装为适配器，从而支持多种类型的处理器，即适配器设计模式的应用，从而很容易支持很多类型的处理器；这里的处理器指的应该就是Controller。</p>
+<p>由于Controller的类型不同，有多种实现方式，那么调用方式就不是确定的，如果需要直接调用Controller方法，需要在代码中写成如下形式： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(mappedHandler.getHandler() <span class="keyword">instanceof</span> MultiActionController)&#123;  </div><div class="line">   ((MultiActionController)mappedHandler.getHandler()).xxx  </div><div class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(mappedHandler.getHandler() <span class="keyword">instanceof</span> XXX)&#123;  </div><div class="line">    ...  </div><div class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(...)&#123;  </div><div class="line">   ...  </div><div class="line">&#125;  </div><div class="line">...</div></pre></td></tr></table></figure>
+<p>这样假设如果我们增加一个HardController，就要在代码中加入一行 if(mappedHandler.getHandler() instanceof  HardController)<br>这种形式就使得程序难以维护，也违反了设计模式中的开闭原则 –  对扩展开放，对修改关闭。 </p>
+<p>因此Spring定义了一个适配接口，使得每一种Controller有一种对应的适配器实现类，<br>让适配器代替Controller执行相应的方法。这样在扩展Controller 时，只需要增加一个适配器类就完成了SpringMVC的扩展了，真的是很精巧的做法！ </p>
+<p>在一个典型的SpringMVC调用中，</p>
+<ol>
+<li>HandlerExecutionChain中封装handler对象就是用@Controller注解标识的类的一个实例</li>
+<li>根据类级别和方法级别的@RequestMapping注解，由默认注册的RequestMappingHandlerMapping生成HandlerExecutionChain对象</li>
+<li>RequestMappingHandlerAdapter类来执行这个HandlerExecutionChain对象</li>
+<li>生成最终的ModelAndView对象后，再由具体的View对象的render方法渲染视图。</li>
+</ol>
+<h1 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h1><ol>
+<li>把源码编译后导入到eclipse里面以后看源码的效率提高了不少，学到一个Ctrl+T快捷键</li>
+<li>了解整个MVC框架处理请求的流程</li>
+<li><p>学习了两个新的设计模式：</p>
+<ul>
+<li>策略模式</li>
+<li>适配器模式</li>
+</ul>
+</li>
+<li>进一步体会到了Spring在设计上的优雅与巧妙，Spring中的一个原则：开闭原则：对扩展开放，对修改关闭<ul>
+<li>类中所有的变量声明，几乎都以接口的形式给出，并没有绑定在具体的实现类上。</li>
+<li>使用模版方法模式，在父类中对基础行为进行定义，让子类实现模版方法扩展行为。</li>
+</ul>
+</li>
+</ol>
+<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://blog.csdn.net/zuoluoboy/article/details/19766131" target="_blank" rel="external">http://blog.csdn.net/zuoluoboy/article/details/19766131</a></p>
+<p><a href="http://jinnianshilongnian.iteye.com/blog/1594806" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1594806</a></p>
+<p><a href="http://www.cnblogs.com/java-my-life/archive/2012/05/10/2491891.html" target="_blank" rel="external">http://www.cnblogs.com/java-my-life/archive/2012/05/10/2491891.html</a></p>
+<p><a href="http://www.cnblogs.com/java-my-life/archive/2012/04/13/2442795.html" target="_blank" rel="external">http://www.cnblogs.com/java-my-life/archive/2012/04/13/2442795.html</a></p>
+<p><a href="https://my.oschina.net/lichhao/blog/99039" target="_blank" rel="external">https://my.oschina.net/lichhao/blog/99039</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码/" rel="tag"># 源码</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/SpringMVC/" rel="tag"># SpringMVC</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/07/MultiThreading/Java中的线程池/" rel="next" title="Java中的线程池">
+                <i class="fa fa-chevron-left"></i> Java中的线程池
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/10/spring/SpringMVC(2)DispatcherServlet的初始化过程/" rel="prev" title="SpringMVC（二）：DispatcherServlet的初始化过程">
+                SpringMVC（二）：DispatcherServlet的初始化过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/"
+     data-title="SpringMVC（一）：请求处理流程与关键类"
+     data-content=""
+     data-url="http://yoursite.com/2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/"
+           data-title="SpringMVC（一）：请求处理流程与关键类" data-url="http://yoursite.com/2017/01/09/spring/SpringMVC(1)请求处理流程与关键类/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="paine" />
+          <p class="site-author-name" itemprop="name">paine</p>
+          <p class="site-description motion-element" itemprop="description">paine1690</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Spring-MVC的请求处理流程"><span class="nav-number">1.</span> <span class="nav-text">一、Spring MVC的请求处理流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、源码中的相关类与接口"><span class="nav-number">2.</span> <span class="nav-text">二、源码中的相关类与接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、DispatcherServlet"><span class="nav-number">2.1.</span> <span class="nav-text">1、DispatcherServlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、HandlerMapping"><span class="nav-number">2.2.</span> <span class="nav-text">2、HandlerMapping</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、源码"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1、源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、调用"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2、调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3、作用"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3、作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4、策略模式"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.4、策略模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、HandlerExecutionChain"><span class="nav-number">2.3.</span> <span class="nav-text">3、HandlerExecutionChain</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、HandlerInterceptor"><span class="nav-number">2.4.</span> <span class="nav-text">4、HandlerInterceptor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、HandlerAdapter"><span class="nav-number">2.5.</span> <span class="nav-text">5、HandlerAdapter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1、源码"><span class="nav-number">2.5.1.</span> <span class="nav-text">5.1、源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2、调用"><span class="nav-number">2.5.2.</span> <span class="nav-text">5.2、调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3、作用"><span class="nav-number">2.5.3.</span> <span class="nav-text">5.3、作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4、适配器模式"><span class="nav-number">2.5.4.</span> <span class="nav-text">5.4、适配器模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、总结"><span class="nav-number">3.</span> <span class="nav-text">三、总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考地址"><span class="nav-number">4.</span> <span class="nav-text">四、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"paine1690"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
