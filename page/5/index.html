@@ -1690,7 +1690,7 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/HashMap源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1715,8 +1715,8 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/HashMap源码分析/" itemprop="url">
-                  HashMap源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="url">
+                  ConcurrentHashMap源码分析
                 </a>
               
             
@@ -1773,8 +1773,8 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/HashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/HashMap源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1782,7 +1782,7 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
 
           
           
-             <span id="/2016/11/12/Java/JDK/HashMap源码分析/" class="leancloud_visitors" data-flag-title="HashMap源码分析">
+             <span id="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" class="leancloud_visitors" data-flag-title="ConcurrentHashMap源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1813,12 +1813,11 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
       
         
           
-          Hashmap是Java中非常常用的容器，在网上看见很多源码分析都是以前版本的，本文章结合JDK1.8的源码对HashMap进行简单的分析，在学习的过程中发现HashMap的源码远比前面的List要复杂的多，花了好长时间才理清关系。
-O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈希冲突的解决
+          本文的分析的源码是JDK8的版本，与JDK6的版本有很大的差异。实现线程安全的思想也已经完全变了，它摒弃了Segment（锁段）的概念，而是启用了一种全新的方式实现，利用CAS算法。它沿用了与它同时期的HashMap版本的思想，底层依然由“数组”+链表+红黑树的方式思想，但是为了做到并发，又增加了很
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/HashMap源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1861,7 +1860,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedList源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1886,8 +1885,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">
-                  LinkedHashMap源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="url">
+                  LinkedList源码分析
                 </a>
               
             
@@ -1944,8 +1943,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/LinkedList源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1953,7 +1952,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
+             <span id="/2016/11/12/Java/JDK/LinkedList源码分析/" class="leancloud_visitors" data-flag-title="LinkedList源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1984,12 +1983,11 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
-LinkedHashMap继承自HashMap，关于map的操作基本一样
+          分析完Arraylist后来看一下List的另一种实现LinkedList。LinkedList底层使用的是双向链表结构，内部类定义了节点结构，一个头结点和尾节点表示队列的开始和结尾。与ArrayList不同的是，LinkedList除了实现了List接口外，还实现了Deque接口，而Deque接口
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/LinkedList源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
