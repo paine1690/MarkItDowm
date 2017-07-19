@@ -100,7 +100,7 @@
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/5.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/6.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/7.png?raw=true">
-<meta property="og:updated_time" content="2017-04-21T03:09:06.000Z">
+<meta property="og:updated_time" content="2017-07-19T08:27:10.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java中的Object类与深浅克隆">
 <meta name="twitter:description" content="在Java中，Object类是所有类的父类，任何类都默认继承Object。
@@ -434,6 +434,18 @@
 <h2 id="1、getClass-方法"><a href="#1、getClass-方法" class="headerlink" title="1、getClass()方法"></a>1、getClass()方法</h2><p>final方法，说明子类中不可重写。</p>
 <p>获得运行时类型。</p>
 <h2 id="2、hashCode-方法"><a href="#2、hashCode-方法" class="headerlink" title="2、hashCode()方法"></a>2、hashCode()方法</h2><p>该方法用于哈希查找，可以减少在查找中使用equals的次数，重写了equals方法一般都要重写hashCode方法。这个方法在一些具有哈希功能的Collection中用到。</p>
+<p>Effective Java中提到：</p>
+<blockquote>
+<p>在每个覆盖了equals方法的类中，也必须覆盖hashCode方法。给不同的对象产生不同的hashCode，有助于提高散列表的性能。</p>
+</blockquote>
+<p>至于如何才能为不同的对象产生不同的散列码，先看一下String类中的hashCode方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> h = hash;</div><div class="line">    <span class="keyword">if</span> (h == <span class="number">0</span> &amp;&amp; value.length &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">char</span> val[] = value;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; value.length; i++) &#123;</div><div class="line">            h = <span class="number">31</span> * h + val[i];</div><div class="line">        &#125;</div><div class="line">        hash = h;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>计算方法为：s[0]*31^(n-1) + s[1]*31^(n-2) + … + s[n-1]。</p>
+<p>这个书中给出的计算散列码的建议很相似，都是把关键的域乘31再相加。至于为什么是31，书中给出的解释如下：</p>
+<blockquote>
+<p>因为它是一个奇素数。如果乘的是偶数，并且乘法溢出的话，信息就会丢失，因为与2相乘等价于移位运算。使用素数的好处并不明显，但是习惯上都使用素数来计算散列结果。31有个很好的特性，即用移位和减法来替代乘法，可以得到更好的性能：</p>
+<p>31 * i == (i &lt;&lt; 5) - i。现代的JVM可以自动完成这种优化。</p>
+</blockquote>
 <h2 id="3、equals方法"><a href="#3、equals方法" class="headerlink" title="3、equals方法"></a>3、equals方法</h2><p>该方法是非常重要的一个方法。一般equals和==是不一样的，但是在Object中两者是一样的。子类一般都要重写这个方法。</p>
 <h2 id="4、clone-方法"><a href="#4、clone-方法" class="headerlink" title="4、clone()方法"></a>4、clone()方法</h2><p>保护方法，实现对象的浅克隆，只有实现了Cloneable接口才可以调用该方法，否则抛出CloneNotSupportedException异常。</p>
 <p>主要是JAVA里除了8种基本类型传参数是值传递，其他的类对象传参数都是引用传递，我们有时候不希望在方法里讲参数改变，这是就需要在类中复写clone方法。</p>
