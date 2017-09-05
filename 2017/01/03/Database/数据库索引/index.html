@@ -104,7 +104,7 @@
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/10.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/11.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/12.png?raw=true">
-<meta property="og:updated_time" content="2017-04-06T11:18:56.000Z">
+<meta property="og:updated_time" content="2017-09-05T09:55:17.907Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库的索引">
 <meta name="twitter:description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。
@@ -629,7 +629,28 @@
 <li>为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。</li>
 <li>用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一棵B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效，而使用自增字段作为主键则是一个很好的选择。</li>
 </ol>
-<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://blog.csdn.net/xifeijian/article/details/20316775" target="_blank" rel="external">http://blog.csdn.net/xifeijian/article/details/20316775</a></p>
+<h1 id="四、什么时候创建索引"><a href="#四、什么时候创建索引" class="headerlink" title="四、什么时候创建索引"></a>四、什么时候创建索引</h1><p>小米和头条面试都问到了这个问题。</p>
+<p>索引是建立在数据库表中的某些列的上面。因此，在创建索引的时候，应该仔细考虑在哪些列上可以创建索引，在哪些列上不能创建索引。</p>
+<p>一般来说，应该在这些列上创建索引:</p>
+<ul>
+<li><p>在经常需要<strong>搜索、排序、WHERE</strong>的列上，可以加快对应操作的速度。</p>
+</li>
+<li><p>在经常需要根据范围进行搜索的列上创建索引，因为索引已经排序，其指定的范围是连续的。</p>
+</li>
+<li><p>在经常用在连接的列上，这些列主要是一些外键，可以加快连接的速度。</p>
+</li>
+<li><p>在作为主键的列上，强制该列的唯一性和组织表中数据的排列结构。</p>
+<p>​</p>
+</li>
+</ul>
+<p>同样，对于有些列不应该创建索引。一般来说，不应该创建索引的的这些列具有下列特点：</p>
+<ul>
+<li>对于那些在查询中很少使用或者参考的列不应该创建索引。</li>
+<li>对于那些只有很少数据值的列也不应该增加索引。当数据量不大时，全表扫描也是可以接受的。</li>
+<li>对于那些定义为text, image和bit数据类型的列不应该增加索引。这是因为，这些列的数据量要么相当大，要么取值很少。</li>
+<li>当修改操作比大于检索操作更频繁时，不应该创建索引。因为需要频繁的维护索引结构。</li>
+</ul>
+<h1 id="五、参考地址"><a href="#五、参考地址" class="headerlink" title="五、参考地址"></a>五、参考地址</h1><p><a href="http://blog.csdn.net/xifeijian/article/details/20316775" target="_blank" rel="external">http://blog.csdn.net/xifeijian/article/details/20316775</a></p>
 <p><a href="http://blog.csdn.net/v_JULY_v/article/details/6530142/" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/article/details/6530142/</a></p>
 <p><a href="http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html" target="_blank" rel="external">http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html</a></p>
 <p><a href="http://blog.csdn.net/kennyrose/article/details/7532032" target="_blank" rel="external">http://blog.csdn.net/kennyrose/article/details/7532032</a></p>
@@ -637,6 +658,7 @@
 <p><a href="http://www.cnblogs.com/zlcxbb/p/5757245.html" target="_blank" rel="external">http://www.cnblogs.com/zlcxbb/p/5757245.html</a></p>
 <p><a href="http://www.cnblogs.com/lovekingly/p/3962284.html" target="_blank" rel="external">http://www.cnblogs.com/lovekingly/p/3962284.html</a></p>
 <p><a href="http://blog.itpub.net/24383181/viewspace-692973/" target="_blank" rel="external">http://blog.itpub.net/24383181/viewspace-692973/</a></p>
+<p><a href="http://blog.csdn.net/u011534095/article/details/48552877" target="_blank" rel="external">http://blog.csdn.net/u011534095/article/details/48552877</a></p>
 
       
     </div>
@@ -675,8 +697,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/02/spring/Spring源码分析(2)依赖注入的实现/" rel="next" title="Spring源码分析（二）：依赖注入的实现">
-                <i class="fa fa-chevron-left"></i> Spring源码分析（二）：依赖注入的实现
+              <a href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" rel="next" title="数据库中的乐观锁与悲观锁">
+                <i class="fa fa-chevron-left"></i> 数据库中的乐观锁与悲观锁
               </a>
             
           </div>
@@ -685,8 +707,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" rel="prev" title="数据库中的乐观锁与悲观锁">
-                数据库中的乐观锁与悲观锁 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/01/03/Database/数据库事务与隔离级别/" rel="prev" title="数据库事务与隔离级别">
+                数据库事务与隔离级别 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -836,7 +858,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、基础知识"><span class="nav-number">1.</span> <span class="nav-text">一、基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、MYSQL存储引擎–MyISAM与InnoDB"><span class="nav-number">1.1.</span> <span class="nav-text">1、MYSQL存储引擎–MyISAM与InnoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、B-树与B-树"><span class="nav-number">1.2.</span> <span class="nav-text">2、B-树与B+树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、B-TREE"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1、B-TREE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、B-TREE"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2、B+TREE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、数据库索引"><span class="nav-number">2.</span> <span class="nav-text">二、数据库索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、索引的定义"><span class="nav-number">2.1.</span> <span class="nav-text">1、索引的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、索引的分类"><span class="nav-number">2.2.</span> <span class="nav-text">2、索引的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、索引的种类"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1、索引的种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、索引的结构"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2、索引的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3、索引的实现"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3、索引的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、索引的实现"><span class="nav-number">3.</span> <span class="nav-text">三、索引的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、MyISAM的索引实现"><span class="nav-number">3.1.</span> <span class="nav-text">1、MyISAM的索引实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1、主键索引"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1、主键索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、辅助索引"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2、辅助索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、InnoDB的索引实现"><span class="nav-number">3.2.</span> <span class="nav-text">2、InnoDB的索引实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、主键索引"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1、主键索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、辅助索引"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2、辅助索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、对比"><span class="nav-number">3.3.</span> <span class="nav-text">3、对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考地址"><span class="nav-number">4.</span> <span class="nav-text">四、参考地址</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、基础知识"><span class="nav-number">1.</span> <span class="nav-text">一、基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、MYSQL存储引擎–MyISAM与InnoDB"><span class="nav-number">1.1.</span> <span class="nav-text">1、MYSQL存储引擎–MyISAM与InnoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、B-树与B-树"><span class="nav-number">1.2.</span> <span class="nav-text">2、B-树与B+树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、B-TREE"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1、B-TREE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、B-TREE"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2、B+TREE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、数据库索引"><span class="nav-number">2.</span> <span class="nav-text">二、数据库索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、索引的定义"><span class="nav-number">2.1.</span> <span class="nav-text">1、索引的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、索引的分类"><span class="nav-number">2.2.</span> <span class="nav-text">2、索引的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、索引的种类"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1、索引的种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、索引的结构"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2、索引的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3、索引的实现"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3、索引的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、索引的实现"><span class="nav-number">3.</span> <span class="nav-text">三、索引的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、MyISAM的索引实现"><span class="nav-number">3.1.</span> <span class="nav-text">1、MyISAM的索引实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1、主键索引"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1、主键索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、辅助索引"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2、辅助索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、InnoDB的索引实现"><span class="nav-number">3.2.</span> <span class="nav-text">2、InnoDB的索引实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、主键索引"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1、主键索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、辅助索引"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2、辅助索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、对比"><span class="nav-number">3.3.</span> <span class="nav-text">3、对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、什么时候创建索引"><span class="nav-number">4.</span> <span class="nav-text">四、什么时候创建索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、参考地址"><span class="nav-number">5.</span> <span class="nav-text">五、参考地址</span></a></li></ol></div>
             
 
           </div>
