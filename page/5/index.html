@@ -1859,7 +1859,7 @@ Shor
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/PriorityQueue源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1884,8 +1884,8 @@ Shor
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="url">
-                  ConcurrentHashMap源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="url">
+                  PriorityQueue源码分析
                 </a>
               
             
@@ -1942,8 +1942,8 @@ Shor
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1951,7 +1951,7 @@ Shor
 
           
           
-             <span id="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" class="leancloud_visitors" data-flag-title="ConcurrentHashMap源码分析">
+             <span id="/2016/11/12/Java/JDK/PriorityQueue源码分析/" class="leancloud_visitors" data-flag-title="PriorityQueue源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1982,11 +1982,12 @@ Shor
       
         
           
-          本文的分析的源码是JDK8的版本，与JDK6的版本有很大的差异。实现线程安全的思想也已经完全变了，它摒弃了Segment（锁段）的概念，而是启用了一种全新的方式实现，利用CAS算法。它沿用了与它同时期的HashMap版本的思想，底层依然由“数组”+链表+红黑树的方式思想，但是为了做到并发，又增加了很
+          Priorityqueue是Java7后加入的优先级队列，继承自AbstractQueue，而AbstractQueue，实现了Queue接口，也就是说Priorityqueue是实现了Queue接口的，带有优先级的队列。
+内部实现上采用的是最小堆，即每次取出优先级最小的元素。相对来说实现上比较简单
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

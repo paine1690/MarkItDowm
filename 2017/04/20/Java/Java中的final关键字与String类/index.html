@@ -103,7 +103,7 @@
 
 为什么String类是不可变的？
 为什">
-<meta property="og:updated_time" content="2017-07-13T08:28:01.472Z">
+<meta property="og:updated_time" content="2017-11-21T01:55:53.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java中的final关键字与String类">
 <meta name="twitter:description" content="Java中的String类型为什么是final的?
@@ -467,7 +467,31 @@
 <p>如果一个基类中的方法是private的，那么对子类来说是隐藏不可见的。</p>
 <p>即使在子类中定义了一个名称相同的方法，也只是生成了一个名称相同的方法，但是并没有重写该方法。</p>
 <h2 id="3-final类"><a href="#3-final类" class="headerlink" title="3.final类"></a>3.final类</h2><p>将一个类定义为final，则说明该类是不可继承的。最常见的肯定就是下面要介绍的String类了。</p>
-<h1 id="二、String类与不可变性"><a href="#二、String类与不可变性" class="headerlink" title="二、String类与不可变性"></a>二、String类与不可变性</h1><p>String类声明为final主要是是为了保证其不可变性。</p>
+<h1 id="二、String类与不可变性"><a href="#二、String类与不可变性" class="headerlink" title="二、String类与不可变性"></a>二、String类与不可变性</h1><p>《Effictive Java》中提到，不可变类只是其实例不能被修改的类。每个实例中包含的所有信息都必须在创建该实例的时候就提供，并在对象的整个生命周期内固定不变。</p>
+<p>Java类库中包含许多不可变的类，其中有：</p>
+<ul>
+<li>String</li>
+<li>基本数据类型的包装类</li>
+<li>BigInteger</li>
+<li>BigDecimal</li>
+</ul>
+<p>为了使类成为不可变，要遵循下面五条规则：</p>
+<ol>
+<li>不要提供任何会修改对象状态的方法</li>
+<li>保证类不会被扩展。一般做法是使这个类成为final的</li>
+<li>使所有的域都是final的</li>
+<li>使所有的域都成为私有的</li>
+<li>确保对于任何可变组件的互斥访问</li>
+</ol>
+<p>不可变类对象的几点好处：</p>
+<ul>
+<li>简单：不可变对象只有一种状态，即被创建时的状态</li>
+<li>不可变对象本质上是线程安全的，不需要同步</li>
+<li>不可变对象可以自由共享</li>
+<li>不可变对象之间可以共享内部信息。比如BigInteger，数值相同符号不同，可以共享数值</li>
+</ul>
+<p>下面以String类的代表来具体进行分析</p>
+<p>String类声明为final主要是是为了保证其不可变性。</p>
 <p>我个人认为：String在Java中的对象，但是它在使用上其实更接近基本数据类型，所以将它设计成不可变的对象类型，最大程度上接近了基本数据类型，仔细想想面向对象的特性继承封装多态，其实在String类中完全没有体现，所以我觉得它虽然实现上是一个类，但设计者还是想把它当做基本数据类型来使用。</p>
 <p>在Java中Long, Double, Integer等类也是final的，也说明了这个问题。</p>
 <h2 id="1、什么是不可变"><a href="#1、什么是不可变" class="headerlink" title="1、什么是不可变"></a>1、什么是不可变</h2><p>String不可变很简单。给一个字符串“a”赋值“b”或者执行+操作变成“aa”，不会在原来的内存地址上修改数据，而是生成一个新的String对象然后指向这个新对象。</p>
@@ -502,6 +526,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;		</div><div class="line">    Map&lt;StringBuilder, Integer&gt; map=<span class="keyword">new</span> HashMap&lt;StringBuilder, Integer&gt;();</div><div class="line">    StringBuilder s1=<span class="keyword">new</span> StringBuilder(<span class="string">"aab"</span>);</div><div class="line">    StringBuilder s2=<span class="keyword">new</span> StringBuilder(<span class="string">"aa"</span>);</div><div class="line">    map.put(s1, <span class="number">1</span>);</div><div class="line">    map.put(s2, <span class="number">2</span>);</div><div class="line">    s2.append(<span class="string">"b"</span>);</div><div class="line">    System.out.println(map.keySet());<span class="comment">//[aab, aab]</span></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
 <p>从输出结果可以看出，会出现两个key值相等的情况。当然，这个例子并不完全恰当，因为StringBuilder其实没有重写equals方法，所以在map中查找的时候比较的是指向的对象而不是想String一样比较字符串是否相同，这个例子主要体现的就是以String作为key的时候，如果是可变的，那么会出现key值相同的情况。</p>
 <h1 id="三、参考地址"><a href="#三、参考地址" class="headerlink" title="三、参考地址"></a>三、参考地址</h1><p>《Java编程思想》第四版</p>
+<p>《Effictive Java》第二版</p>
 <p><a href="https://www.zhihu.com/question/31345592" target="_blank" rel="external">https://www.zhihu.com/question/31345592</a></p>
 
       
