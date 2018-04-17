@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -326,8 +326,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="url">
-                  Java的fail-fast机制
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">
+                  LinkedHashMap源码分析
                 </a>
               
             
@@ -384,8 +384,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/Java的fail-fast机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +393,7 @@
 
           
           
-             <span id="/2016/11/12/Java/JDK/Java的fail-fast机制/" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
+             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -424,12 +424,12 @@
       
         
           
-          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
-1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
+          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
+LinkedHashMap继承自HashMap，关于map的操作基本一样
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/Java的fail-fast机制/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -643,7 +643,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -668,8 +668,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="url">
-                  ConcurrentHashMap源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="url">
+                  Java的fail-fast机制
                 </a>
               
             
@@ -726,8 +726,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/Java的fail-fast机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -735,7 +735,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" class="leancloud_visitors" data-flag-title="ConcurrentHashMap源码分析">
+             <span id="/2016/11/12/Java/JDK/Java的fail-fast机制/" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -766,11 +766,12 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          本文的分析的源码是JDK8的版本，与JDK6的版本有很大的差异。实现线程安全的思想也已经完全变了，它摒弃了Segment（锁段）的概念，而是启用了一种全新的方式实现，利用CAS算法。它沿用了与它同时期的HashMap版本的思想，底层依然由“数组”+链表+红黑树的方式思想，但是为了做到并发，又增加了很
+          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
+1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/Java的fail-fast机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -984,7 +985,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1009,8 +1010,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">
-                  LinkedHashMap源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="url">
+                  ConcurrentHashMap源码分析
                 </a>
               
             
@@ -1067,8 +1068,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1076,7 +1077,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
+             <span id="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" class="leancloud_visitors" data-flag-title="ConcurrentHashMap源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1107,12 +1108,11 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
-LinkedHashMap继承自HashMap，关于map的操作基本一样
+          本文的分析的源码是JDK8的版本，与JDK6的版本有很大的差异。实现线程安全的思想也已经完全变了，它摒弃了Segment（锁段）的概念，而是启用了一种全新的方式实现，利用CAS算法。它沿用了与它同时期的HashMap版本的思想，底层依然由“数组”+链表+红黑树的方式思想，但是为了做到并发，又增加了很
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1155,7 +1155,7 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ArrayList源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedList源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1180,8 +1180,8 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/ArrayList源码分析/" itemprop="url">
-                  ArrayList源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="url">
+                  LinkedList源码分析
                 </a>
               
             
@@ -1238,8 +1238,8 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/ArrayList源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/ArrayList源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/LinkedList源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1247,7 +1247,7 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
 
           
           
-             <span id="/2016/11/12/Java/JDK/ArrayList源码分析/" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
+             <span id="/2016/11/12/Java/JDK/LinkedList源码分析/" class="leancloud_visitors" data-flag-title="LinkedList源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1278,14 +1278,11 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
       
         
           
-          ArrayList是Java集合中最常用的，基于一个数组实现的，容量可以动态增长。
-ArrayList不是线程安全的，只能在单线程环境下使用。        
-本文以jdk1.8的源码为例，分析其实现机制。
-一、基本属性与构造函数12345678910111213141516171819202122
+          分析完Arraylist后来看一下List的另一种实现LinkedList。LinkedList底层使用的是双向链表结构，内部类定义了节点结构，一个头结点和尾节点表示队列的开始和结尾。与ArrayList不同的是，LinkedList除了实现了List接口外，还实现了Deque接口，而Deque接口
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/ArrayList源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/LinkedList源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1681,7 +1678,7 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/dns/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/HTTPS/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1706,8 +1703,8 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
             
               
                 
-                <a class="post-title-link" href="/2016/10/31/ComputerNetworking/dns/" itemprop="url">
-                  浅析DNS协议
+                <a class="post-title-link" href="/2016/10/31/ComputerNetworking/HTTPS/" itemprop="url">
+                  浅析HTTPS协议
                 </a>
               
             
@@ -1764,8 +1761,8 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/10/31/ComputerNetworking/dns/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/31/ComputerNetworking/dns/" itemprop="commentCount"></span>
+                <a href="/2016/10/31/ComputerNetworking/HTTPS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/31/ComputerNetworking/HTTPS/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1773,7 +1770,7 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
 
           
           
-             <span id="/2016/10/31/ComputerNetworking/dns/" class="leancloud_visitors" data-flag-title="浅析DNS协议">
+             <span id="/2016/10/31/ComputerNetworking/HTTPS/" class="leancloud_visitors" data-flag-title="浅析HTTPS协议">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1804,12 +1801,14 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
       
         
           
-          DNS即Domain Name System，用于域名解析是最常用的应用层协议之一。虽然我们没有直接使用过它，但它却经常由其他的应用层协议如HTTP、SMTP、FTP等所使用。以下简单记录一些比较常见的问题。
-一、DNS解析过程面试中比较常见的问题就是你在浏览器中输入了www.baidu.com之后
+          一、基本概念1、HTTPSHTTPS，也称作HTTP over TLS。TLS的前身是SSL。端口为443。
+下图描述了在TCP/IP协议栈中TLS(各子协议）和HTTP的关系
+
+其中Handshake protocol，Change Ciper Spec protocol和Alert protoc
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/10/31/ComputerNetworking/dns/#more" rel="contents">
+            <a class="btn" href="/2016/10/31/ComputerNetworking/HTTPS/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
