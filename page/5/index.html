@@ -108,7 +108,7 @@
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: '0',
+      userId: 'undefined',
       author: '博主'
     },
     algolia: {
@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/15/Java/Java中的异常机制/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/15/Java/Object类与深浅克隆/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -326,8 +326,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/12/15/Java/Java中的异常机制/" itemprop="url">
-                  Java中的异常机制
+                <a class="post-title-link" href="/2016/12/15/Java/Object类与深浅克隆/" itemprop="url">
+                  Java中的Object类与深浅克隆
                 </a>
               
             
@@ -384,8 +384,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/12/15/Java/Java中的异常机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/15/Java/Java中的异常机制/" itemprop="commentCount"></span>
+                <a href="/2016/12/15/Java/Object类与深浅克隆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/15/Java/Object类与深浅克隆/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +393,7 @@
 
           
           
-             <span id="/2016/12/15/Java/Java中的异常机制/" class="leancloud_visitors" data-flag-title="Java中的异常机制">
+             <span id="/2016/12/15/Java/Object类与深浅克隆/" class="leancloud_visitors" data-flag-title="Java中的Object类与深浅克隆">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -424,13 +424,13 @@
       
         
           
-          一、异常1、类继承结构在 Java 中，所有的异常都有一个共同的祖先 Throwable（可抛出）。Throwable 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。
-
-从图中可以看出，Throwable有两个子类，Error(错误)和Exception(异常)。二者都是 
+          在Java中，Object类是所有类的父类，任何类都默认继承Object。
+一、Object的中的公有方法1.8中的源码
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/12/15/Java/Java中的异常机制/#more" rel="contents">
+            <a class="btn" href="/2016/12/15/Java/Object类与深浅克隆/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1861,7 +1861,7 @@ Shor
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1886,8 +1886,8 @@ Shor
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">
-                  LinkedHashMap源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="url">
+                  ConcurrentHashMap源码分析
                 </a>
               
             
@@ -1944,8 +1944,8 @@ Shor
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1953,7 +1953,7 @@ Shor
 
           
           
-             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
+             <span id="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" class="leancloud_visitors" data-flag-title="ConcurrentHashMap源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1984,12 +1984,11 @@ Shor
       
         
           
-          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
-LinkedHashMap继承自HashMap，关于map的操作基本一样
+          本文的分析的源码是JDK8的版本，与JDK6的版本有很大的差异。实现线程安全的思想也已经完全变了，它摒弃了Segment（锁段）的概念，而是启用了一种全新的方式实现，利用CAS算法。它沿用了与它同时期的HashMap版本的思想，底层依然由“数组”+链表+红黑树的方式思想，但是为了做到并发，又增加了很
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2240,11 +2239,6 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
     })();
   </script>
 
-  
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
   
 
 
