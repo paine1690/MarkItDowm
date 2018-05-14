@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="设计模式,多线程," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="生产者消费者问题是研究多线程程序时绕不开的经典问题之一，比较典型的描述就是有一块缓冲区作为仓库，生产者可以将产品放入仓库，消费者则可以从仓库中取走产品。 解决生产者/消费者问题的方法可分为两类：  采用某种机制保护生产者和消费者之间的同步； 在生产者和消费者之间建立一个管道。  第一种方式有较高的效率，并且易于实现，代码的可控制性较好，属于常用的模式。第二种管道缓冲区不易控制，被传输数据对象不易于">
+<meta name="keywords" content="设计模式,多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生产者消费者模型">
+<meta property="og:url" content="http://yoursite.com/post/161dcf21.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="生产者消费者问题是研究多线程程序时绕不开的经典问题之一，比较典型的描述就是有一块缓冲区作为仓库，生产者可以将产品放入仓库，消费者则可以从仓库中取走产品。 解决生产者/消费者问题的方法可分为两类：  采用某种机制保护生产者和消费者之间的同步； 在生产者和消费者之间建立一个管道。  第一种方式有较高的效率，并且易于实现，代码的可控制性较好，属于常用的模式。第二种管道缓冲区不易控制，被传输数据对象不易于">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-02-09T14:11:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="生产者消费者模型">
+<meta name="twitter:description" content="生产者消费者问题是研究多线程程序时绕不开的经典问题之一，比较典型的描述就是有一块缓冲区作为仓库，生产者可以将产品放入仓库，消费者则可以从仓库中取走产品。 解决生产者/消费者问题的方法可分为两类：  采用某种机制保护生产者和消费者之间的同步； 在生产者和消费者之间建立一个管道。  第一种方式有较高的效率，并且易于实现，代码的可控制性较好，属于常用的模式。第二种管道缓冲区不易控制，被传输数据对象不易于">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/161dcf21.html"/>
+
+
+
+
+
+  <title>生产者消费者模型 | paine1690</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/161dcf21.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">生产者消费者模型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-23T00:00:00+08:00">
+                2016-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/161dcf21.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/post/161dcf21.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/post/161dcf21.html" class="leancloud_visitors" data-flag-title="生产者消费者模型">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>生产者消费者问题是研究多线程程序时绕不开的经典问题之一，比较典型的描述就是有一块缓冲区作为仓库，生产者可以将产品放入仓库，消费者则可以从仓库中取走产品。</p>
+<p>解决生产者/消费者问题的方法可分为两类：</p>
+<ol>
+<li>采用某种机制保护生产者和消费者之间的同步；</li>
+<li>在生产者和消费者之间建立一个管道。</li>
+</ol>
+<p>第一种方式有较高的效率，并且易于实现，代码的可控制性较好，属于常用的模式。第二种管道缓冲区不易控制，被传输数据对象不易于封装等，实用性不强。因此本文只介绍同步机制实现的生产者/消费者问题。</p>
+<p>同步问题核心在于：如何保证同一资源被多个线程并发访问时的完整性。常用的同步方法是采用信号或加锁机制，保证资源在任意时刻至多被一个线程访问。Java语言在多线程编程上实现了完全对象化，提供了对同步机制的良好支持。在Java中一共有四种方法支持同步，其中前三个是同步方法，一个是管道方法。</p>
+<ol>
+<li>wait() / notify()方法</li>
+<li>await() / signal()方法</li>
+<li>BlockingQueue阻塞队列方法</li>
+</ol>
+<h1 id="一、wait、notify方法"><a href="#一、wait、notify方法" class="headerlink" title="一、wait、notify方法"></a>一、wait、notify方法</h1><h2 id="1、方法介绍"><a href="#1、方法介绍" class="headerlink" title="1、方法介绍"></a>1、方法介绍</h2><p>前面介绍Object类的方法时提到过里面有几个自带的关于线程的方法，</p>
+<ul>
+<li>wait</li>
+<li>notify</li>
+<li>notifyAll</li>
+</ul>
+<p>这三个方法一般配合在一起使用，用于线程间的通信。</p>
+<p>关于wait方法的标准写法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The standard idiom for calling the wait method in Java </span></span><br><span class="line"><span class="keyword">synchronized</span> (sharedObject) &#123; </span><br><span class="line">    <span class="keyword">while</span> (condition) &#123; </span><br><span class="line">        sharedObject.wait(); </span><br><span class="line">        <span class="comment">// (Releases lock, and reacquires on wakeup) </span></span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// do action based upon condition e.g. take or put into queue </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以利用wait()来让一个线程在某些条件下暂停运行。例如，在生产者消费者模型中，生产者线程在缓冲区为满的时候，消费者在缓冲区为空的时 候，都应该暂停运行。如果某些线程在等待某些条件触发，那当那些条件为真时，你可以用 notify 和 notifyAll 来通知那些等待中的线程重新开始运行。不同之处在于，notify 仅仅通知一个线程，并且我们不知道哪个线程会收到通知，然而 notifyAll 会通知所有等待中的线程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Storage</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 仓库最大存储量  </span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_SIZE = <span class="number">100</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 仓库存储的载体  </span></span><br><span class="line">    <span class="keyword">private</span> LinkedList&lt;Object&gt; list = <span class="keyword">new</span> LinkedList&lt;Object&gt;();  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 生产num个产品  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">produce</span><span class="params">(<span class="keyword">int</span> num, Thread thread)</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(list)&#123;</span><br><span class="line">            <span class="comment">// 如果仓库剩余容量不足  </span></span><br><span class="line">            <span class="keyword">while</span>(list.size()+num&gt;MAX_SIZE)&#123;</span><br><span class="line">                System.out.println(thread.getName()+<span class="string">"【要生产的产品数量】:"</span> + num + <span class="string">"\t【库存量】:"</span>  </span><br><span class="line">                        + list.size() + <span class="string">"/t暂时不能执行生产任务!"</span>);  </span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    list.wait();</span><br><span class="line">                &#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;    </span><br><span class="line">            <span class="comment">// 生产条件满足情况下，生产num个产品  </span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;num; i++)&#123;</span><br><span class="line">                list.add(<span class="keyword">new</span> Object());</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"【已经生产产品数】:"</span> + num + <span class="string">"\t【现仓储量为】:"</span> + list.size());  </span><br><span class="line">            list.notifyAll();              </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 消费num个产品  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">consume</span><span class="params">(<span class="keyword">int</span> num, Thread thread)</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(list)&#123;</span><br><span class="line">            <span class="comment">// 如果仓库存储量不足  </span></span><br><span class="line">            <span class="keyword">while</span>(list.size()&lt;num)&#123;</span><br><span class="line">                System.out.println(thread.getName()+<span class="string">"【要消费的产品数量】:"</span> + num + <span class="string">"\t【库存量】:"</span>  </span><br><span class="line">                        + list.size() + <span class="string">"/t暂时不能执行消费任务!"</span>);  </span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    list.wait();</span><br><span class="line">                &#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 消费条件满足情况下，消费num个产品  </span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;num; i++)&#123;</span><br><span class="line">                list.remove();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"【已经消费产品数】:"</span> + num + <span class="string">"\t【现仓储量为】:"</span> + list.size());  </span><br><span class="line">            list.notifyAll();  </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">        Storage storage;<span class="comment">// 所在放置的仓库  </span></span><br><span class="line">        <span class="keyword">int</span> num;<span class="comment">// 每次生产的产品数量  </span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(String name, Storage storage, <span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(name);</span><br><span class="line">            <span class="keyword">this</span>.storage=storage;</span><br><span class="line">            <span class="keyword">this</span>.num=num;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">            storage.produce(num, <span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">        Storage storage;<span class="comment">// 所在放置的仓库  </span></span><br><span class="line">        <span class="keyword">int</span> num;<span class="comment">// 每次生产的产品数量  </span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(String name, Storage storage, <span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(name);</span><br><span class="line">            <span class="keyword">this</span>.storage=storage;</span><br><span class="line">            <span class="keyword">this</span>.num=num;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">            storage.consume(num, <span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;        </span><br><span class="line">        Storage storage = <span class="keyword">new</span> Storage();  <span class="comment">// 仓库对象  </span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 生产者对象  </span></span><br><span class="line">        Producer p1=<span class="keyword">new</span> Producer(<span class="string">"producer1"</span>, storage, <span class="number">10</span>); </span><br><span class="line">        Producer p2=<span class="keyword">new</span> Producer(<span class="string">"producer2"</span>, storage, <span class="number">10</span>); </span><br><span class="line">        Producer p3=<span class="keyword">new</span> Producer(<span class="string">"producer3"</span>, storage, <span class="number">10</span>); </span><br><span class="line">        Producer p4=<span class="keyword">new</span> Producer(<span class="string">"producer4"</span>, storage, <span class="number">10</span>); </span><br><span class="line">        Producer p5=<span class="keyword">new</span> Producer(<span class="string">"producer5"</span>, storage, <span class="number">10</span>); </span><br><span class="line">        Producer p6=<span class="keyword">new</span> Producer(<span class="string">"producer6"</span>, storage, <span class="number">10</span>);</span><br><span class="line">        Producer p7=<span class="keyword">new</span> Producer(<span class="string">"producer7"</span>, storage, <span class="number">10</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 消费者对象  </span></span><br><span class="line">        Consumer c1=<span class="keyword">new</span> Consumer(<span class="string">"consumer1"</span>, storage, <span class="number">50</span>);  </span><br><span class="line">        Consumer c2=<span class="keyword">new</span> Consumer(<span class="string">"consumer2"</span>, storage, <span class="number">50</span>);  </span><br><span class="line">        Consumer c3=<span class="keyword">new</span> Consumer(<span class="string">"consumer3"</span>, storage, <span class="number">50</span>);   </span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 线程开始执行  </span></span><br><span class="line">        c1.start();  </span><br><span class="line">        c2.start();  </span><br><span class="line">        c3.start();  </span><br><span class="line">        p1.start();  </span><br><span class="line">        p2.start();  </span><br><span class="line">        p3.start();  </span><br><span class="line">        p4.start();  </span><br><span class="line">        p5.start();  </span><br><span class="line">        p6.start();  </span><br><span class="line">        p7.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果（每次的输出结果都是不一样的）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">consumer1【要消费的产品数量】:50    【库存量】:0/t暂时不能执行消费任务!</span><br><span class="line">【已经生产产品数】:10    【现仓储量为】:10</span><br><span class="line">consumer1【要消费的产品数量】:50    【库存量】:10/t暂时不能执行消费任务!</span><br><span class="line">【已经生产产品数】:10    【现仓储量为】:20</span><br><span class="line">【已经生产产品数】:10    【现仓储量为】:30</span><br><span class="line">【已经生产产品数】:10    【现仓储量为】:40</span><br><span class="line">consumer3【要消费的产品数量】:50    【库存量】:40/t暂时不能执行消费任务!</span><br><span class="line">【已经生产产品数】:10    【现仓储量为】:50</span><br><span class="line">【已经消费产品数】:50    【现仓储量为】:0</span><br><span class="line">consumer3【要消费的产品数量】:50    【库存量】:0/t暂时不能执行消费任务!</span><br><span class="line">consumer1【要消费的产品数量】:50    【库存量】:0/t暂时不能执行消费任务!</span><br><span class="line">【已经生产产品数】:10    【现仓储量为】:10</span><br><span class="line">【已经生产产品数】:10    【现仓储量为】:20</span><br><span class="line">consumer1【要消费的产品数量】:50    【库存量】:20/t暂时不能执行消费任务!</span><br><span class="line">consumer3【要消费的产品数量】:50    【库存量】:20/t暂时不能执行消费任务!</span><br></pre></td></tr></table></figure>
+<p>实现类Storage中定义了produce和consume方法，供生产者和消费者线程调用，修改逻辑后生产者和消费者的代码完全不用改变</p>
+<h2 id="2、wait与sleep的区别"><a href="#2、wait与sleep的区别" class="headerlink" title="2、wait与sleep的区别"></a>2、wait与sleep的区别</h2><h3 id="sleep方法"><a href="#sleep方法" class="headerlink" title="sleep方法"></a>sleep方法</h3><p>sleep()方法是Thread类的静态方法，使目前正在执行的线程休眠millis毫秒。</p>
+<ul>
+<li>当线程睡眠时，它睡在某个地方，在苏醒之前不会返回到可运行状态。</li>
+<li>当睡眠时间到期，则返回到可运行状态。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    e.printStackTrace(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>这两个方法都会使线程进入阻塞状态，也都会抛出中断异常，但是它们有一下几点区别：</p>
+<ol>
+<li><p>关于方法来源与作用：</p>
+<ul>
+<li>wait是Object类的方法，用来线程间的通信</li>
+<li>sleep是Thread类的方法，是线程用来控制自身流程的</li>
+</ul>
+</li>
+<li><p>关于锁的释放：</p>
+<ul>
+<li>sleep方法不会释放锁</li>
+<li>wait方法会释放锁</li>
+</ul>
+</li>
+<li><p>关于使用区域：</p>
+<ul>
+<li>wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用</li>
+<li>sleep可以在任何地方使用。</li>
+</ul>
+<p>​</p>
+</li>
+</ol>
+<h1 id="二、await、signal方法"><a href="#二、await、signal方法" class="headerlink" title="二、await、signal方法"></a>二、await、signal方法</h1><p>在JDK5.0之后，Java提供了更加健壮的线程处理机制，包括同步、锁定、线程池等，它们可以实现更细粒度的线程控制。await()和signal()就是其中用来做同步的两种方法，它们的功能基本上和wait() / nofity()相同，完全可以取代它们，但是它们和新引入的锁定机制Lock直接挂钩，具有更大的灵活性。通过在Lock对象上调用newCondition()方法，将条件变量和一个锁对象进行绑定，进而控制并发程序访问竞争资源的安全。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.Condition;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.Lock;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.ReentrantLock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Storage</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_SIZE = <span class="number">100</span>;<span class="comment">// 仓库最大存储量    </span></span><br><span class="line">      </span><br><span class="line">    <span class="keyword">private</span> LinkedList&lt;Object&gt; list = <span class="keyword">new</span> LinkedList&lt;Object&gt;();<span class="comment">// 仓库存储的载体</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Lock lock=<span class="keyword">new</span> ReentrantLock();<span class="comment">// 锁      </span></span><br><span class="line">    <span class="keyword">private</span> Condition full=lock.newCondition();<span class="comment">// 仓库满的条件变量  </span></span><br><span class="line">    <span class="keyword">private</span> Condition empty=lock.newCondition();<span class="comment">// 仓库空的条件变量  </span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 生产num个产品  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">produce</span><span class="params">(<span class="keyword">int</span> num, Thread thread)</span></span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span>&#123;<span class="comment">//显示锁最后必须显示释放</span></span><br><span class="line">            <span class="comment">// 如果仓库剩余容量不足  </span></span><br><span class="line">            System.out.println(thread.getName());</span><br><span class="line">            <span class="keyword">while</span>(list.size()+num&gt;MAX_SIZE)&#123;</span><br><span class="line">                System.out.println(<span class="string">"【要生产的产品数量】:"</span> + num + <span class="string">"\t【库存量】:"</span>  </span><br><span class="line">                        + list.size() + <span class="string">"/t暂时不能执行生产任务!"</span>);  </span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    full.await();</span><br><span class="line">                &#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 生产条件满足情况下，生产num个产品  </span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;num; i++)&#123;</span><br><span class="line">                list.add(<span class="keyword">new</span> Object());</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"【已经生产产品数】:"</span> + num + <span class="string">"\t【现仓储量为】:"</span> + list.size());  </span><br><span class="line">            empty.signal();</span><br><span class="line">        &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 消费num个产品  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">consume</span><span class="params">(<span class="keyword">int</span> num, Thread thread)</span></span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="comment">// 如果仓库存储量不足  </span></span><br><span class="line">            System.out.println(thread.getName());</span><br><span class="line">            <span class="keyword">while</span>(list.size()&lt;num)&#123;</span><br><span class="line">                System.out.println(<span class="string">"【要消费的产品数量】:"</span> + num + <span class="string">"\t【库存量】:"</span>  </span><br><span class="line">                        + list.size() + <span class="string">"/t暂时不能执行消费任务!"</span>);  </span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    empty.await();</span><br><span class="line">                &#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 消费条件满足情况下，消费num个产品  </span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;num; i++)&#123;</span><br><span class="line">                list.remove();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"【已经消费产品数】:"</span> + num + <span class="string">"\t【现仓储量为】:"</span> + list.size());  </span><br><span class="line">            full.signal();</span><br><span class="line">        &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 其余代码与上面完全一样</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里体现出了设计上的好处，只要改变Storage类的代码即可。</p>
+<p>从修改的地方可以看出await、signal方法与wait、notify非常相似，而且是他们的升级。</p>
+<p>通过将两个条件分开到两个等待线程集中，Condition更容易满足单词通知的需求。signal比signalAll更高效，它极大地减少每次在缓存操作中发生的上下文切换与锁请求的次数，个人理解就是当生产者生产了以后，只通知消费者，而且只通知一个消费者。</p>
+<h1 id="三、BlockingQueue阻塞队列方法"><a href="#三、BlockingQueue阻塞队列方法" class="headerlink" title="三、BlockingQueue阻塞队列方法"></a>三、BlockingQueue阻塞队列方法</h1><p>BlockingQueue是JDK5.0的新增内容，它是一个已经在内部实现了同步的队列，实现方式采用的是我们第2种await() / signal()方法。它可以在生成对象时指定容量大小。它用于阻塞操作的是put()和take()方法。</p>
+<ul>
+<li>put()方法：类似于我们上面的生产者线程，容量达到最大时，自动阻塞。</li>
+<li>take()方法：类似于我们上面的消费者线程，容量为0时，自动阻塞。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlockingQueueDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> BlockingQueue&lt;String&gt; queue;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> timeout; <span class="comment">// 生产一个产品后暂停的时间</span></span><br><span class="line">        <span class="keyword">private</span> String category; <span class="comment">// 仅仅起标记产品作用</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(BlockingQueue&lt;String&gt; queue, <span class="keyword">int</span> timeout, String category)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>();</span><br><span class="line">            <span class="keyword">this</span>.queue = queue;</span><br><span class="line">            <span class="keyword">this</span>.timeout = timeout;</span><br><span class="line">            <span class="keyword">this</span>.category = category;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (!Thread.currentThread().isInterrupted()) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// put()方法也是一个会阻塞的方法，如果队列已满的时候这个方法会一起阻塞直到</span></span><br><span class="line">                    <span class="comment">// 队列中重新出现空间为止</span></span><br><span class="line">                    queue.put(<span class="string">"product "</span> + category);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e1) &#123;</span><br><span class="line">                    e1.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    TimeUnit.MILLISECONDS.sleep(timeout); <span class="comment">// 每生产一个产品就暂停timeout毫秒</span></span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Customer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> BlockingQueue&lt;String&gt; queue;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Customer</span><span class="params">(BlockingQueue&lt;String&gt; queue)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>();</span><br><span class="line">            <span class="keyword">this</span>.queue = queue;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (!Thread.currentThread().isInterrupted()) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    System.out.println(<span class="string">"product got:"</span> + queue.take());</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e1) &#123;</span><br><span class="line">                    e1.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 暂停10毫秒，这里主要是为了证明take()是一个阻塞方法，如果 BlockingQueue中</span></span><br><span class="line">                    <span class="comment">// 没有元素，它会一起阻塞直到队列中有元素为止</span></span><br><span class="line">                    TimeUnit.MILLISECONDS.sleep(<span class="number">10</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 这里简单的说一下BlockingQueue的实现,它基于生产者-消费者模式，其中有两个重要的阻塞方法</span></span><br><span class="line">        <span class="comment">// put()和take()，而这两个方法的实现用到了Lock和Condition，具体实现请参考API</span></span><br><span class="line">        BlockingQueue&lt;String&gt; queue = <span class="keyword">new</span> ArrayBlockingQueue&lt;String&gt;(<span class="number">10</span>);</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Producer(queue, <span class="number">500</span>, <span class="string">"peak"</span>)); <span class="comment">// 生产者线程,并且要比nike生产的快</span></span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Producer(queue, <span class="number">1000</span>, <span class="string">"nike"</span>)); <span class="comment">// 第二个生产者线程</span></span><br><span class="line">        Thread t3 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Customer(queue)); <span class="comment">// 消费者线程</span></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t3.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://developer.51cto.com/art/201508/487488.htm" target="_blank" rel="noopener">http://developer.51cto.com/art/201508/487488.htm</a></p>
+<p><a href="http://blog.csdn.net/monkey_d_meng/article/details/6251879" target="_blank" rel="noopener">http://blog.csdn.net/monkey_d_meng/article/details/6251879</a></p>
+<p><a href="http://blog.csdn.net/moreevan/article/details/6763508" target="_blank" rel="noopener">http://blog.csdn.net/moreevan/article/details/6763508</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/75b5b8fb.html" rel="next" title="浅析Servlet">
+                <i class="fa fa-chevron-left"></i> 浅析Servlet
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/eefe591f.html" rel="prev" title="进程与线程">
+                进程与线程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、wait、notify方法"><span class="nav-number">1.</span> <span class="nav-text">一、wait、notify方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、方法介绍"><span class="nav-number">1.1.</span> <span class="nav-text">1、方法介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、wait与sleep的区别"><span class="nav-number">1.2.</span> <span class="nav-text">2、wait与sleep的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">sleep方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区别"><span class="nav-number">1.2.2.</span> <span class="nav-text">区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、await、signal方法"><span class="nav-number">2.</span> <span class="nav-text">二、await、signal方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、BlockingQueue阻塞队列方法"><span class="nav-number">3.</span> <span class="nav-text">三、BlockingQueue阻塞队列方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考地址"><span class="nav-number">4.</span> <span class="nav-text">四、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'paine1690',
+            repo: 'paine1690.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bf2440c072f1b1269a712a8f831d8c3c74d0a58d',
+            
+                client_id: 'b90e00c88abe9c1cff7b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="多线程," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法： 举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程基础">
+<meta property="og:url" content="http://yoursite.com/post/53471b9a.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法： 举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-14T12:20:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程基础">
+<meta name="twitter:description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法： 举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/53471b9a.html"/>
+
+
+
+
+
+  <title>多线程基础 | paine1690</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/53471b9a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">多线程基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-10T00:00:00+08:00">
+                2016-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/53471b9a.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/post/53471b9a.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/post/53471b9a.html" class="leancloud_visitors" data-flag-title="多线程基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、线程的两种实现方式"><a href="#一、线程的两种实现方式" class="headerlink" title="一、线程的两种实现方式"></a>一、线程的两种实现方式</h1><p>Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法：</p>
+<p>举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时卖票，而现在只有一个售票员，这个售票员就相当于一个CPU，三个窗口就相当于三个线程。</p>
+<h2 id="1、通过扩展Thread类来创建多线程"><a href="#1、通过扩展Thread类来创建多线程" class="headerlink" title="1、通过扩展Thread类来创建多线程"></a>1、通过扩展Thread类来创建多线程</h2><ol>
+<li>定义一个Thread类的子类，并重写该类的run方法，该run方法的方法体就代表了线程要完成的任务。</li>
+<li>创建Thread子类的实例，即创建了线程对象。</li>
+<li>调用线程对象的start()方法来启动该线程。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyThread m1=<span class="keyword">new</span> MyThread(<span class="string">"Window 1"</span>);</span><br><span class="line">		MyThread m2=<span class="keyword">new</span> MyThread(<span class="string">"Window 2"</span>);</span><br><span class="line">		MyThread m3=<span class="keyword">new</span> MyThread(<span class="string">"Window 3"</span>);</span><br><span class="line">        m1.start();</span><br><span class="line">        m2.start();</span><br><span class="line">        m3.start();		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;<span class="comment">//每个线程都拥有100张票</span></span><br><span class="line">	MyThread(String name)&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);<span class="comment">//调用父类带参数的构造方法</span></span><br><span class="line">    &#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序中定义一个线程类，它扩展了Thread类。利用扩展的线程类在MutliThreadDemo类的主方法中创建了三个线程对象，并通过start()方法分别将它们启动。</p>
+<p>从结果可以看到，每个线程分别对应100张电影票，之间并无任何关系，这就说明每个线程之间是平等的，没有优先级关系，因此都有机会得到CPU的处理。但是结果显示这三个线程并不是依次交替执行，而是在三个线程同时被执行的情况下，有的线程被分配时间片的机会多，票被提前卖完，而有的线程被分配时间片的机会比较少，票迟一些卖完。</p>
+<p>可见，<strong>利用扩展Thread类创建的多个线程，虽然执行的是相同的代码，但彼此相互独立，且各自拥有自己的资源，互不干扰</strong>。 </p>
+<h2 id="2、通过实现Runnable接口来创建多线程"><a href="#2、通过实现Runnable接口来创建多线程" class="headerlink" title="2、通过实现Runnable接口来创建多线程"></a>2、通过实现Runnable接口来创建多线程</h2><ol>
+<li>定义runnable接口的实现类，并重写该接口的run()方法，该run()方法的方法体同样是该线程的线程执行体。</li>
+<li>创建 Runnable实现类的实例，并依此实例作为Thread的target来创建Thread对象，该Thread对象才是真正的线程对象。</li>
+<li>调用线程对象的start()方法来启动该线程。</li>
+</ol>
+<h3 id="1-1例子1"><a href="#1-1例子1" class="headerlink" title="1.1例子1"></a>1.1例子1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyThread2 m1=<span class="keyword">new</span> MyThread2();</span><br><span class="line">		MyThread2 m2=<span class="keyword">new</span> MyThread2();</span><br><span class="line">		MyThread2 m3=<span class="keyword">new</span> MyThread2();</span><br><span class="line">        Thread t1=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 1"</span>);</span><br><span class="line">        Thread t2=<span class="keyword">new</span> Thread(m2, <span class="string">"Window 2"</span>);</span><br><span class="line">        Thread t3=<span class="keyword">new</span> Thread(m3, <span class="string">"Window 3"</span>);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t3.start();	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread2</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	 <span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;<span class="comment">//每个线程都拥有100张票</span></span><br><span class="line">	 <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">	     <span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">           	<span class="comment">//如果要访问当前线程，则必须使用Thread.currentThread()方法。</span></span><br><span class="line">	         System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</span><br><span class="line">	     &#125;</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于这三个线程也是彼此独立，各自拥有自己的资源，即100张电影票，因此程序输出的结果和（1）结果大同小异。均是各自线程对自己的100张票进行单独的处理，互不影响。</p>
+<p>可见，只要现实的情况要求保证新建线程彼此相互独立，各自拥有资源，且互不干扰，采用哪个方式来创建多线程都是可以的。因为这两种方式创建的多线程程序能够实现相同的功能。</p>
+<h3 id="1-2、例子2"><a href="#1-2、例子2" class="headerlink" title="1.2、例子2"></a>1.2、例子2</h3><p>现实中也存在这样的情况，比如模拟一个火车站的售票系统，假如当日从A地发往B地的火车票只有100张，且允许所有窗口卖这100张票，那么每一个窗口也相当于一个线程，但是这时和前面的例子不同之处就在于所有线程处理的资源是同一个资源，即100张车票。如果还用前面的方式来创建线程显然是无法实现的，这种情况该怎样处理呢？看下面这个程序，程序代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyThread3 m1=<span class="keyword">new</span> MyThread3();</span><br><span class="line">        Thread t1=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 1"</span>);</span><br><span class="line">        Thread t2=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 2"</span>);</span><br><span class="line">        Thread t3=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 3"</span>);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t3.start();	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread3</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">			System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果正如前面分析的那样，程序在内存中仅创建了一个资源，而新建的三个线程都是基于访问这同一资源的，并且由于每个线程上所运行的是相同的代码，因此它们执行的功能也是相同的。</p>
+<h2 id="3、Thread与Runnable"><a href="#3、Thread与Runnable" class="headerlink" title="3、Thread与Runnable"></a>3、Thread与Runnable</h2><p>通过上面例子的对比，可以看出两种方法都可以创建新的线程，但是后者与前者相比有着更多的优势：</p>
+<ol>
+<li>线程类只是实现了Runnable接口或Callable接口，还可以继承其他类。</li>
+<li>多个线程可以共享同一个target对象，所以非常适合多个相同线程来处理同一份资源的情况，从而可以将CPU、代码和数据分开，形成清晰的模型，较好地体现了面向对象的思想。</li>
+<li>几乎所有的多线程程序都是通过实现Runnable接口的方式来完成的。</li>
+</ol>
+<h2 id="4、Callable"><a href="#4、Callable" class="headerlink" title="4、Callable"></a>4、Callable</h2><p>除了以上两种方法，还有一个叫做Callable的接口，它和Runnable很相似，但也有几点不同：</p>
+<ol>
+<li>Callable需要实现call方法，而Runnable需要实现run方法</li>
+<li>Callable方法可以返回任意类型的对象</li>
+<li>Callable能够抛出异常，而runnable不能</li>
+<li>Callable和Runnable都可以应用于executors。而Thread类只支持Runnable.</li>
+<li>Callable与executors联合在一起，在任务完成时可立刻获得一个更新了的Future。而Runable却要自己处理</li>
+</ol>
+<p><strong>Future接口</strong>：一般都是取回Callable执行的状态用的。其中的主要方法：</p>
+<ul>
+<li>cancel，取消Callable的执行，当Callable还没有完成时</li>
+<li>get，获得Callable的返回值</li>
+<li>isCanceled，判断是否取消了</li>
+<li>isDone，判断是否完成</li>
+</ul>
+<h1 id="二、用户线程与守护线程"><a href="#二、用户线程与守护线程" class="headerlink" title="二、用户线程与守护线程"></a>二、用户线程与守护线程</h1><p>百度面试的时候被问到怎么开一个守护线程，没有答上来。</p>
+<p>在Java中有两类线程：</p>
+<ul>
+<li><p>User Thread(用户线程)：</p>
+<p>非守护线程包括常规的用户线程或诸如用于处理GUI事件的事件调度线程，Java虚拟机在它所有非守护线程已经离开后自动离开。</p>
+</li>
+<li><p>Daemon Thread(守护线程) ：</p>
+<p>守护线程则是用来服务用户线程的，比如说GC线程。如果没有其他用户线程在运行，那么就没有可服务对象，也就没有理由继续下去。</p>
+</li>
+</ul>
+<h2 id="1、区别"><a href="#1、区别" class="headerlink" title="1、区别"></a>1、区别</h2><p>User和Daemon两者几乎没有区别，唯一的不同之处就在于虚拟机的离开：如果 User Thread已经全部退出运行了，只剩下Daemon Thread存在了，虚拟机也就退出了。 因为没有了被守护者，Daemon也就没有工作可做了，也就没有继续运行程序的必要了。</p>
+<h2 id="2、创建"><a href="#2、创建" class="headerlink" title="2、创建"></a>2、创建</h2><p> 守护线程与普通线程写法上基本没什么区别，调用线程对象的方法setDaemon(true)，则可以将其设置为守护线程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Thread daemonTread = <span class="keyword">new</span> Thread();     </span><br><span class="line">  <span class="comment">// 设定 daemonThread 为 守护线程，default false(非守护线程)  </span></span><br><span class="line"> daemonThread.setDaemon(<span class="keyword">true</span>);     </span><br><span class="line"> <span class="comment">// 验证当前线程是否为守护线程，返回 true 则为守护线程  </span></span><br><span class="line"> daemonThread.isDaemon();</span><br></pre></td></tr></table></figure>
+<ol>
+<li>thread.setDaemon(true)必须在thread.start()之前设置，否则会抛出一个IllegalThreadStateException异常。你不能把正在运行的常规线程设置为守护线程。</li>
+<li>在Daemon线程中产生的新线程也是Daemon的。 </li>
+<li>不是所有的应用都可以分配给Daemon线程来进行服务，比如读写操作或者计算逻辑。因为在Daemon Thread还没来的及进行操作时，虚拟机可能已经退出了。 </li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Thread threadA=<span class="keyword">new</span> Thread()&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"hello I am threadA"</span>);				</span><br><span class="line">			Thread threadB=<span class="keyword">new</span> Thread()&#123;</span><br><span class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">					System.out.println(<span class="string">"hello I am threadB"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">			System.out.println(<span class="string">"threadB is deamon: "</span>+threadB.isDaemon());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	System.out.println(<span class="string">"threadA is deamon: "</span>+threadA.isDaemon());</span><br><span class="line">	threadA.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">	threadA.start();</span><br><span class="line">	System.out.println(<span class="string">"threadA is deamon: "</span>+threadA.isDaemon());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">threadA is deamon: false</span><br><span class="line">threadA is deamon: true</span><br><span class="line">hello I am threadA</span><br><span class="line">threadB is deamon: true</span><br></pre></td></tr></table></figure>
+<p>可以看出，线程A初始状态下是非守护线程，设置后变成守护线程，而在线程A中产生的线程B，即使还没有start，但初始状态就已经是守护线程。</p>
+<h1 id="三、线程的5种状态"><a href="#三、线程的5种状态" class="headerlink" title="三、线程的5种状态"></a>三、线程的5种状态</h1><p>关于线程状态不同书上有不同的说法，一般来说有5种状态：</p>
+<ol>
+<li><p><strong>新建(new)</strong>:</p>
+<p>​    当用new操作符创建一个线程时， 例如new Thread(r)，线程还没有开始运行，此时线程处在新建状态。 当一个线程处于新生状态时，程序还没有开始运行线程中的代码</p>
+</li>
+<li><p><strong>就绪(Runnable)</strong>：</p>
+<p>​    一个新创建的线程并不自动开始运行，要执行线程，必须调用线程的start()方法。当线程对象调用start()方法即启动了线程，start()方法创建线程运行的系统资源，并调度线程运行run()方法。当start()方法返回后，线程就处于就绪状态。</p>
+<pre><code>处于就绪状态的线程并不一定立即运行run()方法，线程还必须同其他线程竞争CPU时间，只有获得CPU时间才可以运行线程。因为在单CPU的计算机系统中，不可能同时运行多个线程，一个时刻仅有一个线程处于运行状态。因此此时可能有多个线程处于就绪状态。对多个处于就绪状态的线程是由Java运行时系统的线程调度程序(*thread scheduler*)来调度的。
+</code></pre></li>
+<li><p><strong>运行(Running)</strong>：</p>
+<p>​    当线程获得CPU时间后，它才进入运行状态，真正开始执行run()方法.</p>
+</li>
+<li><p><strong>阻塞(Blocked)</strong> ：</p>
+<p>​    所谓阻塞状态是正在运行的线程没有运行结束，暂时让出CPU，这时其他处于就绪状态的线程就可以获得CPU时间，进入运行状态。线程运行过程中，可能由于各种原因进入阻塞状态:</p>
+<ul>
+<li><p>线程通过调用sleep方法进入睡眠状态；</p>
+</li>
+<li><p>线程通过wait()方法挂起，JVM会把该线程放入等待池中，直到线程得到了notify()或者notifyAll()消息，线程才会进入就绪状态</p>
+</li>
+<li><p>线程调用一个在I/O上被阻塞的操作，即该操作在输入输出操作完成之前不会返回到它的调用者；</p>
+</li>
+<li><p>线程试图得到一个锁，而该锁正被其他线程持有；</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+<li><p><strong>死亡(Dead)</strong>：</p>
+<p>​    该线程结束生命周期，可能是：</p>
+<ul>
+<li>从run方法返回</li>
+<li>线程被中断</li>
+</ul>
+</li>
+</ol>
+<h1 id="三、参考地址"><a href="#三、参考地址" class="headerlink" title="三、参考地址"></a>三、参考地址</h1><p><a href="http://www.cnblogs.com/whgw/archive/2011/10/03/2198506.html" target="_blank" rel="noopener">http://www.cnblogs.com/whgw/archive/2011/10/03/2198506.html</a></p>
+<p><a href="http://blog.csdn.net/longshengguoji/article/details/41126119" target="_blank" rel="noopener">http://blog.csdn.net/longshengguoji/article/details/41126119</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/eda9b60b.html" rel="next" title="464. Can I Win">
+                <i class="fa fa-chevron-left"></i> 464. Can I Win
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/fcbebb9.html" rel="prev" title="线程安全与锁">
+                线程安全与锁 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、线程的两种实现方式"><span class="nav-number">1.</span> <span class="nav-text">一、线程的两种实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、通过扩展Thread类来创建多线程"><span class="nav-number">1.1.</span> <span class="nav-text">1、通过扩展Thread类来创建多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、通过实现Runnable接口来创建多线程"><span class="nav-number">1.2.</span> <span class="nav-text">2、通过实现Runnable接口来创建多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1例子1"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1例子1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、例子2"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2、例子2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Thread与Runnable"><span class="nav-number">1.3.</span> <span class="nav-text">3、Thread与Runnable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、Callable"><span class="nav-number">1.4.</span> <span class="nav-text">4、Callable</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、用户线程与守护线程"><span class="nav-number">2.</span> <span class="nav-text">二、用户线程与守护线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、区别"><span class="nav-number">2.1.</span> <span class="nav-text">1、区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、创建"><span class="nav-number">2.2.</span> <span class="nav-text">2、创建</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、线程的5种状态"><span class="nav-number">3.</span> <span class="nav-text">三、线程的5种状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、参考地址"><span class="nav-number">4.</span> <span class="nav-text">三、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'paine1690',
+            repo: 'paine1690.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bf2440c072f1b1269a712a8f831d8c3c74d0a58d',
+            
+                client_id: 'b90e00c88abe9c1cff7b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

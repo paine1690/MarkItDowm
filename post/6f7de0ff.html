@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java基础知识," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、JSP中静态include指令与动态include指令1、使用方法1234567891011121314&amp;lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=gb2312&quot;%&amp;gt;&amp;lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://">
+<meta name="keywords" content="Java基础知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="笔试习题总结">
+<meta property="og:url" content="http://yoursite.com/post/6f7de0ff.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="一、JSP中静态include指令与动态include指令1、使用方法1234567891011121314&amp;lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=gb2312&quot;%&amp;gt;&amp;lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-29T06:45:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="笔试习题总结">
+<meta name="twitter:description" content="一、JSP中静态include指令与动态include指令1、使用方法1234567891011121314&amp;lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=gb2312&quot;%&amp;gt;&amp;lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/6f7de0ff.html"/>
+
+
+
+
+
+  <title>笔试习题总结 | paine1690</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/6f7de0ff.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">笔试习题总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-02T00:00:00+08:00">
+                2017-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/6f7de0ff.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/post/6f7de0ff.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/post/6f7de0ff.html" class="leancloud_visitors" data-flag-title="笔试习题总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、JSP中静态include指令与动态include指令"><a href="#一、JSP中静态include指令与动态include指令" class="headerlink" title="一、JSP中静态include指令与动态include指令"></a>一、JSP中静态include指令与动态include指令</h1><h2 id="1、使用方法"><a href="#1、使用方法" class="headerlink" title="1、使用方法"></a>1、使用方法</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> contentType=<span class="string">"text/html; charset=gb2312"</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">"-//W3C//DTD HTML 4.01 Transitional//EN"</span> <span class="string">"http://www.w3.org/TR/html4/loose.dtd"</span>&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=ISO-8859-1"</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;!-- 静态 --&gt;</span><br><span class="line">&lt;%<span class="meta">@include</span> file=<span class="string">"scriptlet.jsp"</span> %&gt;</span><br><span class="line">  &lt;!-- 动态 --&gt;</span><br><span class="line">&lt;jsp:include page=<span class="string">"scriptlet.jsp"</span> /&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="2、区别"><a href="#2、区别" class="headerlink" title="2、区别"></a>2、区别</h2><ol>
+<li>表达式的支持<ul>
+<li>静态导入（include指令）通过file属性指定被包含的文件，且file属性不支持任何表达式</li>
+<li>动态导入（include动作）通过page属性指定被包含的文件，且page属性支持JSP表达式</li>
+</ul>
+</li>
+<li>编译方式<ul>
+<li>使用静态导入（include指令）时，被包含的文件内容会原封不动的插入到包含页中，然后JSP编译器再将成后的文件最终编译成一个Java文件</li>
+<li>使用动态导入（include动作）包含文件时，当该标识被执行时，程序会将请求转发（不是请求重定向）到被包含的页面，并将执行结果输出到浏览器中，然后返回包含页继续执行后面的代码。因为服务器执行的是多个文件，所以JSP编译器会分别对这些文件进行编译</li>
+</ul>
+</li>
+<li>命名冲突<ul>
+<li>静态导入使用include指令包含文件时，由于被包含的文件最终会生成一个文件，所以在被包含、包含文件中不能有重名的变量或方法</li>
+<li>动态导入使用include动作包含文件时，由于每个文件是单独编译的，所以在被包含文件和包含文件中重名的变量和方法是不相冲突的</li>
+</ul>
+</li>
+<li>导入方式<ul>
+<li>静态导入是将被导入页面的代码完全融入，两个页面融合成一个整体Servlet，因此被导入页面甚至不需要是一个完整的页面</li>
+<li>动态导入则在Servlet中使用include方法来引入被导入页面的内容</li>
+</ul>
+</li>
+<li>编译指令<ul>
+<li>静态导入时被导入页面的编译指令会起作用</li>
+<li>动态导入时被导入页面的编译指令则失去作用，只是插入被导入页面的body内容</li>
+</ul>
+</li>
+</ol>
+<h1 id="二、Java基本语法"><a href="#二、Java基本语法" class="headerlink" title="二、Java基本语法"></a>二、Java基本语法</h1><h2 id="1、抽象类与接口的区别"><a href="#1、抽象类与接口的区别" class="headerlink" title="1、抽象类与接口的区别"></a>1、抽象类与接口的区别</h2><p><strong>抽象类</strong></p>
+<p>特点:</p>
+<p>1.抽象类中可以构造方法</p>
+<p>2.抽象类中可以存在普通属性，方法，静态属性和方法。</p>
+<p>3.抽象类中可以存在抽象方法。</p>
+<p>4.如果一个类中有一个抽象方法，那么当前类一定是抽象类；抽象类中不一定有抽象方法。</p>
+<p>5.抽象类中的抽象方法，需要有子类实现，如果子类不实现，则子类也需要定义为抽象的。</p>
+<p><strong>接口</strong></p>
+<p>1.在接口中只有方法的声明，没有方法体。</p>
+<p>2.在接口中只有常量，因为定义的变量，在编译的时候都会默认加上</p>
+<p>public static final </p>
+<p>3.在接口中的方法，永远都被public来修饰。</p>
+<p>4.接口中没有构造方法，也不能实例化接口的对象。</p>
+<p>5.接口可以实现多继承</p>
+<p>6.接口中定义的方法都需要有实现类来实现，如果实现类不能实现接口中的所有方法则实现类定义为抽象类。</p>
+<h2 id="2、关于final的重要知识点"><a href="#2、关于final的重要知识点" class="headerlink" title="2、关于final的重要知识点;"></a>2、关于final的重要知识点;</h2><ol>
+<li>final关键字可以用于成员变量、本地变量、方法以及类。</li>
+<li>final成员变量必须在声明的时候初始化或者在构造器中初始化，否则就会报编译错误。</li>
+<li>不能够对final变量再次赋值。final方法不能被重写。final类不能被继承。</li>
+<li>本地变量必须在声明时赋值。</li>
+<li>在匿名类中所有变量都必须是final变量。</li>
+<li>没有在声明时初始化final变量的称为空白final变量(blank final variable)，它们必须在构造器中初始化，或者调用this()初始化。不这么做的话，编译器会报错“final变量(变量名)需要进行初始化”。</li>
+</ol>
+<h2 id="3、数据类型转换"><a href="#3、数据类型转换" class="headerlink" title="3、数据类型转换"></a>3、数据类型转换</h2><p>当使用 +、-、*、/、%、运算操作是，遵循如下规则：</p>
+<ul>
+<li>只要两个操作数中有一个是double类型的，另一个将会被转换成double类型，并且结果也是double类型。</li>
+<li>如果两个操作数中有一个是float类型的，另一个将会被转换为float类型，并且结果也是float类型</li>
+<li>如果两个操作数中有一个是long类型的，另一个将会被转换成long类型，并且结果也是long类型</li>
+<li>否则（操作数为：byte、short、int 、char），两个数都会被转换成int类型，并且结果也是int类型。</li>
+</ul>
+<p>另外在Java中，给double类型的幅值直接写小数就可以，给float类型的幅值则需要加一个f：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> f=<span class="number">3.0f</span>;</span><br><span class="line"><span class="keyword">double</span> d=<span class="number">3.0</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a=<span class="number">1</span>/<span class="number">3</span>;<span class="comment">//结果为int型，不需要转换</span></span><br><span class="line"><span class="keyword">float</span> b=<span class="number">1</span>/<span class="number">3.0f</span>;<span class="comment">//int与float操作，int转换为float型，结果也为float型</span></span><br><span class="line"><span class="keyword">float</span> c=(<span class="keyword">float</span>) (<span class="number">1</span>/<span class="number">3.0</span>);<span class="comment">//int与double操作，int转换为double型，结果也为double型，所以必须强制转换为flaot</span></span><br><span class="line"><span class="keyword">double</span> d=<span class="number">1</span>/<span class="number">3</span>;<span class="comment">//结果为int，自动转换为double</span></span><br><span class="line"><span class="keyword">double</span> e=<span class="number">1</span>/<span class="number">3.0f</span>;<span class="comment">//结果为float，自动转换为double</span></span><br><span class="line"><span class="keyword">double</span> f=<span class="number">1</span>/<span class="number">3.0</span>;<span class="comment">//结果为double，不需要转换</span></span><br></pre></td></tr></table></figure>
+<h2 id="4、方法的重写（override）两同两小一大原则："><a href="#4、方法的重写（override）两同两小一大原则：" class="headerlink" title="4、方法的重写（override）两同两小一大原则："></a>4、方法的重写（override）两同两小一大原则：</h2><ul>
+<li>方法名相同，参数类型相同</li>
+<li>子类返回类型小于等于父类方法返回类型</li>
+<li>子类抛出异常小于等于父类方法抛出异常</li>
+<li>子类访问权限大于等于父类方法访问权限</li>
+</ul>
+<h2 id="5、重载"><a href="#5、重载" class="headerlink" title="5、重载"></a>5、重载</h2><p>重载的概念是：</p>
+<p>方法名称相同，参数个数、次序、类型不同</p>
+<p>因此重载对返回值类型没有要求，可以相同，也可以不同</p>
+<p>但是如果参数的个数、类型、次序都相同，方法名也相同，仅返回值类型不同，则无法构成重载</p>
+<h2 id="6、操作符优先级"><a href="#6、操作符优先级" class="headerlink" title="6、操作符优先级"></a>6、操作符优先级</h2><table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>运算符</th>
+<th>结合性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>() [] .</td>
+<td>从左到右</td>
+</tr>
+<tr>
+<td>2</td>
+<td>! +(正)  -(负) ~ ++ –</td>
+<td>从右向左</td>
+</tr>
+<tr>
+<td>3</td>
+<td>* / %</td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>4</td>
+<td>+(加) -(减)</td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>5</td>
+<td>&lt;&lt; &gt;&gt; &gt;&gt;&gt;</td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>6</td>
+<td>&lt; &lt;= &gt; &gt;= instanceof</td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>7</td>
+<td>==   !=</td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>8</td>
+<td>&amp;(按位与)</td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>9</td>
+<td>^</td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>10</td>
+<td>\</td>
+<td></td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>11</td>
+<td>&amp;&amp;</td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>12</td>
+<td>\</td>
+<td>\</td>
+<td></td>
+<td>从左向右</td>
+</tr>
+<tr>
+<td>13</td>
+<td>?:</td>
+<td>从右向左</td>
+</tr>
+<tr>
+<td>14</td>
+<td>= += -= *= /= %= &amp;= \</td>
+<td>= ^=  ~=  &lt;&lt;= &gt;&gt;=   &gt;&gt;&gt;=</td>
+<td>从右向左</td>
+</tr>
+</tbody>
+</table>
+<h1 id="三、虚拟机参数配置"><a href="#三、虚拟机参数配置" class="headerlink" title="三、虚拟机参数配置"></a>三、虚拟机参数配置</h1><blockquote>
+<p>-Xmx10240m -Xms10240m -Xmn5120m -XXSurvivorRatio=3,其最小内存值和Survivor区总大小分别是（）答案：10240m，2048m</p>
+</blockquote>
+<ul>
+<li>-Xmx10240m：JVM最大可用内存为10240M。</li>
+<li>-Xms10240m：JVM初始内存为10240M</li>
+<li>-Xmn5120m：代表新生代</li>
+<li>-XXSurvivorRatio=3：代表Eden:Survivor = 3。Eden:Survivor=3:1</li>
+</ul>
+<p>计算Survivor大小， Eden:Survivor = 3，总大小为5120,3x+x+x=5120  x=1024</p>
+<h1 id="四、磁盘"><a href="#四、磁盘" class="headerlink" title="四、磁盘"></a>四、磁盘</h1><h2 id="1、磁道，扇区，柱面和磁头数"><a href="#1、磁道，扇区，柱面和磁头数" class="headerlink" title="1、磁道，扇区，柱面和磁头数"></a>1、磁道，扇区，柱面和磁头数</h2><ol>
+<li><p>磁道：</p>
+<p>当磁盘旋转时，磁头若保持在一个位置上，则每个磁头都会在磁盘表面划出一个圆形轨迹，这些圆形轨迹就叫做磁道。这些磁道用肉眼是根本看不到的，因为它们仅是盘面上以特殊方式磁化了的一些磁化区，磁盘上的信息便是沿着这样的轨道存放的。相邻磁道之间并不是紧挨着的，这是因为磁化单元相隔太近时磁性会相互产生影响，同时也为磁头的读写带来困难。一张1.44MB的3.5英寸软盘，一面有80个磁道，而硬盘上的磁道密度则远远大于此值，通常一面有成千上万个磁道。</p>
+</li>
+<li><p>扇区：</p>
+<p>磁盘上的每个磁道被等分为若干个弧段，这些弧段便是磁盘的扇区，每个扇区可以存放<strong>512个字节</strong>的信息，磁盘驱动器在向磁盘读取和写入数据时，要以扇区为单位。1.44MB3.5英寸的软盘，每个磁道分为18个扇区。</p>
+</li>
+<li><p>柱面：</p>
+<p>硬盘通常由重叠的一组盘片构成，每个盘面都被划分为数目相等的磁道，并从外缘的“0”开始编号，具有相同编号的磁道形成一个圆柱，称之为磁盘的柱面。磁盘的<strong>柱面数</strong>与一个盘面上的<strong>磁道数</strong>是相等的。由于每个盘面都有自己的磁头，因此，盘面数等于总的磁头数。所谓硬盘的CHS，即Cylinder（柱面）、Head（磁头）、Sector（扇区），只要知道了硬盘的CHS的数目，即可确定硬盘的容量</p>
+<p>​</p>
+</li>
+</ol>
+<p>硬盘的容量=柱面数*磁头数*扇区数*512B。</p>
+<h2 id="2、簇"><a href="#2、簇" class="headerlink" title="2、簇"></a>2、簇</h2><p>“簇”是DOS进行分配的最小单位。当创建一个很小的文件时，如是一个字节，则它在磁盘上并不是只占一个字节的空间，而是占有整个一簇。DOS视不同的存储介质（如软盘，硬盘），不同容量的硬盘，簇的大小也不一样。簇的大小可在称为磁盘参数块（BPB）中获取。簇的概念仅适用于数据区。 </p>
+<ol>
+<li>簇是DOS进行分配的最小单位。 扇区是磁盘最小的物理存储单元。前者是逻辑上的概念</li>
+<li>每个簇可以包括2、4、8、16、32或64个扇区。显然，簇是操作系统所使用的逻辑概念，而非磁盘的物理特性。</li>
+<li>不同的存储介质，不同容量的硬盘，不同的DOS版本，簇的大小也不一样。 </li>
+<li>簇的概念仅适用于数据区。 </li>
+<li>为了更好地管理磁盘空间和更高效地从硬盘读取数据，操作系统规定一个簇中只能放置一个文件的内容，因此文件所占用的空间，只能是<strong>簇的整数倍</strong> ；而如果文件实际大小小于一簇，它也要占一簇的空间。所以，一般情况下文件所占空间要略大于文件的实际大小，只有在少数情况下，即文件的实际大小恰好是簇的整数倍时，文件的实际大小才会与所占空间完全一致。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java基础知识/" rel="tag"># Java基础知识</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/8d88e9ed.html" rel="next" title="Java中的访问权限">
+                <i class="fa fa-chevron-left"></i> Java中的访问权限
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/daec3ea8.html" rel="prev" title="Java中的枚举类型enum">
+                Java中的枚举类型enum <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、JSP中静态include指令与动态include指令"><span class="nav-number">1.</span> <span class="nav-text">一、JSP中静态include指令与动态include指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、使用方法"><span class="nav-number">1.1.</span> <span class="nav-text">1、使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、区别"><span class="nav-number">1.2.</span> <span class="nav-text">2、区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Java基本语法"><span class="nav-number">2.</span> <span class="nav-text">二、Java基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、抽象类与接口的区别"><span class="nav-number">2.1.</span> <span class="nav-text">1、抽象类与接口的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、关于final的重要知识点"><span class="nav-number">2.2.</span> <span class="nav-text">2、关于final的重要知识点;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、数据类型转换"><span class="nav-number">2.3.</span> <span class="nav-text">3、数据类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、方法的重写（override）两同两小一大原则："><span class="nav-number">2.4.</span> <span class="nav-text">4、方法的重写（override）两同两小一大原则：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、重载"><span class="nav-number">2.5.</span> <span class="nav-text">5、重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、操作符优先级"><span class="nav-number">2.6.</span> <span class="nav-text">6、操作符优先级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、虚拟机参数配置"><span class="nav-number">3.</span> <span class="nav-text">三、虚拟机参数配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、磁盘"><span class="nav-number">4.</span> <span class="nav-text">四、磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、磁道，扇区，柱面和磁头数"><span class="nav-number">4.1.</span> <span class="nav-text">1、磁道，扇区，柱面和磁头数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、簇"><span class="nav-number">4.2.</span> <span class="nav-text">2、簇</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'paine1690',
+            repo: 'paine1690.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bf2440c072f1b1269a712a8f831d8c3c74d0a58d',
+            
+                client_id: 'b90e00c88abe9c1cff7b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

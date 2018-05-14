@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="源码,多线程," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="看了网上的博客发现对这个类的作用争议比较大，于是自己看了源码，比较认同的说法是：  This class provides thread-local variables. These variables differ fromtheir normal counterparts in that each thread that accesses one (via its{@code get} or">
+<meta name="keywords" content="源码,多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThreadLocal实现与使用">
+<meta property="og:url" content="http://yoursite.com/post/9b9098cb.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="看了网上的博客发现对这个类的作用争议比较大，于是自己看了源码，比较认同的说法是：  This class provides thread-local variables. These variables differ fromtheir normal counterparts in that each thread that accesses one (via its{@code get} or">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/MultiThreading/1.png?raw=true">
+<meta property="og:updated_time" content="2017-02-18T03:27:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ThreadLocal实现与使用">
+<meta name="twitter:description" content="看了网上的博客发现对这个类的作用争议比较大，于是自己看了源码，比较认同的说法是：  This class provides thread-local variables. These variables differ fromtheir normal counterparts in that each thread that accesses one (via its{@code get} or">
+<meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/MultiThreading/1.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/9b9098cb.html"/>
+
+
+
+
+
+  <title>ThreadLocal实现与使用 | paine1690</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/9b9098cb.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ThreadLocal实现与使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-26T00:00:00+08:00">
+                2016-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/9b9098cb.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/post/9b9098cb.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/post/9b9098cb.html" class="leancloud_visitors" data-flag-title="ThreadLocal实现与使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>看了网上的博客发现对这个类的作用争议比较大，于是自己看了源码，比较认同的说法是：</p>
+<blockquote>
+<p>This class provides thread-local variables. These variables differ from<br>their normal counterparts in that each thread that accesses one (via its<br>{@code get} or {@code set} method) has its own, independently initialized<br>copy of the variable. {@code ThreadLocal} instances are typically private<br>static fields in classes that wish to associate state with a thread (e.g.,<br>a user ID or Transaction ID).</p>
+</blockquote>
+<p>可以总结为一句话：<strong>ThreadLocal的作用是提供线程内的局部变量，这种变量在线程的生命周期内起作用，减少同一个线程内多个函数或者组件之间一些公共变量的传递的复杂度。</strong></p>
+<h1 id="一、基本操作"><a href="#一、基本操作" class="headerlink" title="一、基本操作"></a>一、基本操作</h1><h2 id="1、构造函数"><a href="#1、构造函数" class="headerlink" title="1、构造函数"></a>1、构造函数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadLocal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没有任何实现</p>
+<h2 id="2、initialValue方法"><a href="#2、initialValue方法" class="headerlink" title="2、initialValue方法"></a>2、initialValue方法</h2><p>用来设置当前线程的初始值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> T <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>默认返回的是null，声明为protect说明为了让子类重写，一般自己定义的都会重写这个方法来设置初始值。</p>
+<p>通常该方法只会被调用一次</p>
+<ul>
+<li>在调用get方法的时候会第一次调用</li>
+<li>如果开始就调用了set方法，那么该方法就不会被调用</li>
+<li>在remove方法之后还会重复上面两条原则</li>
+</ul>
+<h2 id="3、get方法"><a href="#3、get方法" class="headerlink" title="3、get方法"></a>3、get方法</h2><p>返回当前线程的ThreadLocal值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">///</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4、set方法"><a href="#4、set方法" class="headerlink" title="4、set方法"></a>4、set方法</h2><p>用于设置当前线程的ThreadLocal值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">  <span class="comment">///</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5、remove方法"><a href="#5、remove方法" class="headerlink" title="5、remove方法"></a>5、remove方法</h2><p>用来将当前线程的ThreadLocal绑定的值删除</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在某些情况下需要手动调用该方法，防止内存泄露。</p>
+<h2 id="6、使用示例"><a href="#6、使用示例" class="headerlink" title="6、使用示例"></a>6、使用示例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;Integer&gt; value=<span class="keyword">new</span> ThreadLocal&lt;Integer&gt;()&#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">protected</span> Integer <span class="title">initialValue</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> id;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">MyThread</span><span class="params">(<span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.id=id;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"线程: "</span>+id+<span class="string">"初始值： "</span>+value.get());</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)&#123;</span><br><span class="line">				value.set(value.get()+<span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(<span class="string">"线程: "</span>+id+<span class="string">"累加值： "</span>+value.get());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++)&#123;</span><br><span class="line">			<span class="keyword">new</span> Thread(<span class="keyword">new</span> MyThread(i)).start();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">线程: 1初始值： 0</span><br><span class="line">线程: 2初始值： 0</span><br><span class="line">线程: 0初始值： 0</span><br><span class="line">线程: 2累加值： 10</span><br><span class="line">线程: 1累加值： 10</span><br><span class="line">线程: 0累加值： 10</span><br></pre></td></tr></table></figure>
+<p>总结了一下发现其实这个类就是相当于定义一个变量，以上面的为例</p>
+<p>如果直接定义一个Integer value变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Integer value=<span class="keyword">new</span> Integer(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>那么所有线程就可以共享这个变量了。</p>
+<p>而如果想把这个变量设置为线程间内的局部变量，就可以</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;Integer&gt; value=<span class="keyword">new</span> ThreadLocal&lt;Integer&gt;()&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> Integer <span class="title">initialValue</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;		</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其实都是定义了一个初始值为0的变量，只不过作用域不同而已。</p>
+<h1 id="二、源码分析"><a href="#二、源码分析" class="headerlink" title="二、源码分析"></a>二、源码分析</h1><p>关于内部实现网上有很多争议，最开始理解的版本可能比较容易</p>
+<blockquote>
+<p>每个ThreadLocal类创建一个Map，然后用线程的ID作为Map的key，实例对象作为Map的value，这样就能达到各个线程的值隔离的效果。</p>
+</blockquote>
+<p>不知道早期的类是不是这么实现的，但是在JDK8中的源码确实不是这样实现的。</p>
+<h2 id="1、get"><a href="#1、get" class="headerlink" title="1、get"></a>1、get</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">//1、get方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       Thread t = Thread.currentThread();<span class="comment">//获取当前线程</span></span><br><span class="line">       ThreadLocalMap map = getMap(t);<span class="comment">//根据当前线程获取ThreadLocalMap，调用了getMap方法</span></span><br><span class="line">       <span class="keyword">if</span> (map != <span class="keyword">null</span>) &#123;<span class="comment">//map不为空</span></span><br><span class="line">           ThreadLocalMap.Entry e = map.getEntry(<span class="keyword">this</span>);</span><br><span class="line">           <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;<span class="comment">//且在map中以ThreadLocal对象为key的值不为空</span></span><br><span class="line">               <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">               T result = (T)e.value;</span><br><span class="line">               <span class="keyword">return</span> result;<span class="comment">//返回</span></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> setInitialValue();<span class="comment">//如果map为空或e为空，说明是第一次get，肯定会返回设定的初始值，则调用setInitialValue方法</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2、getMap方法</span></span><br><span class="line">   <span class="function">ThreadLocalMap <span class="title">getMap</span><span class="params">(Thread t)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> t.threadLocals;<span class="comment">//返回当前线程的threadLocals</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3、setInitialValue方法</span></span><br><span class="line">   <span class="keyword">private</span> T setInitialValue方法() &#123;</span><br><span class="line">       T value = initialValue();<span class="comment">//获取设置的初始值</span></span><br><span class="line">       Thread t = Thread.currentThread();<span class="comment">//获取当前线程</span></span><br><span class="line">       ThreadLocalMap map = getMap(t);<span class="comment">//再次获取当前线程的ThreadLocalMap</span></span><br><span class="line">       <span class="keyword">if</span> (map != <span class="keyword">null</span>)<span class="comment">//如果mao已经存在，则设置初始值</span></span><br><span class="line">           map.set(<span class="keyword">this</span>, value);</span><br><span class="line">       <span class="keyword">else</span><span class="comment">//没有map就创建，调用createMap方法</span></span><br><span class="line">           createMap(t, value);</span><br><span class="line">       <span class="keyword">return</span> value;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//4、createMap方法</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">createMap</span><span class="params">(Thread t, T firstValue)</span> </span>&#123;</span><br><span class="line">       t.threadLocals = <span class="keyword">new</span> ThreadLocalMap(<span class="keyword">this</span>, firstValue);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 下面是Thread类的源码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/* ThreadLocal values pertaining to this thread. This map is maintained</span></span><br><span class="line"><span class="comment">    * by the ThreadLocal class. */</span></span><br><span class="line">   ThreadLocal.ThreadLocalMap threadLocals = <span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
+<p>可以看出整个get方法的流程：</p>
+<ol>
+<li>首先获取当前线程</li>
+<li>根据当前线程获取一个Map</li>
+<li>如果获取的Map不为空，则在Map中以ThreadLocal的引用作为key来在Map中获取对应的value e，否则转到5</li>
+<li>如果e不为null，则返回e.value，否则转到5</li>
+<li>Map为空或者e为空，则通过initialValue方法获取初始值value，然后用ThreadLocal的引用和value作为firstKey和firstValue创建一个新的Map</li>
+</ol>
+<h2 id="2、设计思路"><a href="#2、设计思路" class="headerlink" title="2、设计思路"></a>2、设计思路</h2><p>从上面的分析可以看出，ThreadLocl的设计思路是和随开始理解的相反的，是以线程为单位去维护一个map，而吧ThreadLocl当做key，而这个map是ThreadLocal的一个内部类ThreadLocalMap</p>
+<ol>
+<li>Thread类中有一个ThreadLocal.ThreadLocalMap变量threadLocals，用于维护这个线程的所有ThreadLocal变量</li>
+<li>每次获取某个ThreadLocal变量时，都会获取当前线程的map</li>
+<li>在map中，ThreadLocal变量作为key去查找，如果不存在，就根据设置的初始值去初始化</li>
+</ol>
+<p>这样做的好处在于：</p>
+<ol>
+<li>这样设计之后每个Map的Entry数量变小了：之前是Thread的数量，现在是ThreadLocal的数量，能提高性能，据说性能的提升不是一点两点(没有亲测)</li>
+<li>当Thread销毁之后对应的ThreadLocalMap也就随之销毁了，能减少内存使用量。</li>
+</ol>
+<h2 id="3、ThreadLocalMap"><a href="#3、ThreadLocalMap" class="headerlink" title="3、ThreadLocalMap"></a>3、ThreadLocalMap</h2><p>ThreadLocalMap是ThreadL的一个内部类，关于它有一点就是它的Entry是一个弱引用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalMap</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The entries in this hash map extend WeakReference, using</span></span><br><span class="line"><span class="comment">     * its main ref field as the key (which is always a</span></span><br><span class="line"><span class="comment">     * ThreadLocal object).  Note that null keys (i.e. entry.get()</span></span><br><span class="line"><span class="comment">     * == null) mean that the key is no longer referenced, so the</span></span><br><span class="line"><span class="comment">     * entry can be expunged from table.  Such entries are referred to</span></span><br><span class="line"><span class="comment">     * as "stale entries" in the code that follows.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;</span><br><span class="line">        <span class="comment">/** The value associated with this ThreadLocal. */</span></span><br><span class="line">        Object value;</span><br><span class="line"></span><br><span class="line">        Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">            <span class="keyword">super</span>(k);</span><br><span class="line">            value = v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="comment">///</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于引用的四种类型已经介绍过，弱引用面临着随时被GC的风险.</p>
+<p>从上面代码可以看出，Entry是继承WeakReference。即Entry实例本质上就是对ThreadLocal对象的弱引用。只不过，Entry同时还保存了value。</p>
+<p> <img src="https://github.com/paine1690/HelloWorld/blob/master/pic/MultiThreading/1.png?raw=true" alt="ThreadLocal"></p>
+<p>所以关于ThreadLocal印发内存泄漏的说法</p>
+<blockquote>
+<p>如上图，ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用引用他，那么系统gc的时候，这个ThreadLocal势必会被回收，这样一来，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry的value，如果当前线程再迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链：<br><strong>Thread Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value</strong><br>永远无法回收，造成内存泄露。</p>
+</blockquote>
+<p>但是ThreadLocal在设计的时候会避免这个的发生</p>
+<ol>
+<li>首先从ThreadLocal的直接索引位置(通过ThreadLocal.threadLocalHashCode &amp; (len-1)运算得到)获取Entry e，如果e不为null并且key相同则返回e；</li>
+<li>如果e为null或者key不一致则向下一个位置查询，如果下一个位置的key和当前需要查询的key相等，则返回对应的Entry，否则，如果key值为null，则擦除该位置的Entry，否则继续向下一个位置查询</li>
+</ol>
+<p><strong>在这个过程中遇到的key为null的Entry都会被擦除</strong> </p>
+<p>上面的设计思路依赖一个前提条件：<strong>要调用ThreadLocalMap的getEntry方法或者set方法。</strong>这当然是不可能任何情况都成立的，所以很多情况下需要使用者手动调用ThreadLocal的remove方法，手动删除不再需要的ThreadLocal，防止内存泄露。所以JDK建议将ThreadLocal变量定义成private static的，这样的话ThreadLocal的生命周期就更长，由于一直存在ThreadLocal的强引用，所以ThreadLocal也就不会被回收，也就能保证任何时候都能根据ThreadLocal的弱引用访问到Entry的value值，然后remove它，防止内存泄露。</p>
+<h1 id="三、ThreadLocal在Spring中的应用"><a href="#三、ThreadLocal在Spring中的应用" class="headerlink" title="三、ThreadLocal在Spring中的应用"></a>三、ThreadLocal在Spring中的应用</h1><h2 id="1、应用"><a href="#1、应用" class="headerlink" title="1、应用"></a>1、应用</h2><p>在网上看了N篇博客说明ThreadLocal在Spring中的应用，发现都是出自一处的，不知道是谁转载谁。</p>
+<p>在此主要引用参考地址中第三个的博客</p>
+<blockquote>
+<p>ThreadLocal在Spring中发挥着重要的作用，在管理request作用域的Bean、事务管理、任务调度、AOP等模块都出现了它们的身影，起着举足轻重的作用。</p>
+</blockquote>
+<p>举例子比较多的（没见过其他例子）就是Spring的DAO模版。</p>
+<blockquote>
+<p>我们知道Spring通过各种模板类降低了开发者使用各种数据持久技术的难度。这些模板类都是线程安全的，也就是说，多个DAO可以复用同一个模板实例而不会发生冲突。我们使用模板类访问底层数据，根据持久化技术的不同，模板类需要绑定数据连接或会话的资源。但这些资源本身是非线程安全的，也就是说它们不能在同一时刻被多个线程共享。虽然模板类通过资源池获取数据连接或会话，但资源池本身解决的是数据连接或会话的缓存问题，并非数据连接或会话的线程安全问题。 </p>
+</blockquote>
+<p>按照传统经验，如果某个对象是非线程安全的，在多线程环境下，对对象的访问必须采用synchronized进行线程同步。但模板类并未采用线程同步机制，因为线程同步会降低并发性，影响系统性能。此外，通过代码同步解决线程安全的挑战性很大，可能会增强好几倍的实现难度。那么模板类究竟仰仗何种魔法神功，可以在无须线程同步的情况下就化解线程安全的难题呢？<strong>答案就是ThreadLocal！</strong></p>
+<h2 id="2、举例"><a href="#2、举例" class="headerlink" title="2、举例"></a>2、举例</h2><p>TopicDao：非线程安全 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TopicDao</span> </span>&#123;  </span><br><span class="line">   <span class="comment">//①一个非线程安全的变量  </span></span><br><span class="line">   <span class="keyword">private</span> Connection conn;   </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addTopic</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        <span class="comment">//②引用非线程安全变量  </span></span><br><span class="line">       Statement stat = conn.createStatement();  </span><br><span class="line">       …  </span><br><span class="line">   &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于①处的conn是成员变量，因为addTopic()方法是非线程安全的，必须在使用时创建一个新TopicDao实例（非singleton）。下面使用ThreadLocal对conn这个非线程安全的“状态”进行改造： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TopicDao</span> </span>&#123;  </span><br><span class="line">	 <span class="comment">//①使用ThreadLocal保存Connection变量  </span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;Connection&gt; connThreadLocal = <span class="keyword">new</span> ThreadLocal&lt;Connection&gt;();  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span></span>&#123; 	           </span><br><span class="line">		<span class="comment">//②如果connThreadLocal没有本线程对应的Connection创建一个新的Connection，  </span></span><br><span class="line">		<span class="comment">//并将其保存到线程本地变量中。  </span></span><br><span class="line">		<span class="keyword">if</span>(connThreadLocal.get()==<span class="keyword">null</span>)&#123;  </span><br><span class="line">			Connection conn=ConnectionManager.getConnection();  </span><br><span class="line">			connThreadLocal.set(conn);  </span><br><span class="line">			<span class="keyword">return</span> conn;  </span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;  </span><br><span class="line">			<span class="comment">//③直接返回线程本地变量  </span></span><br><span class="line">			<span class="keyword">return</span> connThreadLocal.get();  </span><br><span class="line">		&#125;  </span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addTopic</span><span class="params">()</span> </span>&#123;  	  </span><br><span class="line">		<span class="comment">//④从ThreadLocal中获取线程对应的  </span></span><br><span class="line">		Statement stat = getConnection().createStatement();  </span><br><span class="line">	&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是网上的版本，而我觉得可以通过重写初始化方法来直接新建Connection，不需要你们麻烦</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TopicDao</span> </span>&#123;  </span><br><span class="line">	 <span class="comment">//①使用ThreadLocal保存Connection变量,重写初始化方法</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;Connection&gt; connThreadLocal = <span class="keyword">new</span> ThreadLocal&lt;Connection&gt;()&#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">protected</span> Connection <span class="title">initialValue</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> ConnectionManager.getConnection();  </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span></span>&#123; </span><br><span class="line">		<span class="keyword">return</span> connThreadLocal.get();  </span><br><span class="line">		</span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addTopic</span><span class="params">()</span> </span>&#123;  	  </span><br><span class="line">		<span class="comment">//④从ThreadLocal中获取线程对应的  </span></span><br><span class="line">		Statement stat = getConnection().createStatement();  </span><br><span class="line">	&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，就保证了不同的线程使用线程相关的Connection，而不会使用其他线程的Connection。因此，这个TopicDao就可以做到singleton共享了。 </p>
+<p>当然，这个例子本身很粗糙，将Connection的ThreadLocal直接放在Dao只能做到本Dao的多个方法共享Connection时不发生线程安全问题，但无法和其他Dao共用同一个Connection，要做到同一事务多Dao共享同一个Connection，必须在一个共同的外部类使用ThreadLocal保存Connection。但这个实例基本上说明了Spring对有状态类线程安全化的解决思路。在本章后面的内容中，我们将详细说明Spring如何通过ThreadLocal解决事务管理的问题。 </p>
+<h2 id="3、Spring源码中的实现"><a href="#3、Spring源码中的实现" class="headerlink" title="3、Spring源码中的实现"></a>3、Spring源码中的实现</h2><p>在Spring技术内幕第五章中，找到了关于JdbcTemplete类的实现，由于源码较多，没有完全分析。但是可以发现内部实现确实是使用了ThreadLocal的。</p>
+<ol>
+<li><p>在JdbcTemplete.excute方法中，获取Connection的代码为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里取得数据库的Connection，这个数据库的Connection已经在Spring的事务管理之下</span></span><br><span class="line">Connection con = DataSourceUtils.getConnection(getDatasource());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DataSourceUtils是一个辅助类，Spring通过这个辅助类来对数据的Connection进行管理，比如利用它来完成打开和关闭Connection等。</p>
+</li>
+<li><p>在DataSourceUtils类中，实现了Connection的相关处理，也可以看见Connection和当前线程的绑定，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*把对数据库的Connection放到事务管理器中进行管理，这里使用TransactionSynchronizationManager中定义的ThreadLocal变量来和线程绑定数据库连接*/</span></span><br><span class="line">ConnectionHolder conHolder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下面就是对conHolder的操作了。</p>
+<p>如果在TransactionSynchronizationManager中已经有了与当前线程绑定的数据库连接，那就直接取出来使用。</p>
+<p>不然就新打开一个数据库的Connection，并通过TransactionSynchronizationManager和当前线程绑定起来。</p>
+<p>可以看出，基本与上面的例子思路一致，只不过实现起来更复杂。</p>
+<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://qifuguang.me/2015/09/02/[Java%E5%B9%B6%E5%8F%91%E5%8C%85%E5%AD%A6%E4%B9%A0%E4%B8%83]%E8%A7%A3%E5%AF%86ThreadLocal/" target="_blank" rel="noopener">http://qifuguang.me/2015/09/02/[Java%E5%B9%B6%E5%8F%91%E5%8C%85%E5%AD%A6%E4%B9%A0%E4%B8%83]%E8%A7%A3%E5%AF%86ThreadLocal/</a></p>
+<p><a href="http://www.jianshu.com/p/27e309e1d0f5" target="_blank" rel="noopener">http://www.jianshu.com/p/27e309e1d0f5</a></p>
+<p><a href="http://www.iteye.com/topic/1123824" target="_blank" rel="noopener">http://www.iteye.com/topic/1123824</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码/" rel="tag"># 源码</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/eefe591f.html" rel="next" title="进程与线程">
+                <i class="fa fa-chevron-left"></i> 进程与线程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/ff9fd0d5.html" rel="prev" title="Java的Concurrent包">
+                Java的Concurrent包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、基本操作"><span class="nav-number">1.</span> <span class="nav-text">一、基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、构造函数"><span class="nav-number">1.1.</span> <span class="nav-text">1、构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、initialValue方法"><span class="nav-number">1.2.</span> <span class="nav-text">2、initialValue方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、get方法"><span class="nav-number">1.3.</span> <span class="nav-text">3、get方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、set方法"><span class="nav-number">1.4.</span> <span class="nav-text">4、set方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、remove方法"><span class="nav-number">1.5.</span> <span class="nav-text">5、remove方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、使用示例"><span class="nav-number">1.6.</span> <span class="nav-text">6、使用示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、源码分析"><span class="nav-number">2.</span> <span class="nav-text">二、源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、get"><span class="nav-number">2.1.</span> <span class="nav-text">1、get</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、设计思路"><span class="nav-number">2.2.</span> <span class="nav-text">2、设计思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、ThreadLocalMap"><span class="nav-number">2.3.</span> <span class="nav-text">3、ThreadLocalMap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、ThreadLocal在Spring中的应用"><span class="nav-number">3.</span> <span class="nav-text">三、ThreadLocal在Spring中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、应用"><span class="nav-number">3.1.</span> <span class="nav-text">1、应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、举例"><span class="nav-number">3.2.</span> <span class="nav-text">2、举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Spring源码中的实现"><span class="nav-number">3.3.</span> <span class="nav-text">3、Spring源码中的实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考地址"><span class="nav-number">4.</span> <span class="nav-text">四、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'paine1690',
+            repo: 'paine1690.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bf2440c072f1b1269a712a8f831d8c3c74d0a58d',
+            
+                client_id: 'b90e00c88abe9c1cff7b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

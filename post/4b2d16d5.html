@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Spring最重要的两个特性就是依赖注入DI和面向切面编程AOP。 一、依赖注入1、依赖注入与控制反转这两个概念经常被用来比较，个人理解应该是他们描述的角度的不同的。 1.1、依赖注入理解依赖注入，首先要知道这里说的依赖指的是什么 正常的程序中肯定是有很多个类一起协同工作的，比如一个A类要用到另一个B类的某个方法，那么则表示B类是A类的一个依赖。 那么A类可以自己new一个B类的实例出来，然后再需">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring基础知识（二）：依赖注入">
+<meta property="og:url" content="http://yoursite.com/post/4b2d16d5.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="Spring最重要的两个特性就是依赖注入DI和面向切面编程AOP。 一、依赖注入1、依赖注入与控制反转这两个概念经常被用来比较，个人理解应该是他们描述的角度的不同的。 1.1、依赖注入理解依赖注入，首先要知道这里说的依赖指的是什么 正常的程序中肯定是有很多个类一起协同工作的，比如一个A类要用到另一个B类的某个方法，那么则表示B类是A类的一个依赖。 那么A类可以自己new一个B类的实例出来，然后再需">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-02-22T01:59:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring基础知识（二）：依赖注入">
+<meta name="twitter:description" content="Spring最重要的两个特性就是依赖注入DI和面向切面编程AOP。 一、依赖注入1、依赖注入与控制反转这两个概念经常被用来比较，个人理解应该是他们描述的角度的不同的。 1.1、依赖注入理解依赖注入，首先要知道这里说的依赖指的是什么 正常的程序中肯定是有很多个类一起协同工作的，比如一个A类要用到另一个B类的某个方法，那么则表示B类是A类的一个依赖。 那么A类可以自己new一个B类的实例出来，然后再需">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/4b2d16d5.html"/>
+
+
+
+
+
+  <title>Spring基础知识（二）：依赖注入 | paine1690</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/4b2d16d5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring基础知识（二）：依赖注入</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-31T00:00:00+08:00">
+                2016-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/4b2d16d5.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/post/4b2d16d5.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/post/4b2d16d5.html" class="leancloud_visitors" data-flag-title="Spring基础知识（二）：依赖注入">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Spring最重要的两个特性就是依赖注入DI和面向切面编程AOP。</p>
+<h1 id="一、依赖注入"><a href="#一、依赖注入" class="headerlink" title="一、依赖注入"></a>一、依赖注入</h1><h2 id="1、依赖注入与控制反转"><a href="#1、依赖注入与控制反转" class="headerlink" title="1、依赖注入与控制反转"></a>1、依赖注入与控制反转</h2><p>这两个概念经常被用来比较，个人理解应该是他们描述的角度的不同的。</p>
+<h3 id="1-1、依赖注入"><a href="#1-1、依赖注入" class="headerlink" title="1.1、依赖注入"></a>1.1、依赖注入</h3><p>理解依赖注入，首先要知道这里说的依赖指的是什么</p>
+<p>正常的程序中肯定是有很多个类一起协同工作的，比如一个A类要用到另一个B类的某个方法，那么则表示B类是A类的一个依赖。</p>
+<p>那么A类可以自己new一个B类的实例出来，然后再需要的时候进行调用，但是这样做有很多问题，会导致<strong>高度耦合</strong>和<strong>难以测试</strong>。</p>
+<p>而如果使用依赖注入的方式，则可以带来一个最明显的好处就是-<strong>松耦合</strong>。</p>
+<blockquote>
+<p>如果一个对象只通过接口（而不是具体实现或初始化过程）来表明依赖，你们这种依赖就能够在对象本身毫不知情的情况下，用不同的具体实现进行替换。</p>
+</blockquote>
+<h3 id="1-2、控制反转"><a href="#1-2、控制反转" class="headerlink" title="1.2、控制反转"></a>1.2、控制反转</h3><p>控制反转的意思我理解的就是，所有的依赖都统一交给Spring的容器去管理，</p>
+<ul>
+<li>控制的具体含义就是对依赖的注入</li>
+<li>而反转是指，依赖的注入本来由自己控制的东西，交给了容器去控制，实现了主动权的反转。</li>
+</ul>
+<h2 id="2、依赖的注入方式"><a href="#2、依赖的注入方式" class="headerlink" title="2、依赖的注入方式"></a>2、依赖的注入方式</h2><p>说到依赖的注入方式还是离不开Spring的容器，Spring容器负责创建应用程序中的bean并通过DI来协调这些对象之间的关系。所以想要了解依赖的注入方式，就要先知道bean的装配方式</p>
+<ul>
+<li>在XML中进行显式配置</li>
+<li>在Java代码中进行显式配置</li>
+<li>隐式的bean发现机制和自动装配</li>
+</ul>
+<p>以XML配置的方式为例，依赖注入有四种方式：</p>
+<ol>
+<li>set注入</li>
+<li>构造器注入</li>
+<li>静态工厂方法注入</li>
+<li>实例工厂方法注入</li>
+</ol>
+<h3 id="2-1、set注入"><a href="#2-1、set注入" class="headerlink" title="2.1、set注入"></a>2.1、set注入</h3><p>这是最简单的注入方式，假设有一个SpringAction，类中需要实例化一个SpringDao对象，那么就可以定义一个private的SpringDao成员变量，然后创建SpringDao的set方法（这是ioc的注入入口）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringAction</span> </span>&#123;  </span><br><span class="line">	<span class="comment">//注入对象springDao  </span></span><br><span class="line">	<span class="keyword">private</span> SpringDao springDao;  </span><br><span class="line">	</span><br><span class="line">	<span class="comment">//一定要写被注入对象的set方法  </span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSpringDao</span><span class="params">(SpringDao springDao)</span> </span>&#123;  </span><br><span class="line">	    <span class="keyword">this</span>.springDao = springDao;  </span><br><span class="line">	&#125;  </span><br><span class="line">  </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ok</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        springDao.ok();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>随后编写spring的xml文件，<code>&lt;bean&gt;</code>中的name属性是class属性的一个别名，class属性指类的全名，因为在SpringAction中有一个公共属性Springdao，所以要在<code>&lt;bean&gt;</code>标签中创建一个<code>&lt;property&gt;</code>标签指定SpringDao。<code>&lt;property&gt;</code>标签中的name就是SpringAction类中的SpringDao属性名，ref指下面<code>&lt;bean name=&quot;springDao&quot;...&gt;</code>，这样其实是spring将SpringDaoImpl对象实例化并且调用SpringAction的setSpringDao方法将SpringDao注入：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置bean,配置后该类由spring管理--&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"springAction"</span> <span class="attr">class</span>=<span class="string">"com.bless.springdemo.action.SpringAction"</span>&gt;</span>  </span><br><span class="line">	<span class="comment">&lt;!--(1)依赖注入,配置当前类中相应的属性--&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"springDao"</span> <span class="attr">ref</span>=<span class="string">"springDao"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"springDao"</span> <span class="attr">class</span>=<span class="string">"com.bless.springdemo.dao.impl.SpringDaoImpl"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2、构造器注入"><a href="#2-2、构造器注入" class="headerlink" title="2.2、构造器注入"></a>2.2、构造器注入</h3><p>这种方式的注入是指带有参数的构造函数注入，看下面的例子，我创建了两个成员变量SpringDao和User，但是并未设置对象的set方法，所以就不能支持第一种注入方式，这里的注入方式是在SpringAction的构造函数中注入，也就是说在创建SpringAction对象时要将SpringDao和User两个参数值传进来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringAction</span> </span>&#123;  </span><br><span class="line">    <span class="comment">//注入对象springDao  </span></span><br><span class="line">    <span class="keyword">private</span> SpringDao springDao;  </span><br><span class="line">    <span class="keyword">private</span> User user;  </span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SpringAction</span><span class="params">(SpringDao springDao,User user)</span></span>&#123;  </span><br><span class="line">        <span class="keyword">this</span>.springDao = springDao;  </span><br><span class="line">        <span class="keyword">this</span>.user = user;  </span><br><span class="line">        System.out.println(<span class="string">"构造方法调用springDao和user"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">          </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span></span>&#123;  </span><br><span class="line">    	user.setName(<span class="string">"卡卡"</span>);  </span><br><span class="line">    	springDao.save(user);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在XML文件中同样不用<code>&lt;property&gt;</code>的形式，而是使用<code>&lt;constructor-arg&gt;</code>标签，ref属性同样指向其它<code>&lt;bean&gt;</code>标签的name属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置bean,配置后该类由spring管理--&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"springAction"</span> <span class="attr">class</span>=<span class="string">"com.bless.springdemo.action.SpringAction"</span>&gt;</span>  </span><br><span class="line">        <span class="comment">&lt;!--(2)创建构造器注入,如果主类有带参的构造方法则需添加此配置--&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"springDao"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"user"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"springDao"</span> <span class="attr">class</span>=<span class="string">"com.bless.springdemo.dao.impl.SpringDaoImpl"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"com.bless.springdemo.vo.User"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>剩下的两种工厂方法的注入方式没有用过，不详细介绍了。</p>
+<h3 id="2-3、自动装配"><a href="#2-3、自动装配" class="headerlink" title="2.3、自动装配"></a>2.3、自动装配</h3><p>除了xml的装配方式，实际使用中更多的是使用自动装配的方式。Spring从两个角度来实现自动化装配：</p>
+<ul>
+<li>组建扫描（component scanning）：Spring会自动发现应用上下文中锁创建的bean</li>
+<li>自动装载（autowiring）：Spring自动满足bean之间的依赖</li>
+</ul>
+<p>这两个分别对应了注解@Component和@Autowiring</p>
+<ul>
+<li>@Component：这个注解表明该类会作为组件类，并告知Spring要为这个类创建bean</li>
+<li>@AutoWiring：可以用在构造方法或set方法上，表明注入一个依赖</li>
+</ul>
+<p>比如，构造器注入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> <span class="keyword">implements</span> <span class="title">aa</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;</span><br><span class="line">	A a;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@AutoWiring</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">B</span><span class="params">(A a)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.a=a;</span><br><span class="line">	&#125; 	</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">		a.fun();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>set注入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">   <span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;</span><br><span class="line">   	A a;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@AutoWiring</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setA</span><span class="params">(A a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.a = a;</span><br><span class="line">       &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">   		a.fun();</span><br><span class="line">   	&#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-4、set注入与构造器注入的区别"><a href="#2-4、set注入与构造器注入的区别" class="headerlink" title="2.4、set注入与构造器注入的区别"></a>2.4、set注入与构造器注入的区别</h3><p><a href="http://blog.sina.com.cn/s/blog_ad071a810101g9wx.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_ad071a810101g9wx.html</a></p>
+<h3 id="Component-Service-Controller-Repository"><a href="#Component-Service-Controller-Repository" class="headerlink" title="@Component,@Service,@Controller,@Repository"></a>@Component,@Service,@Controller,@Repository</h3><p>Spring 2.5 中除了提供 @Component 注释外，还定义了几个拥有特殊语义的注释，它们分别是：</p>
+<ul>
+<li>@Repository</li>
+<li>@Service</li>
+<li>@Controller。</li>
+</ul>
+<p>在目前的 Spring 版本中，这 3 个注释和 @Component 是等效的，但是从注释类的命名上，很容易看出这 3 个注释分别和持久层、业务层和控制层（Web 层）相对应。</p>
+<h2 id="3、Spring的特殊注入"><a href="#3、Spring的特殊注入" class="headerlink" title="3、Spring的特殊注入"></a>3、Spring的特殊注入</h2><p>Spring中还有两种比较特殊的注入方式：就是通过Spring配置文件中的lookup-method和replace-method，这其实是两个方法级别的注入，和一般的属性(Property)注入是不一样的，它们注入的是方法(Method)。</p>
+<h3 id="3-1、lookup-method注入"><a href="#3-1、lookup-method注入" class="headerlink" title="3.1、lookup-method注入"></a>3.1、lookup-method注入</h3><p>lookup method注入是spring动态改变bean里方法的实现。方法执行返回的对象，使用spring内原有的这类对象替换，通过改变方法返回值来动态改变方法。内部实现为使用cglib方法，重新生成子类，重写配置的方法和返回对象，达到动态改变的效果。</p>
+<p>有种说法这个也叫方法注入，它不同于set注入和构造注入，主要是使用场景不同:一个singleton的Bean需要引用一个prototype的Bean; 一个无状态的Bean需要引用一个有状态的Bean。容器创建之后就加载了所有的Bean. 而BeanA中需要引用的BeanB是状态个不确定的Bean. 那么我们需要在每次需要BeanB的时候都重新让容器加载一次吗? </p>
+<p>cglib为我们动态的构造BeanB的子类, 当我们的BeanA需要BeanB的时候, cglib把这个子类对象给BeanA. </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CommandManager</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">process</span><span class="params">(Object commandState)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// grab a new instance of the appropriate Command interface</span></span><br><span class="line">        Command command = createCommand();</span><br><span class="line">        <span class="comment">// set the state on the (hopefully brand new) Command instance</span></span><br><span class="line">        command.setState(commandState);</span><br><span class="line">        <span class="keyword">return</span> command.execute();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// okay... but where is the implementation of this method?</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Command <span class="title">createCommand</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"command"</span> <span class="attr">class</span>=<span class="string">"fiona.apple.AsyncCommand"</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"commandManager"</span> <span class="attr">class</span>=<span class="string">"fiona.apple.CommandManager"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">lookup-method</span> <span class="attr">name</span>=<span class="string">"createCommand"</span> <span class="attr">bean</span>=<span class="string">"command"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意：由于采用cglib生成之类的方式，所以需要用来动态注入的类，不能是final修饰的；需要动态注入的方法，也不能是final修饰的。</p>
+<p>同时，还得注意command的scope的配置，如果scope配置为singleton，则每次调用方法createCommand，返回的对象都是相同的；如果scope配置为prototype，则每次调用，返回都不同。</p>
+<h3 id="3-2、replaced-method注入"><a href="#3-2、replaced-method注入" class="headerlink" title="3.2、replaced-method注入"></a>3.2、replaced-method注入</h3><p>replaced method注入是spring动态改变bean里方法的实现。需要改变的方法，使用spring内原有其他类（需要继承接口org.springframework.beans.factory.support.MethodReplacer）的逻辑，替换这个方法。通过改变方法执行逻辑来动态改变方法。内部实现为使用cglib方法，重新生成子类，重写配置的方法和返回对象，达到动态改变的效果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyValueCalculator</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">computeValue</span><span class="params">(String input)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// some real code...</span></span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// some other methods... </span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * meant to be used to override the existing computeValue(String)</span></span><br><span class="line"><span class="comment"> * implementation in MyValueCalculator</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReplacementComputeValue</span> <span class="keyword">implements</span> <span class="title">MethodReplacer</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">reimplement</span><span class="params">(Object o, Method m, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="comment">// get the input value, work with it, and return a computed result</span></span><br><span class="line">        String input = (String) args[<span class="number">0</span>];</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">return</span> ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"myValueCalculator"</span> <span class="attr">class</span>=<span class="string">"x.y.z.MyValueCalculator"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- arbitrary method replacement --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">replaced-method</span> <span class="attr">name</span>=<span class="string">"computeValue"</span> <span class="attr">replacer</span>=<span class="string">"replacementComputeValue"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg-type</span>&gt;</span>String<span class="tag">&lt;/<span class="name">arg-type</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">replaced-method</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"replacementComputeValue"</span> <span class="attr">class</span>=<span class="string">"a.b.c.ReplacementComputeValue"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意：由于采用cglib生成之类的方式，所以需要用来动态注入的类，不能是final修饰的；需要动态注入的方法，也不能是final修饰的。</p>
+<h3 id="3-3、二者的区别"><a href="#3-3、二者的区别" class="headerlink" title="3.3、二者的区别"></a>3.3、二者的区别</h3><p>两者的差别是这样的</p>
+<ol>
+<li>如果需要替换的方法没有返回值，那么只能使用replace-method来替换，而不能用lookup-method来替换。</li>
+<li>replace-method必须实现MethodReplacer接口的Bean才能替换，而lookup-method则由BeanFactory自动为我们处理了。</li>
+</ol>
+<h1 id="二、依赖注入的时机"><a href="#二、依赖注入的时机" class="headerlink" title="二、依赖注入的时机"></a>二、依赖注入的时机</h1><p>在IOC容器中依赖注入的触发有两种情况</p>
+<ul>
+<li>用户第一次调用getBean方法时触发</li>
+<li>通过设置lazy-init属性设置让容器在初始化阶段完成预实例化</li>
+</ul>
+<p>在第一篇中已经分析过，Spring中bean的作用域有五种，通过scope属性来设置，比较常见的就是singleton和prototype，前者就是单例模式。下面分析的lazy-init时机，基本都是针对singleton的bean的。</p>
+<p>关于lazy-init，很多地方都遇见过，大概就是等需要这个东西的时候再将它实例化。</p>
+<h2 id="1、spring的default-lazy-init参数"><a href="#1、spring的default-lazy-init参数" class="headerlink" title="1、spring的default-lazy-init参数"></a>1、spring的default-lazy-init参数</h2><p>ApplicationContext实现的默认行为就是在启动服务器时将所有singleton bean提前进行实例化(也就是依赖注入)。提前实例化意味着作为初始化过程的一部分，ApplicationContext实例会创建并配置所有的singleton bean。</p>
+<p>这样可以减少web服务器在运行时的负担，但是同时也会增加Spring的启动时间。 </p>
+<p>所以在Spring中有一个属性可以来配置是否开启lazy-init，就是在<code>&lt;beans&gt;</code>元素上使用<code>default-lazy-init</code>属性。按照上面的说法，Spring启动的时候没有lazy-init，所以这个属性默认的肯定是false的。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt; <span class="attr">beans</span>  <span class="attr">default-lazy-init</span>=<span class="string">"true"</span> &gt;</span>   </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>设置这个属性以后，就可以实现lazy-init，从而大大减少Spring的启动时间。</p>
+<h2 id="2、Spring的lazy-init"><a href="#2、Spring的lazy-init" class="headerlink" title="2、Spring的lazy-init"></a>2、Spring的lazy-init</h2><h3 id="2-1、lazy-init"><a href="#2-1、lazy-init" class="headerlink" title="2.1、lazy-init"></a>2.1、lazy-init</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span> </span><br><span class="line">      <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"service1"</span> <span class="attr">type</span>=<span class="string">"bean路径"</span> <span class="attr">lazy-init</span>=<span class="string">"true"</span>/&gt;</span> </span><br><span class="line">      <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"service2"</span> <span class="attr">type</span>=<span class="string">"bean路径"</span> <span class="attr">lazy-init</span>=<span class="string">"false"</span>&gt;</span> </span><br><span class="line">             <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"service1"</span> <span class="attr">ref</span>=<span class="string">"service1"</span>/&gt;</span> </span><br><span class="line">      <span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当 IoC容器启动时，service2会实例化，而service1则不会；但是但容器实例化service2时，service1也被实例化了，为什么呢，因为service2需要它。也就是说lazy-init=”true”的bean，IoC容器启动时不会实例化该bean，只有当容器需要用到时才实例化它。lazy-init有利于容器效率，对于不需要的bean可以先不管。 </p>
+<h3 id="2-2、-lt-beans-gt-与-lt-bean-gt-的优先级"><a href="#2-2、-lt-beans-gt-与-lt-bean-gt-的优先级" class="headerlink" title="2.2、&lt; beans&gt;与&lt; bean&gt;的优先级"></a>2.2、&lt; beans&gt;与&lt; bean&gt;的优先级</h3><p><strong>在同一个文件中<code>&lt;bean/&gt;</code>里面设置的优先级大于<code>&lt;beans/&gt;</code>里设置的优先级</strong></p>
+<h2 id="3、Spring的abstract"><a href="#3、Spring的abstract" class="headerlink" title="3、Spring的abstract"></a>3、Spring的abstract</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"baseTxService"</span>  <span class="attr">class</span>=<span class="string">"org.springframework.transaction.interceptor.TransactionProxyFactoryBean"</span>  <span class="attr">abstract</span>=<span class="string">"true"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>bean abstract=”true”时，该bean不会被实例化，上面的bean是个模板 </p>
+<h2 id="4、非单例bean的实例化"><a href="#4、非单例bean的实例化" class="headerlink" title="4、非单例bean的实例化"></a>4、非单例bean的实例化</h2><p>以上说的都是bean为singleton的情况。如果一个bean的scope属性为scope=”pototype”时，即使设置了lazy-init=”false”,容器启动时不实例化bean，而是调用getBean方法实例化的</p>
+<p>通过上面的分析可以知道，</p>
+<ul>
+<li>如果一个bean被设置为lazy-init</li>
+<li>在其他bean实例化的时候没有依赖它</li>
+<li>或者bean的属性不是singleton</li>
+</ul>
+<p>那么它在容器初始化阶段并不会实例化，而是第一次getBean的时候实例化，下面详细分析一下getBean的源码。</p>
+<h1 id="三、Bean实例化的三种方式"><a href="#三、Bean实例化的三种方式" class="headerlink" title="三、Bean实例化的三种方式"></a>三、Bean实例化的三种方式</h1><p>在Spring中bean的实例化有三种方式</p>
+<ol>
+<li>使用构造器实例化</li>
+<li>使用静态工厂方法实例化</li>
+<li>使用实例化工厂方法实例化</li>
+</ol>
+<h2 id="1、使用构造器实例化"><a href="#1、使用构造器实例化" class="headerlink" title="1、使用构造器实例化"></a>1、使用构造器实例化</h2><p>这种实例化的方式可能在我们平时的开发中用到的是最多的，因为在xml文件中配置简单并且也不需要额外的工厂类来实现。</p>
+<p>默认无参构造方法：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--applicationContext.xml配置：--&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"personService"</span> <span class="attr">class</span>=<span class="string">"cn.mytest.service.impl.PersonServiceBean"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果有参数，有多重参数匹配的方式</p>
+<ol>
+<li>按照参数的顺序和个数来注入</li>
+<li>按照参数类型匹配注入</li>
+<li>按照参数索引顺序注入</li>
+<li>通过参数名称注入 Spring3以上</li>
+<li>通过annotation注入<code>@ConstructorProperties</code>   Spring3以上</li>
+<li>用简化的c namespace来进行构造函数注入  spring3.1以上</li>
+</ol>
+<h3 id="1-1、按照参数的顺序和个数来注入"><a href="#1-1、按照参数的顺序和个数来注入" class="headerlink" title="1.1、按照参数的顺序和个数来注入"></a>1.1、按照参数的顺序和个数来注入</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">(Bar bar, Baz baz)</span> </span>&#123;  </span><br><span class="line">      <span class="comment">// ...  </span></span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"foo"</span> <span class="attr">class</span>=<span class="string">"x.y.Foo"</span>&gt;</span>  </span><br><span class="line">      <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"bar"</span>/&gt;</span>  </span><br><span class="line">      <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"baz"</span>/&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">bean</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bar"</span> <span class="attr">class</span>=<span class="string">"x.y.Bar"</span>/&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"baz"</span> <span class="attr">class</span>=<span class="string">"x.y.Baz"</span>/&gt;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面几种注入方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleBean</span> </span>&#123;  </span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> years;  </span><br><span class="line">  <span class="keyword">private</span> String ultimateAnswer;    </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ExampleBean</span><span class="params">(<span class="keyword">int</span> years, String ultimateAnswer)</span> </span>&#123;  </span><br><span class="line">      <span class="keyword">this</span>.years = years;  </span><br><span class="line">      <span class="keyword">this</span>.ultimateAnswer = ultimateAnswer;  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2、按照参数类型匹配注入"><a href="#1-2、按照参数类型匹配注入" class="headerlink" title="1.2、按照参数类型匹配注入"></a>1.2、按照参数类型匹配注入</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleBean"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBean"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">type</span>=<span class="string">"int"</span> <span class="attr">value</span>=<span class="string">"7500000"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span> <span class="attr">value</span>=<span class="string">"42"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-3、按照参数索引顺序注入"><a href="#1-3、按照参数索引顺序注入" class="headerlink" title="1.3、按照参数索引顺序注入"></a>1.3、按照参数索引顺序注入</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleBean"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBean"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"0"</span> <span class="attr">value</span>=<span class="string">"7500000"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">"1"</span> <span class="attr">value</span>=<span class="string">"42"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-4、spring3以上还可以通过参数名称进行注入"><a href="#1-4、spring3以上还可以通过参数名称进行注入" class="headerlink" title="1.4、spring3以上还可以通过参数名称进行注入"></a>1.4、spring3以上还可以通过参数名称进行注入</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleBean"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBean"</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"years"</span> <span class="attr">value</span>=<span class="string">"7500000"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"ultimateanswer"</span> <span class="attr">value</span>=<span class="string">"42"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-5、spring3以上通过annotation注入-ConstructorProperties"><a href="#1-5、spring3以上通过annotation注入-ConstructorProperties" class="headerlink" title="1.5、spring3以上通过annotation注入 @ConstructorProperties"></a>1.5、spring3以上通过annotation注入 <code>@ConstructorProperties</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> examples;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleBean</span> </span>&#123;  </span><br><span class="line">  <span class="meta">@ConstructorProperties</span>(&#123;<span class="string">"years"</span>, <span class="string">"ultimateAnswer"</span>&#125;)  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ExampleBean</span><span class="params">(<span class="keyword">int</span> years, String ultimateAnswer)</span> </span>&#123;  </span><br><span class="line">      <span class="keyword">this</span>.years = years;  </span><br><span class="line">      <span class="keyword">this</span>.ultimateAnswer = ultimateAnswer;  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2、使用静态工厂方法实例化"><a href="#2、使用静态工厂方法实例化" class="headerlink" title="2、使用静态工厂方法实例化"></a>2、使用静态工厂方法实例化</h2><p>根据这个中实例化方法的名称就可以知道要想通过这种方式进行实例化就要具备两个条件：</p>
+<ol>
+<li>要有工厂类及其工厂方法</li>
+<li>工厂方法是静态的</li>
+</ol>
+<p>首先创建工程类及其静态方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.mytest.service.impl;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">*创建工厂类 </span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonServiceFactory</span> </span>&#123;  </span><br><span class="line">    <span class="comment">//创建静态方法  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> PersonServiceBean <span class="title">createPersonServiceBean</span><span class="params">()</span></span>&#123;  </span><br><span class="line">         <span class="comment">//返回实例化的类的对象  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PersonServiceBean();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后再去配置spring配置文件，配置的方法和上面有点不同，这里也是关键所在</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--applicationContext.xml配置：--&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"personService1"</span> <span class="attr">class</span>=<span class="string">"cn.mytest.service.impl.PersonServiceFactory"</span> <span class="attr">factory-method</span>=<span class="string">"createPersonServiceBean"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="3、使用实例化工厂方法实例化"><a href="#3、使用实例化工厂方法实例化" class="headerlink" title="3、使用实例化工厂方法实例化"></a>3、使用实例化工厂方法实例化</h2><p>这个方法和上面的方法不同之处在与使用该实例化方式工厂方法不需要是静态的，但是在spring的配置文件中需要配置更多的内容</p>
+<p>首先创建工厂类及工厂方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.mytest.service.impl;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">*创建工厂类 </span></span><br><span class="line"><span class="comment">*/</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonServiceFactory</span> </span>&#123;  </span><br><span class="line">    <span class="comment">//创建静态方法  </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PersonServiceBean <span class="title">createPersonServiceBean1</span><span class="params">()</span></span>&#123;  </span><br><span class="line">         <span class="comment">//返回实例化的类的对象  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PersonServiceBean();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后再去配置spring配置文件，配置的方法和上面有点不同，这里也是关键所在</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--applicationContext.xml配置：--&gt;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"personServiceFactory"</span> <span class="attr">class</span>=<span class="string">"cn.mytest.service.impl.PersonServiceFactory"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"personService2"</span> <span class="attr">factory-bean</span>=<span class="string">"personServiceFactory"</span> <span class="attr">factory-method</span>=<span class="string">"createPersonServiceBean1"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里需要配置两个bean，第一个bean使用的构造器方法实例化工厂类，第二个bean中的id是实例化对象的名称，factory-bean对应的被实例化的工厂类的对象名称，也就是第一个bean的id，factory-method是非静态工厂方法。</p>
+<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://blessht.iteye.com/blog/1162131" target="_blank" rel="noopener">http://blessht.iteye.com/blog/1162131</a></p>
+<p><a href="http://rooock.iteye.com/blog/338847" target="_blank" rel="noopener">http://rooock.iteye.com/blog/338847</a></p>
+<p><a href="http://www.cnblogs.com/atwanli/articles/6154920.html" target="_blank" rel="noopener">http://www.cnblogs.com/atwanli/articles/6154920.html</a></p>
+<p><a href="http://www.cnblogs.com/wcyBlog/p/3756624.html" target="_blank" rel="noopener">http://www.cnblogs.com/wcyBlog/p/3756624.html</a></p>
+<p><a href="http://blog.csdn.net/dracotianlong/article/details/8989874" target="_blank" rel="noopener">http://blog.csdn.net/dracotianlong/article/details/8989874</a></p>
+<p><a href="http://javatea.iteye.com/blog/1337706" target="_blank" rel="noopener">http://javatea.iteye.com/blog/1337706</a></p>
+<p><a href="http://glzaction.iteye.com/blog/1286325" target="_blank" rel="noopener">http://glzaction.iteye.com/blog/1286325</a></p>
+<p><a href="http://blog.csdn.net/zhongweijian/article/details/8482131" target="_blank" rel="noopener">http://blog.csdn.net/zhongweijian/article/details/8482131</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/64644f42.html" rel="next" title="Java中XML的解析方式">
+                <i class="fa fa-chevron-left"></i> Java中XML的解析方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/50b91847.html" rel="prev" title="Spring源码分析（二）：依赖注入的实现">
+                Spring源码分析（二）：依赖注入的实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、依赖注入"><span class="nav-number">1.</span> <span class="nav-text">一、依赖注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、依赖注入与控制反转"><span class="nav-number">1.1.</span> <span class="nav-text">1、依赖注入与控制反转</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1、依赖注入"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1、依赖注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、控制反转"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2、控制反转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、依赖的注入方式"><span class="nav-number">1.2.</span> <span class="nav-text">2、依赖的注入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、set注入"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1、set注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、构造器注入"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2、构造器注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3、自动装配"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3、自动装配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4、set注入与构造器注入的区别"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4、set注入与构造器注入的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Component-Service-Controller-Repository"><span class="nav-number">1.2.5.</span> <span class="nav-text">@Component,@Service,@Controller,@Repository</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Spring的特殊注入"><span class="nav-number">1.3.</span> <span class="nav-text">3、Spring的特殊注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1、lookup-method注入"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1、lookup-method注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2、replaced-method注入"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2、replaced-method注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3、二者的区别"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3、二者的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、依赖注入的时机"><span class="nav-number">2.</span> <span class="nav-text">二、依赖注入的时机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、spring的default-lazy-init参数"><span class="nav-number">2.1.</span> <span class="nav-text">1、spring的default-lazy-init参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、Spring的lazy-init"><span class="nav-number">2.2.</span> <span class="nav-text">2、Spring的lazy-init</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、lazy-init"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1、lazy-init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、-lt-beans-gt-与-lt-bean-gt-的优先级"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2、&lt; beans&gt;与&lt; bean&gt;的优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Spring的abstract"><span class="nav-number">2.3.</span> <span class="nav-text">3、Spring的abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、非单例bean的实例化"><span class="nav-number">2.4.</span> <span class="nav-text">4、非单例bean的实例化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Bean实例化的三种方式"><span class="nav-number">3.</span> <span class="nav-text">三、Bean实例化的三种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、使用构造器实例化"><span class="nav-number">3.1.</span> <span class="nav-text">1、使用构造器实例化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1、按照参数的顺序和个数来注入"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1、按照参数的顺序和个数来注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、按照参数类型匹配注入"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2、按照参数类型匹配注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3、按照参数索引顺序注入"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3、按照参数索引顺序注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4、spring3以上还可以通过参数名称进行注入"><span class="nav-number">3.1.4.</span> <span class="nav-text">1.4、spring3以上还可以通过参数名称进行注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5、spring3以上通过annotation注入-ConstructorProperties"><span class="nav-number">3.1.5.</span> <span class="nav-text">1.5、spring3以上通过annotation注入 @ConstructorProperties</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、使用静态工厂方法实例化"><span class="nav-number">3.2.</span> <span class="nav-text">2、使用静态工厂方法实例化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、使用实例化工厂方法实例化"><span class="nav-number">3.3.</span> <span class="nav-text">3、使用实例化工厂方法实例化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、参考地址"><span class="nav-number">4.</span> <span class="nav-text">四、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'paine1690',
+            repo: 'paine1690.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bf2440c072f1b1269a712a8f831d8c3c74d0a58d',
+            
+                client_id: 'b90e00c88abe9c1cff7b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

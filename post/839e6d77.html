@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="操作系统,Linux," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在面试题中经常遇见chmod 777 a.txt 之类的命令。 一、chmod命令指令名称 : chmod使用权限 : 所有使用者使用方式 : chmod [-cfvR][–help][–version] mode file…  下面分别介绍下各个参数的意义 1、mode权限设定字串，格式如下 : [ugoa…][[+-=][rwxX]…][,…] 其中：  +：表示增加权限 -：表示取消权限 =">
+<meta name="keywords" content="操作系统,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux中的chmod命令与文件权限">
+<meta property="og:url" content="http://yoursite.com/post/839e6d77.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="在面试题中经常遇见chmod 777 a.txt 之类的命令。 一、chmod命令指令名称 : chmod使用权限 : 所有使用者使用方式 : chmod [-cfvR][–help][–version] mode file…  下面分别介绍下各个参数的意义 1、mode权限设定字串，格式如下 : [ugoa…][[+-=][rwxX]…][,…] 其中：  +：表示增加权限 -：表示取消权限 =">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-04-01T02:45:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux中的chmod命令与文件权限">
+<meta name="twitter:description" content="在面试题中经常遇见chmod 777 a.txt 之类的命令。 一、chmod命令指令名称 : chmod使用权限 : 所有使用者使用方式 : chmod [-cfvR][–help][–version] mode file…  下面分别介绍下各个参数的意义 1、mode权限设定字串，格式如下 : [ugoa…][[+-=][rwxX]…][,…] 其中：  +：表示增加权限 -：表示取消权限 =">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/839e6d77.html"/>
+
+
+
+
+
+  <title>Linux中的chmod命令与文件权限 | paine1690</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/839e6d77.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux中的chmod命令与文件权限</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T00:00:00+08:00">
+                2017-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/839e6d77.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/post/839e6d77.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/post/839e6d77.html" class="leancloud_visitors" data-flag-title="Linux中的chmod命令与文件权限">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在面试题中经常遇见chmod 777 a.txt 之类的命令。</p>
+<h1 id="一、chmod命令"><a href="#一、chmod命令" class="headerlink" title="一、chmod命令"></a>一、chmod命令</h1><p>指令名称 : chmod<br>使用权限 : 所有使用者<br>使用方式 : chmod [-cfvR][–help][–version] mode file… </p>
+<p>下面分别介绍下各个参数的意义</p>
+<h2 id="1、mode"><a href="#1、mode" class="headerlink" title="1、mode"></a>1、mode</h2><p>权限设定字串，格式如下 : [ugoa…][[+-=][rwxX]…][,…]</p>
+<p>其中：</p>
+<ul>
+<li>+：表示增加权限</li>
+<li>-：表示取消权限</li>
+<li>=：表示唯一设定权限。 </li>
+</ul>
+<h3 id="用户组"><a href="#用户组" class="headerlink" title="用户组"></a>用户组</h3><p>在Linux中的每个用户必须属于一个组，不能独立于组外。在Linux中每个文件有所有者、所在组、其它组的概念</p>
+<ul>
+<li>u：表示该档案的拥有者(user)</li>
+<li>g：表示与该档案的拥有者属于同一个群体者(group)</li>
+<li>o：表示其他以外的人(other)</li>
+<li>a：表示这三者皆是(all)</li>
+</ul>
+<h3 id="访问权限"><a href="#访问权限" class="headerlink" title="访问权限"></a>访问权限</h3><ul>
+<li>r：表示可读取</li>
+<li>w：表示可写入</li>
+<li>x：表示可执行</li>
+<li>X：表示只有当该档案是个子目录或者该档案已经被设定过为可执行。 </li>
+</ul>
+<h2 id="2、其他参数"><a href="#2、其他参数" class="headerlink" title="2、其他参数"></a>2、其他参数</h2><ul>
+<li>-c : 若该档案权限确实已经更改，才显示其更改动作 </li>
+<li>-f : 若该档案权限无法被更改也不要显示错误讯息 </li>
+<li>-v : 显示权限变更的详细资料 </li>
+<li>-R : 对目前目录下的所有档案与子目录进行相同的权限变更(即以递回的方式逐个变更) </li>
+<li>–help : 显示辅助说明 </li>
+<li>version : 显示版本 </li>
+</ul>
+<h2 id="3、举例"><a href="#3、举例" class="headerlink" title="3、举例"></a>3、举例</h2><p>将档案 file1.txt 设为所有人皆可读取 : </p>
+<blockquote>
+<p>chmod ugo+r file1.txt  </p>
+</blockquote>
+<p>将档案 file1.txt 设为所有人皆可读取 : </p>
+<blockquote>
+<p>chmod a+r file1.txt  </p>
+</blockquote>
+<p>将档案 file1.txt 与 file2.txt 设为该档案拥有者，与其所属同一个群体者可写入，但其他以外的人则不可写入 : </p>
+<blockquote>
+<p>chmod ug+w,o-w file1.txt file2.txt  </p>
+</blockquote>
+<p>将 ex1.py 设定为只有该档案拥有者可以执行 : </p>
+<blockquote>
+<p>chmod u+x ex1.py  </p>
+</blockquote>
+<p>将目前目录下的所有档案与子目录皆设为任何人可读取 : </p>
+<blockquote>
+<p>chmod -R a+r *  </p>
+</blockquote>
+<h2 id="4、数字表示"><a href="#4、数字表示" class="headerlink" title="4、数字表示"></a>4、数字表示</h2><p>chmod也可以用数字来表示权限如 chmod 777 file </p>
+<p>语法为：chmod abc file<br>其中a,b,c各为一个数字，分别表示User、Group、及Other的权限。<br>r=4，w=2，x=1<br>若要rwx属性则4+2+1=7；<br>若要rw-属性则4+2=6；<br>若要r-x属性则4+1=7。 </p>
+<p>例如:</p>
+<p><code>chmod a=rwx file</code>  和<code>chmod 777 file</code>  效果相同<br><code>chmod ug=rwx,o=x file</code>  和<code>chmod 771 file</code>  效果相同 </p>
+<h3 id="chmod-755和chmod-4755的区别"><a href="#chmod-755和chmod-4755的区别" class="headerlink" title="chmod 755和chmod 4755的区别"></a>chmod 755和chmod 4755的区别</h3><p>chmod 4755 filename可以使此程序具有root权限</p>
+<p>chmod 755 设置用户的权限为：</p>
+<p>1.文件所有者可读可写可执行<br>2.与文件所有者同属一个用户组的其他用户可读可执行<br>3.其它用户组可读可执行</p>
+<p>chmod 4755与chmod 755 的区别在于开头多了一位，这个4表示其他用户执行文件时，具有与所有者相当的权限。</p>
+<p>例如：root用户创建了一个上网认证程序netlogin，如果其他用户要上网也要用到这个程序，那就需要root用户运行chmod 755 netlogin命令使其他用户也能运行netlogin。</p>
+<p>但是netlogin执行时可能需要访问一些只有root用户才有权访问的文件，那么其他用户执行netlogin时可能因为权限不够还是不能上网。</p>
+<p>这种情况下，就可以用 chmod 4755 netlogin 设置其他用户在执行netlogin也有root用户的权限，从而顺利上网。</p>
+<h1 id="二、查看权限"><a href="#二、查看权限" class="headerlink" title="二、查看权限"></a>二、查看权限</h1><h2 id="1、ls-l"><a href="#1、ls-l" class="headerlink" title="1、ls-l"></a>1、ls-l</h2><p>查看权限的命令是<code>la -l</code></p>
+<p>显示的格式如下：</p>
+<blockquote>
+<p>-rwxrw-r‐-1 root root 1213 Feb 2 09:39 abc</p>
+</blockquote>
+<p>前面的10个字符确定了它的权限</p>
+<ul>
+<li>第一个字符代表文件类型：<ul>
+<li>-：代表文件</li>
+<li>d：代表目录</li>
+<li>|：代表链接</li>
+</ul>
+</li>
+<li>后面9个字符，3个位一组：表示不同用户类型的权限：<ul>
+<li>第一组rwx：文件<strong>所有者</strong>的权限是读、写和执行 </li>
+<li>第二组rw-：与文件所有者<strong>同一组</strong>的用户的权限是读、写但不能执行 </li>
+<li>第三组r–：不与文件所有者同组的<strong>其他用户</strong>的权限是读不能写和执行 </li>
+</ul>
+</li>
+</ul>
+<p>后面的代表了其他的信息</p>
+<ul>
+<li>1 表示连接的文件数</li>
+<li>root 表示用户</li>
+<li>root表示用户所在的组</li>
+<li>1213 表示文件大小（字节）</li>
+<li>Feb 2 09:39 表示最后修改日期</li>
+<li>abc 表示文件名</li>
+</ul>
+<h2 id="2、目录权限"><a href="#2、目录权限" class="headerlink" title="2、目录权限"></a>2、目录权限</h2><p>关于目录权限，r(浏览目录)和x(进入目录)是有区别的，尤其是和cd命令一起</p>
+<ul>
+<li>r允许你列出目录内的文件</li>
+<li>x只是允许你进入目录.</li>
+</ul>
+<ul>
+<li>如果只有x权限，没有r权限，可以执行cd命令进入目录，但是在目录内无法执行ls命令</li>
+<li>如果只有r权限，没有x权限，那么根本无法使用cd命令进入目录</li>
+</ul>
+<h1 id="三、参考地址"><a href="#三、参考地址" class="headerlink" title="三、参考地址"></a>三、参考地址</h1><p><a href="http://www.cnblogs.com/chengJAVA/p/4319420.html" target="_blank" rel="noopener">http://www.cnblogs.com/chengJAVA/p/4319420.html</a></p>
+<p><a href="http://www.cnblogs.com/123-/p/4189072.html" target="_blank" rel="noopener">http://www.cnblogs.com/123-/p/4189072.html</a></p>
+<p><a href="http://blog.csdn.net/water_cow/article/details/7174881" target="_blank" rel="noopener">http://blog.csdn.net/water_cow/article/details/7174881</a></p>
+<p><a href="http://www.linuxidc.com/Linux/2014-10/107874.htm" target="_blank" rel="noopener">http://www.linuxidc.com/Linux/2014-10/107874.htm</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/66a03750.html" rel="next" title="矩阵相乘与矩阵快速幂">
+                <i class="fa fa-chevron-left"></i> 矩阵相乘与矩阵快速幂
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/e4a28b5a.html" rel="prev" title="Java中的内存泄漏">
+                Java中的内存泄漏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、chmod命令"><span class="nav-number">1.</span> <span class="nav-text">一、chmod命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、mode"><span class="nav-number">1.1.</span> <span class="nav-text">1、mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户组"><span class="nav-number">1.1.1.</span> <span class="nav-text">用户组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问权限"><span class="nav-number">1.1.2.</span> <span class="nav-text">访问权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、其他参数"><span class="nav-number">1.2.</span> <span class="nav-text">2、其他参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、举例"><span class="nav-number">1.3.</span> <span class="nav-text">3、举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、数字表示"><span class="nav-number">1.4.</span> <span class="nav-text">4、数字表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod-755和chmod-4755的区别"><span class="nav-number">1.4.1.</span> <span class="nav-text">chmod 755和chmod 4755的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、查看权限"><span class="nav-number">2.</span> <span class="nav-text">二、查看权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、ls-l"><span class="nav-number">2.1.</span> <span class="nav-text">1、ls-l</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、目录权限"><span class="nav-number">2.2.</span> <span class="nav-text">2、目录权限</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、参考地址"><span class="nav-number">3.</span> <span class="nav-text">三、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'paine1690',
+            repo: 'paine1690.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bf2440c072f1b1269a712a8f831d8c3c74d0a58d',
+            
+                client_id: 'b90e00c88abe9c1cff7b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

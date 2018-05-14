@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java基础知识," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Java中的String类型为什么是final的? 腾讯二面的时候被问到这个问题，回答的不是很好。以前只是知道String类是不可变的，不可被继承的，但是没有深入研究过，immutable和final并不是一回事，为什么一定要声明为final的。 首先我觉得String类是immutable不可变的，而final则是它不可变的具体实现。所以这其实是两个问题  为什么String类是不可变的？ 为什">
+<meta name="keywords" content="Java基础知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的final关键字与String类">
+<meta property="og:url" content="http://yoursite.com/post/9ef7d0ff.html">
+<meta property="og:site_name" content="paine1690">
+<meta property="og:description" content="Java中的String类型为什么是final的? 腾讯二面的时候被问到这个问题，回答的不是很好。以前只是知道String类是不可变的，不可被继承的，但是没有深入研究过，immutable和final并不是一回事，为什么一定要声明为final的。 首先我觉得String类是immutable不可变的，而final则是它不可变的具体实现。所以这其实是两个问题  为什么String类是不可变的？ 为什">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-21T01:55:53.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java中的final关键字与String类">
+<meta name="twitter:description" content="Java中的String类型为什么是final的? 腾讯二面的时候被问到这个问题，回答的不是很好。以前只是知道String类是不可变的，不可被继承的，但是没有深入研究过，immutable和final并不是一回事，为什么一定要声明为final的。 首先我觉得String类是immutable不可变的，而final则是它不可变的具体实现。所以这其实是两个问题  为什么String类是不可变的？ 为什">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/9ef7d0ff.html"/>
+
+
+
+
+
+  <title>Java中的final关键字与String类 | paine1690</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5678dc770cada2ed261e47e7b0395fc1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/9ef7d0ff.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java中的final关键字与String类</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T00:00:00+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/9ef7d0ff.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/post/9ef7d0ff.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/post/9ef7d0ff.html" class="leancloud_visitors" data-flag-title="Java中的final关键字与String类">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Java中的String类型为什么是final的?</p>
+<p>腾讯二面的时候被问到这个问题，回答的不是很好。以前只是知道String类是不可变的，不可被继承的，但是没有深入研究过，immutable和final并不是一回事，为什么一定要声明为final的。</p>
+<p>首先我觉得String类是immutable不可变的，而final则是它不可变的具体实现。所以这其实是两个问题</p>
+<ol>
+<li>为什么String类是不可变的？</li>
+<li>为什么final能保证它的不可变性质？</li>
+</ol>
+<p>下面分别看一下两个问题</p>
+<h1 id="一、final关键字"><a href="#一、final关键字" class="headerlink" title="一、final关键字"></a>一、final关键字</h1><p>Java中的final关键字主要用在三个地方：</p>
+<ol>
+<li>数据</li>
+<li>方法</li>
+<li>类</li>
+</ol>
+<h2 id="1、final数据"><a href="#1、final数据" class="headerlink" title="1、final数据"></a>1、final数据</h2><p>之所以叫final数据而不是final变量，因为Java中分为基本数据类型和对象，final在修饰这两个类的时候也是有一些差别的。</p>
+<h3 id="1-1、编译期常量"><a href="#1-1、编译期常量" class="headerlink" title="1.1、编译期常量"></a>1.1、编译期常量</h3><p>对于编译期常量编译器可以将该常量的值带入任何可能用到的计算式中，也就是 说可以在编译时执行计算式，这减轻了一些运行时的负担。</p>
+<p>在Java中，这类常量必须是基本数据类型，并且以关键字final表示，在对这个常量进行定义的时候就必须进行赋值。</p>
+<p>一个即是static又是final的域只占一段不能改变的存储空间，且变量名全部用大写字母明明，字母之间用下划线隔开。</p>
+<h3 id="1-2、final对象"><a href="#1-2、final对象" class="headerlink" title="1.2、final对象"></a>1.2、final对象</h3><p>对于基本类型，final使数值恒定不变。而对于对象引用，final使<strong>引用</strong>恒定不变。一旦引用被初始化指向一个对象，就再无法把它改为指向另一个对象，然而对象自身却是可以被修改的。下面会有例子说明。</p>
+<h3 id="1-3、空白final"><a href="#1-3、空白final" class="headerlink" title="1.3、空白final"></a>1.3、空白final</h3><p>Java中的“空白final”是指：被声明为final但又未给定初值的域。但是无论上面情况，编译器都确保空白final在使用前必须被初始化。</p>
+<p>空白的final关键字提供了很大的灵活性，一个类的final域可以根据对象而有所不同却又保持其恒定不变的特性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlankFinal</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> a;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.a=a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> i=<span class="number">0</span>;<span class="comment">//直接初始化</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> j;<span class="comment">//未初始化的空白final</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> A a;<span class="comment">//未初始化的空白final</span></span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BlankFinal</span><span class="params">()</span></span>&#123;<span class="comment">//空白final必须在构造器中赋值，不然编译器会报错</span></span><br><span class="line">		j=<span class="number">1</span>; </span><br><span class="line">		a=<span class="keyword">new</span> A(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BlankFinal</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="comment">//空白final必须在构造器中赋值，不然编译器会报错</span></span><br><span class="line">		j=x;</span><br><span class="line">		a=<span class="keyword">new</span> A(x);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>必须在域的定义处或者构造器中对final赋值。</p>
+<h3 id="1-4、final参数"><a href="#1-4、final参数" class="headerlink" title="1.4、final参数"></a>1.4、final参数</h3><p>Java还允许在参数列表中以声明的方式将参数指明为final，意味着无法在方法中更改参数引用所指向的对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> i)</span></span>&#123;<span class="comment">//编译报错</span></span><br><span class="line">	i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2、final方法"><a href="#2、final方法" class="headerlink" title="2、final方法"></a>2、final方法</h2><p>使用final方法的原因有两个</p>
+<p>第一就是把方法锁定，以防止任何继承类修改它的含义。确保在继承中是方法行为保持不变，并不会被覆盖。</p>
+<p>第二就是在早期的Java实现中，如果一个方法指明为final，就是同意编译器将针对该方法的所有调用都转为内嵌调用。</p>
+<h3 id="2-1、private与final"><a href="#2-1、private与final" class="headerlink" title="2.1、private与final"></a>2.1、private与final</h3><p>类中所有的private方法都隐式地指定为final。给private方法添加final关键字，不会有任何意义。</p>
+<p>如果试图覆盖一个private方法，编译器不会给出错误，但是还是会有问题的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlankFinal</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		OverridingPrivate2 op2=<span class="keyword">new</span> OverridingPrivate2();</span><br><span class="line">		op2.f();<span class="comment">//OverridingPrivate2.f()</span></span><br><span class="line">		OverridingPrivate op=(OverridingPrivate)op2;<span class="comment">//向上转型</span></span><br><span class="line">		op.f();<span class="comment">//The method f() from the type OverridingPrivate is not visible</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WithFinals</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"WithFinals.f()"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OverridingPrivate</span> <span class="keyword">extends</span> <span class="title">WithFinals</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"OverridingPrivate.f()"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OverridingPrivate2</span> <span class="keyword">extends</span> <span class="title">OverridingPrivate</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"OverridingPrivate2.f()"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果一个基类中的方法是private的，那么对子类来说是隐藏不可见的。</p>
+<p>即使在子类中定义了一个名称相同的方法，也只是生成了一个名称相同的方法，但是并没有重写该方法。</p>
+<h2 id="3-final类"><a href="#3-final类" class="headerlink" title="3.final类"></a>3.final类</h2><p>将一个类定义为final，则说明该类是不可继承的。最常见的肯定就是下面要介绍的String类了。</p>
+<h1 id="二、String类与不可变性"><a href="#二、String类与不可变性" class="headerlink" title="二、String类与不可变性"></a>二、String类与不可变性</h1><p>《Effictive Java》中提到，不可变类只是其实例不能被修改的类。每个实例中包含的所有信息都必须在创建该实例的时候就提供，并在对象的整个生命周期内固定不变。</p>
+<p>Java类库中包含许多不可变的类，其中有：</p>
+<ul>
+<li>String</li>
+<li>基本数据类型的包装类</li>
+<li>BigInteger</li>
+<li>BigDecimal</li>
+</ul>
+<p>为了使类成为不可变，要遵循下面五条规则：</p>
+<ol>
+<li>不要提供任何会修改对象状态的方法</li>
+<li>保证类不会被扩展。一般做法是使这个类成为final的</li>
+<li>使所有的域都是final的</li>
+<li>使所有的域都成为私有的</li>
+<li>确保对于任何可变组件的互斥访问</li>
+</ol>
+<p>不可变类对象的几点好处：</p>
+<ul>
+<li>简单：不可变对象只有一种状态，即被创建时的状态</li>
+<li>不可变对象本质上是线程安全的，不需要同步</li>
+<li>不可变对象可以自由共享</li>
+<li>不可变对象之间可以共享内部信息。比如BigInteger，数值相同符号不同，可以共享数值</li>
+</ul>
+<p>下面以String类的代表来具体进行分析</p>
+<p>String类声明为final主要是是为了保证其不可变性。</p>
+<p>我个人认为：String在Java中的对象，但是它在使用上其实更接近基本数据类型，所以将它设计成不可变的对象类型，最大程度上接近了基本数据类型，仔细想想面向对象的特性继承封装多态，其实在String类中完全没有体现，所以我觉得它虽然实现上是一个类，但设计者还是想把它当做基本数据类型来使用。</p>
+<p>在Java中Long, Double, Integer等类也是final的，也说明了这个问题。</p>
+<h2 id="1、什么是不可变"><a href="#1、什么是不可变" class="headerlink" title="1、什么是不可变"></a>1、什么是不可变</h2><p>String不可变很简单。给一个字符串“a”赋值“b”或者执行+操作变成“aa”，不会在原来的内存地址上修改数据，而是生成一个新的String对象然后指向这个新对象。</p>
+<h2 id="2、如何实现不可变"><a href="#2、如何实现不可变" class="headerlink" title="2、如何实现不可变"></a>2、如何实现不可变</h2><p>先来看一下String类的定义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt;, <span class="title">CharSequence</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** The value is used for character storage. */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">char</span> value[];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Cache the hash code for the string */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> hash; <span class="comment">// Default to 0</span></span><br></pre></td></tr></table></figure>
+<p>String类声明为final，说明是不可被继承的，而String类的实现，底层是一个char数组，也被声明为final，说明该数组是不可变的。</p>
+<p>上面提到了final修饰一个对象的时候保证指向的的引用不变，但是对象自身是可以改变的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> a=<span class="number">1</span>;</span><br><span class="line">a=<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>这样编译会报错，因为final的变量不可以被再次赋值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">int</span>[] a=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line">a[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">System.out.println(Arrays.toString(a));</span><br></pre></td></tr></table></figure>
+<p>输出为[0, 2, 3, 4]。这说明虽然a指向的数组对象无法改变，但是数组对象内部的结构却可以改变。</p>
+<p>再回到String类中。通过上面这个例子可以知道，如果单纯的把String类中的char数组设置为final，那么这个String的值依然是可以改变的，所以设计人员从以下两个方面进行了保护：</p>
+<ol>
+<li>数组声明为private，保证最高的访问权限，在自己类内部的方法中也保证不改变这个char数组的值</li>
+<li>把String类声明为final， 防止继承的子类对它的equals等关键方法进行重写</li>
+</ol>
+<h2 id="3、不可变的好处"><a href="#3、不可变的好处" class="headerlink" title="3、不可变的好处"></a>3、不可变的好处</h2><p>String类型设计为不可变主要有以下两个方面：</p>
+<ul>
+<li>安全方面</li>
+<li>性能方面</li>
+</ul>
+<h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><p>这个方面很好理解，最熟悉的字符串常量池的存在就是为了性能优化，而如果字符串是可变的，那么常量池存在的意义也就不大了。</p>
+<p>字符串的分配，和其他的对象分配一样，耗费高昂的时间与空间代价。JVM为了提高性能和减少内存开销，在实例化字符串常量的时候进行了一些优化。为了减少在JVM中创建的字符串的数量，字符串类维护了一个字符串池，每当代码创建字符串常量时，JVM会首先检查字符串常量池。如果字符串已经存在池中，就返回池中的实例引用。如果字符串不在池中，就会实例化一个字符串并放到池中。Java能够进行这样的优化是因为字符串是不可变的，可以不用担心数据冲突进行共享。</p>
+<p>转自<a href="http://www.importnew.com/10756.html" target="_blank" rel="noopener">http://www.importnew.com/10756.html</a></p>
+<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><h3 id="3-1、线程安全性"><a href="#3-1、线程安全性" class="headerlink" title="3.1、线程安全性"></a>3.1、线程安全性</h3><p>如果一个对象可以被多个线程访问到，但是并没有被声明为final，那么你需要提供额外的线程安全机制。而String类直接声明为final，即不可改变。就不必再额外考虑线程安全的问题。</p>
+<h3 id="3-2、String作为参数"><a href="#3-2、String作为参数" class="headerlink" title="3.2、String作为参数"></a>3.2、String作为参数</h3><p>String类的变量经常作为参数进行传递，而Java中对象类型的传递的则是引用，下面来看一个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">(String s)</span></span>&#123;</span><br><span class="line">	s+=<span class="string">" in fun"</span>;</span><br><span class="line">	System.out.println(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">(StringBuilder s)</span></span>&#123;</span><br><span class="line">	s.append(<span class="string">" in fun"</span>);</span><br><span class="line">	System.out.println(s);</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	String s1=<span class="string">"s1"</span>;</span><br><span class="line">	StringBuilder s2=<span class="keyword">new</span> StringBuilder(<span class="string">"s2"</span>);</span><br><span class="line">	fun(s1);</span><br><span class="line">	fun(s2);</span><br><span class="line">	System.out.println(s1);</span><br><span class="line">	System.out.println(s2);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s1 in fun</span><br><span class="line">s2 in fun</span><br><span class="line">s1</span><br><span class="line">s2 in fun</span><br></pre></td></tr></table></figure>
+<p>可以看出，与可变的StringBuilder相比，String类作为参数传到另一个方法中之后，无论该方法在传入字符串的基础上如何操作，因为String的不可变性，都会在方法中生成一个新的对象，而对传入的对象没有任何影响。</p>
+<h3 id="3-2、String作为key"><a href="#3-2、String作为key" class="headerlink" title="3.2、String作为key"></a>3.2、String作为key</h3><p>在Java中很多地方都是以String类型的对象作为参数的，比如Spring中的bean的name，Socket或者数据库连接的名称等等，还有就是HashMap或者HashSet的key，这些以String类型对象为参数的场景中，如果String是可变的，那么带来很多问题。下面用一个StringBuilder作为例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;		</span><br><span class="line">	Map&lt;StringBuilder, Integer&gt; map=<span class="keyword">new</span> HashMap&lt;StringBuilder, Integer&gt;();</span><br><span class="line">	StringBuilder s1=<span class="keyword">new</span> StringBuilder(<span class="string">"aab"</span>);</span><br><span class="line">	StringBuilder s2=<span class="keyword">new</span> StringBuilder(<span class="string">"aa"</span>);</span><br><span class="line">	map.put(s1, <span class="number">1</span>);</span><br><span class="line">	map.put(s2, <span class="number">2</span>);</span><br><span class="line">	s2.append(<span class="string">"b"</span>);</span><br><span class="line">	System.out.println(map.keySet());<span class="comment">//[aab, aab]</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>从输出结果可以看出，会出现两个key值相等的情况。当然，这个例子并不完全恰当，因为StringBuilder其实没有重写equals方法，所以在map中查找的时候比较的是指向的对象而不是想String一样比较字符串是否相同，这个例子主要体现的就是以String作为key的时候，如果是可变的，那么会出现key值相同的情况。</p>
+<h1 id="三、参考地址"><a href="#三、参考地址" class="headerlink" title="三、参考地址"></a>三、参考地址</h1><p>《Java编程思想》第四版</p>
+<p>《Effictive Java》第二版</p>
+<p><a href="https://www.zhihu.com/question/31345592" target="_blank" rel="noopener">https://www.zhihu.com/question/31345592</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java基础知识/" rel="tag"># Java基础知识</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/8c537473.html" rel="next" title="Redis中的数据结构与对象">
+                <i class="fa fa-chevron-left"></i> Redis中的数据结构与对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/b7d300b9.html" rel="prev" title="树莓派安装homekit">
+                树莓派安装homekit <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、final关键字"><span class="nav-number">1.</span> <span class="nav-text">一、final关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、final数据"><span class="nav-number">1.1.</span> <span class="nav-text">1、final数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1、编译期常量"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1、编译期常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、final对象"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2、final对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3、空白final"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3、空白final</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4、final参数"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4、final参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、final方法"><span class="nav-number">1.2.</span> <span class="nav-text">2、final方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、private与final"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1、private与final</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-final类"><span class="nav-number">1.3.</span> <span class="nav-text">3.final类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、String类与不可变性"><span class="nav-number">2.</span> <span class="nav-text">二、String类与不可变性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、什么是不可变"><span class="nav-number">2.1.</span> <span class="nav-text">1、什么是不可变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、如何实现不可变"><span class="nav-number">2.2.</span> <span class="nav-text">2、如何实现不可变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、不可变的好处"><span class="nav-number">2.3.</span> <span class="nav-text">3、不可变的好处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能"><span class="nav-number">2.4.</span> <span class="nav-text">性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全"><span class="nav-number">2.5.</span> <span class="nav-text">安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1、线程安全性"><span class="nav-number">2.5.1.</span> <span class="nav-text">3.1、线程安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2、String作为参数"><span class="nav-number">2.5.2.</span> <span class="nav-text">3.2、String作为参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2、String作为key"><span class="nav-number">2.5.3.</span> <span class="nav-text">3.2、String作为key</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、参考地址"><span class="nav-number">3.</span> <span class="nav-text">三、参考地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'paine1690',
+            repo: 'paine1690.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bf2440c072f1b1269a712a8f831d8c3c74d0a58d',
+            
+                client_id: 'b90e00c88abe9c1cff7b'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
