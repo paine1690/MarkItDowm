@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ArrayList源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -326,8 +326,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/ArrayList源码分析/" itemprop="url">
-                  ArrayList源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">
+                  LinkedHashMap源码分析
                 </a>
               
             
@@ -383,7 +383,7 @@
 
           
           
-             <span id="/2016/11/12/Java/JDK/ArrayList源码分析/" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
+             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -414,14 +414,12 @@
       
         
           
-          ArrayList是Java集合中最常用的，基于一个数组实现的，容量可以动态增长。
-ArrayList不是线程安全的，只能在单线程环境下使用。        
-本文以jdk1.8的源码为例，分析其实现机制。
-一、基本属性与构造函数12345678910111213141516171819202122
+          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
+LinkedHashMap继承自HashMap，关于map的操作基本一样
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/ArrayList源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -786,7 +784,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/PriorityQueue源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedList源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -811,8 +809,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="url">
-                  PriorityQueue源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="url">
+                  LinkedList源码分析
                 </a>
               
             
@@ -868,7 +866,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/PriorityQueue源码分析/" class="leancloud_visitors" data-flag-title="PriorityQueue源码分析">
+             <span id="/2016/11/12/Java/JDK/LinkedList源码分析/" class="leancloud_visitors" data-flag-title="LinkedList源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -899,12 +897,11 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          Priorityqueue是Java7后加入的优先级队列，继承自AbstractQueue，而AbstractQueue，实现了Queue接口，也就是说Priorityqueue是实现了Queue接口的，带有优先级的队列。
-内部实现上采用的是最小堆，即每次取出优先级最小的元素。相对来说实现上比较简单
+          分析完Arraylist后来看一下List的另一种实现LinkedList。LinkedList底层使用的是双向链表结构，内部类定义了节点结构，一个头结点和尾节点表示队列的开始和结尾。与ArrayList不同的是，LinkedList除了实现了List接口外，还实现了Deque接口，而Deque接口
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/LinkedList源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1107,7 +1104,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedList源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ArrayList源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1132,8 +1129,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="url">
-                  LinkedList源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/ArrayList源码分析/" itemprop="url">
+                  ArrayList源码分析
                 </a>
               
             
@@ -1189,7 +1186,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/LinkedList源码分析/" class="leancloud_visitors" data-flag-title="LinkedList源码分析">
+             <span id="/2016/11/12/Java/JDK/ArrayList源码分析/" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1220,11 +1217,14 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          分析完Arraylist后来看一下List的另一种实现LinkedList。LinkedList底层使用的是双向链表结构，内部类定义了节点结构，一个头结点和尾节点表示队列的开始和结尾。与ArrayList不同的是，LinkedList除了实现了List接口外，还实现了Deque接口，而Deque接口
+          ArrayList是Java集合中最常用的，基于一个数组实现的，容量可以动态增长。
+ArrayList不是线程安全的，只能在单线程环境下使用。        
+本文以jdk1.8的源码为例，分析其实现机制。
+一、基本属性与构造函数12345678910111213141516171819202122
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/LinkedList源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/ArrayList源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2146,17 +2146,6 @@ TCP是因特网
 
 
 
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
   
 
 
