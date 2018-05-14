@@ -1238,7 +1238,7 @@ ApplicationContext是Spring的核心，在介绍Spring的时候知道它是一�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Database/数据库事务与隔离级别/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Database/数据库中乐观锁与悲观锁​/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -1257,7 +1257,7 @@ ApplicationContext是Spring的核心，在介绍Spring的时候知道它是一�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/03/Database/数据库事务与隔离级别/" itemprop="url">数据库事务与隔离级别</a></h1>
+                <a class="post-title-link" href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" itemprop="url">数据库中的乐观锁与悲观锁</a></h1>
         
 
         <div class="post-meta">
@@ -1309,7 +1309,7 @@ ApplicationContext是Spring的核心，在介绍Spring的时候知道它是一�
 
           
           
-             <span id="/2017/01/03/Database/数据库事务与隔离级别/" class="leancloud_visitors" data-flag-title="数据库事务与隔离级别">
+             <span id="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" class="leancloud_visitors" data-flag-title="数据库中的乐观锁与悲观锁">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1342,15 +1342,13 @@ ApplicationContext是Spring的核心，在介绍Spring的时候知道它是一�
       
         
           
-          一、数据库事务事务是数据库中最常见的概念
-1、事务的特性事务很经典的就是ACID四个特性：
+          1、定义好像没有找到很官方的关于乐观锁与悲观锁的定义
 
-原子性Atomic：
-原子性指组成一个事务的多个数据库操作是一个不可分割的原子单元，只有所有的操作执行成功，整个事务才提交，事务中任何一个数据库操作失败，已经执行的任何操作都必须撤销，让数据库返回到初始状态
+悲观锁：顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/03/Database/数据库事务与隔离级别/#more" rel="contents">
+            <a class="btn" href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1562,7 +1560,7 @@ ApplicationContext是Spring的核心，在介绍Spring的时候知道它是一�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Database/数据库中乐观锁与悲观锁​/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Database/数据库事务与隔离级别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -1581,7 +1579,7 @@ ApplicationContext是Spring的核心，在介绍Spring的时候知道它是一�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" itemprop="url">数据库中的乐观锁与悲观锁</a></h1>
+                <a class="post-title-link" href="/2017/01/03/Database/数据库事务与隔离级别/" itemprop="url">数据库事务与隔离级别</a></h1>
         
 
         <div class="post-meta">
@@ -1633,7 +1631,7 @@ ApplicationContext是Spring的核心，在介绍Spring的时候知道它是一�
 
           
           
-             <span id="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" class="leancloud_visitors" data-flag-title="数据库中的乐观锁与悲观锁">
+             <span id="/2017/01/03/Database/数据库事务与隔离级别/" class="leancloud_visitors" data-flag-title="数据库事务与隔离级别">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1666,13 +1664,15 @@ ApplicationContext是Spring的核心，在介绍Spring的时候知道它是一�
       
         
           
-          1、定义好像没有找到很官方的关于乐观锁与悲观锁的定义
+          一、数据库事务事务是数据库中最常见的概念
+1、事务的特性事务很经典的就是ACID四个特性：
 
-悲观锁：顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上
+原子性Atomic：
+原子性指组成一个事务的多个数据库操作是一个不可分割的原子单元，只有所有的操作执行成功，整个事务才提交，事务中任何一个数据库操作失败，已经执行的任何操作都必须撤销，让数据库返回到初始状态
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/#more" rel="contents">
+            <a class="btn" href="/2017/01/03/Database/数据库事务与隔离级别/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
