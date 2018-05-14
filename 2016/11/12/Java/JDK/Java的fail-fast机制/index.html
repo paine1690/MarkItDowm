@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,11 +10,19 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -37,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="源码," />
@@ -80,26 +77,20 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
-1、定义“快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可">
+<meta name="description" content="一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。 1、定义“快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可">
+<meta name="keywords" content="源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java的fail-fast机制">
 <meta property="og:url" content="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/index.html">
 <meta property="og:site_name" content="paine1690">
-<meta property="og:description" content="一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
-1、定义“快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可">
+<meta property="og:description" content="一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。 1、定义“快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-02-21T11:18:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java的fail-fast机制">
-<meta name="twitter:description" content="一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
-1、定义“快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可">
+<meta name="twitter:description" content="一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。 1、定义“快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可">
 
 
 
@@ -108,11 +99,13 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
-      userId: 'undefined',
+      userId: '0',
       author: '博主'
     },
     algolia: {
@@ -133,11 +126,7 @@
 
 
 
-  <title> Java的fail-fast机制 | paine1690 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>Java的fail-fast机制 | paine1690</title>
   
 
 
@@ -157,42 +146,42 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">paine1690</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
   </div>
-    
-      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -213,7 +202,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -223,7 +212,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -233,7 +222,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -243,7 +232,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -253,32 +242,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
-    </div>
   
 </nav>
 
@@ -302,35 +268,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Java的fail-fast机制
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">Java的fail-fast机制</h1>
         
 
         <div class="post-meta">
@@ -342,7 +302,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
                 2016-11-12
               </time>
             
@@ -388,7 +348,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -404,7 +364,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -419,45 +381,45 @@
 <p>下面看一下List和HashMap中是如何实现这一机制的</p>
 <h1 id="二、List中的fail-fast机制"><a href="#二、List中的fail-fast机制" class="headerlink" title="二、List中的fail-fast机制"></a>二、List中的fail-fast机制</h1><p>最常用的ArrayList和LinkedList都继承自AbstractList（LinkedList继承自AbstractSequentialList，而AbstractSequentialList继承自AbstractList）。</p>
 <h2 id="1、modCount"><a href="#1、modCount" class="headerlink" title="1、modCount"></a>1、modCount</h2><p>在AbstractList中定义了变量modCount，顾名思义，它表示的就是修改次数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> <span class="keyword">transient</span> <span class="keyword">int</span> modCount = <span class="number">0</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">transient</span> <span class="keyword">int</span> modCount = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 <p>这个变量是实现这一机制的关键，在子类中都会通过判断它来判断集合是否被修改。</p>
 <h2 id="2、ArrayList中的实现"><a href="#2、ArrayList中的实现" class="headerlink" title="2、ArrayList中的实现"></a>2、ArrayList中的实现</h2><h3 id="2-1、modCount"><a href="#2-1、modCount" class="headerlink" title="2.1、modCount++"></a>2.1、modCount++</h3><p>这个变量什么时候会改变呢，直接在源码中搜索modCount++：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">trimToSize</span><span class="params">()</span> </span>&#123;</div><div class="line">      modCount++;</div><div class="line">      <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureExplicitCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</div><div class="line">      modCount++;</div><div class="line">     <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">      rangeCheck(index);</div><div class="line">      modCount++;</div><div class="line">      <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">      <span class="keyword">return</span> oldValue;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fastRemove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">      modCount++;</div><div class="line">      <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</div><div class="line">      modCount++;</div><div class="line"><span class="comment">/** 省略此处代码 */</span>  </div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">removeRange</span><span class="params">(<span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex)</span> </span>&#123;</div><div class="line">      modCount++;</div><div class="line">      <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">removeIf</span><span class="params">(Predicate&lt;? <span class="keyword">super</span> E&gt; filter)</span> </span>&#123;</div><div class="line">      <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">          modCount++;</div><div class="line">     <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">replaceAll</span><span class="params">(UnaryOperator&lt;E&gt; operator)</span> </span>&#123;</div><div class="line">      <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">      modCount++;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> E&gt; c)</span> </span>&#123;</div><div class="line">      <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">      modCount++;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">trimToSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      modCount++;</span><br><span class="line">      <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureExplicitCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">      modCount++;</span><br><span class="line">     <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">      rangeCheck(index);</span><br><span class="line">      modCount++;</span><br><span class="line">      <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">      <span class="keyword">return</span> oldValue;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fastRemove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">      modCount++;</span><br><span class="line">      <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      modCount++;</span><br><span class="line"><span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">removeRange</span><span class="params">(<span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex)</span> </span>&#123;</span><br><span class="line">      modCount++;</span><br><span class="line">      <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">removeIf</span><span class="params">(Predicate&lt;? <span class="keyword">super</span> E&gt; filter)</span> </span>&#123;</span><br><span class="line">      <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">          modCount++;</span><br><span class="line">     <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">replaceAll</span><span class="params">(UnaryOperator&lt;E&gt; operator)</span> </span>&#123;</span><br><span class="line">      <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">      modCount++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> E&gt; c)</span> </span>&#123;</span><br><span class="line">      <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">      modCount++;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <p>以上就是修改modCount的所有操作了，可以看出，在add、remove、clear等涉及改变ArrayList元素个数的操作是，modCount都会+1。</p>
 <p>注意一点，就是set方法的时候并没有改变这个值，也就是说是这个变量的修改指的是结构上面的修改，而不是简单的修改集合元素的内容。</p>
 <h3 id="2-2、listIterator"><a href="#2-2、listIterator" class="headerlink" title="2.2、listIterator"></a>2.2、listIterator</h3><p>接下来就看一下什么时候回产生这个异常，ail-fast是在操作迭代器时产生的，下面看一下ArrayList的迭代器</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">new</span> ListItr(<span class="number">0</span>);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ListItr</span> <span class="keyword">extends</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">ListIterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">     ListItr(<span class="keyword">int</span> index) &#123;</div><div class="line">         <span class="keyword">super</span>();</div><div class="line">         cursor = index;</div><div class="line">     &#125;</div><div class="line">     <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">     <span class="function"><span class="keyword">public</span> E <span class="title">previous</span><span class="params">()</span> </span>&#123;</div><div class="line">         checkForComodification();</div><div class="line">         <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">     &#125;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">         <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">         checkForComodification();</div><div class="line">         <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">     &#125;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">         checkForComodification();</div><div class="line"><span class="comment">/** 省略此处代码 */</span>  </div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">     <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return</span></div><div class="line">     <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></div><div class="line">     <span class="keyword">int</span> expectedModCount = modCount;</div><div class="line"></div><div class="line">     <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">     <span class="function"><span class="keyword">public</span> E <span class="title">next</span><span class="params">()</span> </span>&#123;</div><div class="line">         checkForComodification();</div><div class="line">         <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">     &#125;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">         <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">         checkForComodification();</div><div class="line">         <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">     &#125;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; consumer)</span> </span>&#123;</div><div class="line">         <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">         checkForComodification();</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</div><div class="line">         <span class="keyword">if</span> (modCount != expectedModCount)</div><div class="line">             <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> ListItr(<span class="number">0</span>);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ListItr</span> <span class="keyword">extends</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">ListIterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">     ListItr(<span class="keyword">int</span> index) &#123;</span><br><span class="line">         <span class="keyword">super</span>();</span><br><span class="line">         cursor = index;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">     <span class="function"><span class="keyword">public</span> E <span class="title">previous</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         checkForComodification();</span><br><span class="line">         <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">     &#125;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">         <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">         checkForComodification();</span><br><span class="line">         <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">     &#125;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">         checkForComodification();</span><br><span class="line"><span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return</span></span><br><span class="line">     <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></span><br><span class="line">     <span class="keyword">int</span> expectedModCount = modCount;</span><br><span class="line"></span><br><span class="line">     <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">     <span class="function"><span class="keyword">public</span> E <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         checkForComodification();</span><br><span class="line">         <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">     &#125;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">         checkForComodification();</span><br><span class="line">         <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">     &#125;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; consumer)</span> </span>&#123;</span><br><span class="line">         <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">         checkForComodification();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">if</span> (modCount != expectedModCount)</span><br><span class="line">             <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>可以看出，迭代器在调用next、remove、add、set等方法时，都会先调用checkForComodification方法，该方法和很简单，判断modCount != expectedModCount的话就抛出异常，而expectedModCount在迭代器初始化的时候就指定了等于modCount，在迭代过程中如果有其他线程改变结构导致modCount发生变化，这里就会抛出异常。</p>
 <p>有两个线程（线程A，线程B），其中线程A负责遍历list、线程B修改list。线程A在遍历list过程的某个时候（此时expectedModCount = modCount=N），线程启动，同时线程B增加一个元素，这是modCount的值发生改变（modCount + 1 = N + 1）。线程A继续遍历执行next方法时，通告checkForComodification方法发现expectedModCount  = N  ，而modCount = N + 1，两者不等，这时就抛出ConcurrentModificationException 异常，从而产生fail-fast机制。</p>
 <h2 id="2、LinkedList中的实现"><a href="#2、LinkedList中的实现" class="headerlink" title="2、LinkedList中的实现"></a>2、LinkedList中的实现</h2><p>与ArrayList的实现基本一致，只是方法上上有不同，就不再贴代码了。</p>
 <h2 id="3、遍历List删除元素的方法"><a href="#3、遍历List删除元素的方法" class="headerlink" title="3、遍历List删除元素的方法"></a>3、遍历List删除元素的方法</h2><p>有一道面试题就是：如何在遍历ArrayList的时候删除一个元素？</p>
 <p>这个问题看似很简单，但其实暗藏玄机。比如，正常来讲用for-each直接遍历并删除</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; list=<span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">list.add(<span class="string">"a"</span>);</div><div class="line">list.add(<span class="string">"b"</span>);</div><div class="line">list.add(<span class="string">"c"</span>);</div><div class="line">list.add(<span class="string">"d"</span>);</div><div class="line"><span class="keyword">for</span>(String s: list)&#123;</div><div class="line">    <span class="keyword">if</span>(s.equals(<span class="string">"a"</span>))&#123;</div><div class="line">        list.remove(s);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list=<span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">list.add(<span class="string">"a"</span>);</span><br><span class="line">list.add(<span class="string">"b"</span>);</span><br><span class="line">list.add(<span class="string">"c"</span>);</span><br><span class="line">list.add(<span class="string">"d"</span>);</span><br><span class="line"><span class="keyword">for</span>(String s: list)&#123;</span><br><span class="line">	<span class="keyword">if</span>(s.equals(<span class="string">"a"</span>))&#123;</span><br><span class="line">		list.remove(s);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>会直接抛出java.util.ConcurrentModificationException。因为for-each实际上使用的是List的迭代器，而在迭代过程中，删除了一个元素就相当于List的结构发生了变化，就会抛出上文所说的ConcurrentModificationException。</p>
 <p>那么怎样才能正确的遍历并且删除元素呢，必须得用到Iterator的remove方法，比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; list=<span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">list.add(<span class="string">"a"</span>);</div><div class="line">list.add(<span class="string">"b"</span>);</div><div class="line">list.add(<span class="string">"c"</span>);</div><div class="line">list.add(<span class="string">"d"</span>);</div><div class="line">Iterator&lt;String&gt; i=list.iterator();</div><div class="line"><span class="keyword">while</span>(i.hasNext())&#123;</div><div class="line">    String s=i.next();</div><div class="line">    <span class="keyword">if</span>(s.equals(<span class="string">"a"</span>))&#123;</div><div class="line">        i.remove();<span class="comment">//必须的迭代器的remove方法</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list=<span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">list.add(<span class="string">"a"</span>);</span><br><span class="line">list.add(<span class="string">"b"</span>);</span><br><span class="line">list.add(<span class="string">"c"</span>);</span><br><span class="line">list.add(<span class="string">"d"</span>);</span><br><span class="line">Iterator&lt;String&gt; i=list.iterator();</span><br><span class="line"><span class="keyword">while</span>(i.hasNext())&#123;</span><br><span class="line">	String s=i.next();</span><br><span class="line">	<span class="keyword">if</span>(s.equals(<span class="string">"a"</span>))&#123;</span><br><span class="line">		i.remove();<span class="comment">//必须的迭代器的remove方法</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>那么为什么迭代器的remove方法就不会抛出异常呢？再来看一下源码就知道了：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return</span></div><div class="line">    <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></div><div class="line">    <span class="keyword">int</span> expectedModCount = modCount;</div><div class="line"></div><div class="line">    <span class="comment">//省略</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</div><div class="line">        checkForComodification();</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            ArrayList.<span class="keyword">this</span>.remove(lastRet);</div><div class="line">            cursor = lastRet;</div><div class="line">            lastRet = -<span class="number">1</span>;</div><div class="line">            expectedModCount = modCount;</div><div class="line">        &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException ex) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//省略</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return</span></span><br><span class="line">    <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></span><br><span class="line">    <span class="keyword">int</span> expectedModCount = modCount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//省略</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</span><br><span class="line">        checkForComodification();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ArrayList.<span class="keyword">this</span>.remove(lastRet);</span><br><span class="line">            cursor = lastRet;</span><br><span class="line">            lastRet = -<span class="number">1</span>;</span><br><span class="line">            expectedModCount = modCount;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//省略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看出，调用remove方法之后，通过<code>expectedModCount = modCount;</code>来修改了expectedModCount 的值，这样就相当于迭代器自己遍历的时候，是可以对List的结构进行修改的。</p>
 <h1 id="三、HashMap中的fail-fast机制"><a href="#三、HashMap中的fail-fast机制" class="headerlink" title="三、HashMap中的fail-fast机制"></a>三、HashMap中的fail-fast机制</h1><p>通过ArrayList的分析可以了解到fail-fast机制的原理，其实在各个类的实现中应该都是差不多的，只是细节上略有不同。</p>
 <h2 id="1、modCount-1"><a href="#1、modCount-1" class="headerlink" title="1、modCount"></a>1、modCount</h2><p>HashMaP的modCount 变量是直接定义在本类中的，而不是像ArrayList一样在父类的抽象类中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> <span class="keyword">int</span> modCount;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> modCount;</span><br></pre></td></tr></table></figure>
 <p>还有一个比较奇葩的地方就是，在ArrayList中，modCount改变的时候都是modCount++; </p>
 <p>而在HashMap中，既有modCount++; 又有++modCount; 这点不是很理解</p>
 <h2 id="2、HashIterator"><a href="#2、HashIterator" class="headerlink" title="2、HashIterator"></a>2、HashIterator</h2><p>HashMap与List的另一点重要的不同在于，HashMap无法直接返回迭代器，因为它存储的是键值对，在源码分析的时候说过它可以返回三类Collection的集合，而这些集合才可以产生迭代器。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Views  </span></div><div class="line"><span class="function">Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span></span>;  </div><div class="line"><span class="function">Collection&lt;V&gt; <span class="title">values</span><span class="params">()</span></span>;  </div><div class="line">Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySet();</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Views  </span></span><br><span class="line"><span class="function">Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span></span>;  </span><br><span class="line"><span class="function">Collection&lt;V&gt; <span class="title">values</span><span class="params">()</span></span>;  </span><br><span class="line">Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySet();</span><br></pre></td></tr></table></figure>
 <p>再看看他们如何返回迭代器</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span> </span>&#123;</div><div class="line">    Set&lt;K&gt; ks;</div><div class="line">    <span class="keyword">return</span> (ks = keySet) == <span class="keyword">null</span> ? (keySet = <span class="keyword">new</span> KeySet()) : ks;</div><div class="line">&#125;</div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">KeySet</span> <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">K</span>&gt; </span>&#123;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Iterator&lt;K&gt; <span class="title">iterator</span><span class="params">()</span>     </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> KeyIterator(); &#125;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> Collection&lt;V&gt; <span class="title">values</span><span class="params">()</span> </span>&#123;</div><div class="line">    Collection&lt;V&gt; vs;</div><div class="line">    <span class="keyword">return</span> (vs = values) == <span class="keyword">null</span> ? (values = <span class="keyword">new</span> Values()) : vs;</div><div class="line">&#125;</div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Values</span> <span class="keyword">extends</span> <span class="title">AbstractCollection</span>&lt;<span class="title">V</span>&gt; </span>&#123;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Iterator&lt;V&gt; <span class="title">iterator</span><span class="params">()</span>     </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> ValueIterator(); &#125;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet() &#123;</div><div class="line">    Set&lt;Map.Entry&lt;K,V&gt;&gt; es;</div><div class="line">    <span class="keyword">return</span> (es = entrySet) == <span class="keyword">null</span> ? (entrySet = <span class="keyword">new</span> EntrySet()) : es;</div><div class="line">&#125;</div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">EntrySet</span> <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;&gt; </span>&#123;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Iterator&lt;Map.Entry&lt;K,V&gt;&gt; iterator() &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> EntryIterator();<span class="comment">//为什么这里要另起一行！！！！！！！！！！！！！！！</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Set&lt;K&gt; ks;</span><br><span class="line">    <span class="keyword">return</span> (ks = keySet) == <span class="keyword">null</span> ? (keySet = <span class="keyword">new</span> KeySet()) : ks;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">KeySet</span> <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">K</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Iterator&lt;K&gt; <span class="title">iterator</span><span class="params">()</span>     </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> KeyIterator(); &#125;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> Collection&lt;V&gt; <span class="title">values</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Collection&lt;V&gt; vs;</span><br><span class="line">    <span class="keyword">return</span> (vs = values) == <span class="keyword">null</span> ? (values = <span class="keyword">new</span> Values()) : vs;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Values</span> <span class="keyword">extends</span> <span class="title">AbstractCollection</span>&lt;<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Iterator&lt;V&gt; <span class="title">iterator</span><span class="params">()</span>     </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> ValueIterator(); &#125;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet() &#123;</span><br><span class="line">    Set&lt;Map.Entry&lt;K,V&gt;&gt; es;</span><br><span class="line">    <span class="keyword">return</span> (es = entrySet) == <span class="keyword">null</span> ? (entrySet = <span class="keyword">new</span> EntrySet()) : es;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">EntrySet</span> <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Iterator&lt;Map.Entry&lt;K,V&gt;&gt; iterator() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> EntryIterator();<span class="comment">//为什么这里要另起一行！！！！！！！！！！！！！！！</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看出，三个方法返回的迭代分别是新建的一个KeyIterator、ValueIterator、EntryIterator。</p>
 <p>那么再来看一下这三个类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">KeyIterator</span> <span class="keyword">extends</span> <span class="title">HashIterator</span></span></div><div class="line">       <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">K</span>&gt; &#123;</div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> K <span class="title">next</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> nextNode().key; &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ValueIterator</span> <span class="keyword">extends</span> <span class="title">HashIterator</span></span></div><div class="line">       <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">V</span>&gt; &#123;</div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">next</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> nextNode().value; &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">EntryIterator</span> <span class="keyword">extends</span> <span class="title">HashIterator</span></span></div><div class="line">       <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;&gt; &#123;</div><div class="line">       <span class="keyword">public</span> <span class="keyword">final</span> Map.<span class="function">Entry&lt;K,V&gt; <span class="title">next</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> nextNode(); &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">KeyIterator</span> <span class="keyword">extends</span> <span class="title">HashIterator</span></span></span><br><span class="line"><span class="class">       <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">K</span>&gt; </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> K <span class="title">next</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> nextNode().key; &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ValueIterator</span> <span class="keyword">extends</span> <span class="title">HashIterator</span></span></span><br><span class="line"><span class="class">       <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">next</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> nextNode().value; &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">EntryIterator</span> <span class="keyword">extends</span> <span class="title">HashIterator</span></span></span><br><span class="line"><span class="class">       <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;&gt; </span>&#123;</span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">final</span> Map.<span class="function">Entry&lt;K,V&gt; <span class="title">next</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> nextNode(); &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <p>又都同时继承同一个父类HashIterator，只是对自己相关的方法进行了重写，那么再看这个最终的类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HashIterator</span> </span>&#123;</div><div class="line">    Node&lt;K,V&gt; next;        <span class="comment">// next entry to return</span></div><div class="line">    Node&lt;K,V&gt; current;     <span class="comment">// current entry</span></div><div class="line">    <span class="keyword">int</span> expectedModCount;  <span class="comment">// for fast-fail</span></div><div class="line">    <span class="keyword">int</span> index;             <span class="comment">// current slot</span></div><div class="line"></div><div class="line">    HashIterator() &#123;</div><div class="line">        expectedModCount = modCount;</div><div class="line">        <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> next != <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">final</span> Node&lt;K,V&gt; <span class="title">nextNode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HashIterator</span> </span>&#123;</span><br><span class="line">    Node&lt;K,V&gt; next;        <span class="comment">// next entry to return</span></span><br><span class="line">    Node&lt;K,V&gt; current;     <span class="comment">// current entry</span></span><br><span class="line">    <span class="keyword">int</span> expectedModCount;  <span class="comment">// for fast-fail</span></span><br><span class="line">    <span class="keyword">int</span> index;             <span class="comment">// current slot</span></span><br><span class="line"></span><br><span class="line">    HashIterator() &#123;</span><br><span class="line">        expectedModCount = modCount;</span><br><span class="line">        <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> next != <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">final</span> Node&lt;K,V&gt; <span class="title">nextNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个就和上面的ArrayList很像了，在最开始的时候指定expectedModCount，并且每次nextNode和remove的时候检查，如果modCount != expectedModCount不相等则抛出异常。</p>
 <h2 id="3、-modCount"><a href="#3、-modCount" class="headerlink" title="3、++modCount"></a>3、++modCount</h2><p>接下来也看一下map中的哪些操作会导致modCount值的改变</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent,</span></span></div><div class="line">               <span class="keyword">boolean</span> evict) &#123;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">    ++modCount;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">final</span> Node&lt;K,V&gt; <span class="title">removeNode</span><span class="params">(<span class="keyword">int</span> hash, Object key, Object value,</span></span></div><div class="line">                           <span class="keyword">boolean</span> matchValue, <span class="keyword">boolean</span> movable) &#123;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">            ++modCount;</div><div class="line">   <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">computeIfAbsent</span><span class="params">(K key,</span></span></div><div class="line">                         Function&lt;? <span class="keyword">super</span> K, ? extends V&gt; mappingFunction) &#123;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">    ++modCount;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">compute</span><span class="params">(K key,</span></span></div><div class="line">                 BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction) &#123;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">        ++modCount;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">merge</span><span class="params">(K key, V value,</span></span></div><div class="line">               BiFunction&lt;? <span class="keyword">super</span> V, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction) &#123;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">        ++modCount;</div><div class="line">        ++size;</div><div class="line">    <span class="comment">/** 省略此处代码 */</span>  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">    ++modCount;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">final</span> Node&lt;K,V&gt; <span class="title">removeNode</span><span class="params">(<span class="keyword">int</span> hash, Object key, Object value,</span></span></span><br><span class="line"><span class="function"><span class="params">                           <span class="keyword">boolean</span> matchValue, <span class="keyword">boolean</span> movable)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">            ++modCount;</span><br><span class="line">   <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">computeIfAbsent</span><span class="params">(K key,</span></span></span><br><span class="line"><span class="function"><span class="params">                         Function&lt;? <span class="keyword">super</span> K, ? extends V&gt; mappingFunction)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">    ++modCount;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">compute</span><span class="params">(K key,</span></span></span><br><span class="line"><span class="function"><span class="params">                 BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">        ++modCount;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">merge</span><span class="params">(K key, V value,</span></span></span><br><span class="line"><span class="function"><span class="params">               BiFunction&lt;? <span class="keyword">super</span> V, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">        ++modCount;</span><br><span class="line">        ++size;</span><br><span class="line">    <span class="comment">/** 省略此处代码 */</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>还有一个就是下面这个，我这强迫症真是没法忍了，上面的三个迭代器风格不一样也就算了，连个自加操作都没法统一</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</div><div class="line">    Node&lt;K,V&gt;[] tab;</div><div class="line">    modCount++;</div><div class="line">    <span class="keyword">if</span> ((tab = table) != <span class="keyword">null</span> &amp;&amp; size &gt; <span class="number">0</span>) &#123;</div><div class="line">        size = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tab.length; ++i)</div><div class="line">            tab[i] = <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> ((tab = table) != <span class="keyword">null</span> &amp;&amp; size &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        size = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tab.length; ++i)</span><br><span class="line">            tab[i] = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看出，HashMap也是新加或者删除结点等对结构有改变的操作时modCount发生改变。</p>
 <h1 id="四、解决方案"><a href="#四、解决方案" class="headerlink" title="四、解决方案"></a>四、解决方案</h1><p>怎样避免产生这个异常，要么就是直接涉及多线程的直接加锁串行执行，但是这样的话会严重影响效率，在Java并发编程实战这本书中，有一节叫做并发容器，介绍了专门为多线程并发访问设计的容器。</p>
 <h2 id="1、CopyOnWriteArrayList"><a href="#1、CopyOnWriteArrayList" class="headerlink" title="1、CopyOnWriteArrayList"></a>1、CopyOnWriteArrayList</h2><p>ArrayList 的一个线程安全的变体，其中所有可变操作（add、set 等等）都是通过对底层数组进行一次新的复制来实现的。</p>
@@ -468,21 +430,15 @@
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -494,15 +450,15 @@
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" rel="next" title="LinkedHashMap源码分析">
-                <i class="fa fa-chevron-left"></i> LinkedHashMap源码分析
+              <a href="/2016/11/12/Java/JDK/ArrayList源码分析/" rel="next" title="ArrayList源码分析">
+                <i class="fa fa-chevron-left"></i> ArrayList源码分析
               </a>
             
           </div>
@@ -511,8 +467,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" rel="prev" title="ConcurrentHashMap源码分析">
-                ConcurrentHashMap源码分析 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/12/Java/JDK/HashMap源码分析/" rel="prev" title="HashMap源码分析">
+                HashMap源码分析 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -522,6 +478,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -531,20 +491,15 @@
     </div>
   </div>
 
-          
+
           </div>
           
 
 
           
-  <div class="comments" id="comments">
-    
-	  
-        <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
-      
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -560,75 +515,80 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="paine" />
-          <p class="site-author-name" itemprop="name">paine</p>
-          <p class="site-description motion-element" itemprop="description">paine1690</p>
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">65</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">28</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -649,6 +609,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -659,39 +621,50 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -715,52 +688,71 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
-  
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
   
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
 
 
   
@@ -786,143 +778,23 @@
 
 
 
+
+
+
+
+
+
+
   
 
 
 
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
 
 
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
   <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
   <script>
     function showTime(Counter) {
@@ -1032,6 +904,14 @@
 
   
 
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

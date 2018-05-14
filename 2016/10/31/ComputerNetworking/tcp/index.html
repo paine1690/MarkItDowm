@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,11 +10,19 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -37,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="网络协议," />
@@ -80,37 +77,16 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。
-UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。
-
-UDP是无连接的，因此在两个进程通信前没有握手过程。
-UDP提供不可靠的数据传送服务。
-UDP也不保证输出顺序。
-
-TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点
-
-面向连接的服务：在应用层的数据报开始流动之前">
+<meta name="description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。 UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。  UDP是无连接的，因此在两个进程通信前没有握手过程。 UDP提供不可靠的数据传送服务。 UDP也不保证输出顺序。  TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点  面向连接的服务：在应用层的数据报开始流动之前">
+<meta name="keywords" content="网络协议">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析TCP协议">
 <meta property="og:url" content="http://yoursite.com/2016/10/31/ComputerNetworking/tcp/index.html">
 <meta property="og:site_name" content="paine1690">
-<meta property="og:description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。
-UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。
-
-UDP是无连接的，因此在两个进程通信前没有握手过程。
-UDP提供不可靠的数据传送服务。
-UDP也不保证输出顺序。
-
-TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点
-
-面向连接的服务：在应用层的数据报开始流动之前">
+<meta property="og:description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。 UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。  UDP是无连接的，因此在两个进程通信前没有握手过程。 UDP提供不可靠的数据传送服务。 UDP也不保证输出顺序。  TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点  面向连接的服务：在应用层的数据报开始流动之前">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/3.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/4.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/5.png?raw=true">
@@ -119,16 +95,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 <meta property="og:updated_time" content="2017-02-27T01:46:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析TCP协议">
-<meta name="twitter:description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。
-UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。
-
-UDP是无连接的，因此在两个进程通信前没有握手过程。
-UDP提供不可靠的数据传送服务。
-UDP也不保证输出顺序。
-
-TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点
-
-面向连接的服务：在应用层的数据报开始流动之前">
+<meta name="twitter:description" content="一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。 UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。  UDP是无连接的，因此在两个进程通信前没有握手过程。 UDP提供不可靠的数据传送服务。 UDP也不保证输出顺序。  TCP是因特网运输层的面向连接的可靠的运输协议，主要有一下几个特点  面向连接的服务：在应用层的数据报开始流动之前">
 <meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/3.png?raw=true">
 
 
@@ -138,11 +105,13 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
-      userId: 'undefined',
+      userId: '0',
       author: '博主'
     },
     algolia: {
@@ -163,11 +132,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 
 
 
-  <title> 浅析TCP协议 | paine1690 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>浅析TCP协议 | paine1690</title>
   
 
 
@@ -187,42 +152,42 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">paine1690</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
   </div>
-    
-      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -243,7 +208,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -253,7 +218,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -263,7 +228,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -273,7 +238,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -283,32 +248,9 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
-    </div>
   
 </nav>
 
@@ -332,35 +274,29 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/tcp/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/tcp/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                浅析TCP协议
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">浅析TCP协议</h1>
         
 
         <div class="post-meta">
@@ -372,7 +308,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-31T00:00:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-31T00:00:00+08:00">
                 2016-10-31
               </time>
             
@@ -418,7 +354,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -434,7 +370,9 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -505,7 +443,7 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 </blockquote>
 <h3 id="4-2、为什么是四次挥手三次握手"><a href="#4-2、为什么是四次挥手三次握手" class="headerlink" title="4.2、为什么是四次挥手三次握手"></a>4.2、为什么是四次挥手三次握手</h3><p>因为当Server端收到Client端的SYN连接请求报文后，可以直接发送SYN+ACK报文。其中ACK报文是用来应答的，SYN报文是用来同步的。但是关闭连接时，当Server端收到FIN报文时，很可能并不会立即关闭SOCKET，所以只能先回复一个ACK报文，告诉Client端，”你发的FIN报文我收到了”。只有等到我Server端所有的报文都发送完了，我才能发送FIN报文，因此不能一起发送。故需要四步握手。</p>
 <h3 id="4-3、计时等待"><a href="#4-3、计时等待" class="headerlink" title="4.3、计时等待"></a>4.3、计时等待</h3><p>在第四步中，客户端发送ACK报文段后会进入TIME_WAIT状态，这是因为如果客户端的ACK如果丢失了，它将重新发送，TIME_WAIT状态中所需要的时间是依赖于实现方法的。典型的值为30秒、1分钟和2分钟。等待之后连接正式关闭，并且所有的资源(包括端口号)都被释放。</p>
-<h3 id="4-4、CLOSE-WAIT状态"><a href="#4-4、CLOSE-WAIT状态" class="headerlink" title="4.4、CLOSE_WAIT状态"></a>4.4、CLOSE_WAIT状态</h3><p>在小米一面的时候面试官问知不知道CLOSE_WAIT状态，我回答说是四次挥手中的状态，然后解释了四次挥手的全过程。不知道面试官想问的到底是什么，后来上网查了一下发现关于这个状态是有一个比较常见的问题的，在这个<a href="http://blog.csdn.net/ximenying/article/details/1489810" target="_blank" rel="external">http://blog.csdn.net/ximenying/article/details/1489810</a>链接中。</p>
+<h3 id="4-4、CLOSE-WAIT状态"><a href="#4-4、CLOSE-WAIT状态" class="headerlink" title="4.4、CLOSE_WAIT状态"></a>4.4、CLOSE_WAIT状态</h3><p>在小米一面的时候面试官问知不知道CLOSE_WAIT状态，我回答说是四次挥手中的状态，然后解释了四次挥手的全过程。不知道面试官想问的到底是什么，后来上网查了一下发现关于这个状态是有一个比较常见的问题的，在这个<a href="http://blog.csdn.net/ximenying/article/details/1489810" target="_blank" rel="noopener">http://blog.csdn.net/ximenying/article/details/1489810</a>链接中。</p>
 <p>问题描述：</p>
 <blockquote>
 <p>不久前，我的Socket Client程序遇到了一个非常尴尬的错误。它本来应该在一个socket长连接上持续不断地向服务器发送数据，如果socket连接断开，那么程序会自动不断地重试建立连接。</p>
@@ -552,26 +490,20 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 <p>正常来说，肯定是再次丢包后就重新开始慢启动了，但是它偏不。因为上面说到丢包有两个原因：超时或者受到三个冗余ACK。而对着两种情况的处理方法是不同的。对于超时，那么和慢启动一样，ssthresh更新为cwnd的一半，cwnd被设置为很小的值。但是如果是由冗余ACK造成的丢包，那么会将cwnd减一半，将ssthresh设置为cwnd的一半，然后进入快速恢复状态。</p>
 <p><strong>快速恢复</strong>：没太看明白。</p>
 <h1 id="五、TCP安全与SSL"><a href="#五、TCP安全与SSL" class="headerlink" title="五、TCP安全与SSL"></a>五、TCP安全与SSL</h1><p>见HTTPS</p>
-<h1 id="六、参考地址"><a href="#六、参考地址" class="headerlink" title="六、参考地址"></a>六、参考地址</h1><p><a href="http://blog.csdn.net/whuslei/article/details/6667471/" target="_blank" rel="external">http://blog.csdn.net/whuslei/article/details/6667471/</a></p>
-<p><a href="http://blog.sina.com.cn/s/blog_6d39b5be0101k6v4.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_6d39b5be0101k6v4.html</a></p>
+<h1 id="六、参考地址"><a href="#六、参考地址" class="headerlink" title="六、参考地址"></a>六、参考地址</h1><p><a href="http://blog.csdn.net/whuslei/article/details/6667471/" target="_blank" rel="noopener">http://blog.csdn.net/whuslei/article/details/6667471/</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_6d39b5be0101k6v4.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_6d39b5be0101k6v4.html</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -583,15 +515,15 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/31/ComputerNetworking/dns/" rel="next" title="浅析DNS协议">
-                <i class="fa fa-chevron-left"></i> 浅析DNS协议
+              <a href="/2016/10/31/ComputerNetworking/ARP/" rel="next" title="浅析ARP协议">
+                <i class="fa fa-chevron-left"></i> 浅析ARP协议
               </a>
             
           </div>
@@ -600,8 +532,8 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/10/31/ComputerNetworking/HTTPS/" rel="prev" title="浅析HTTPS协议">
-                浅析HTTPS协议 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/10/31/ComputerNetworking/http/" rel="prev" title="浅析HTTP协议">
+                浅析HTTP协议 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -611,6 +543,10 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -620,20 +556,15 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
     </div>
   </div>
 
-          
+
           </div>
           
 
 
           
-  <div class="comments" id="comments">
-    
-	  
-        <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
-      
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -649,75 +580,80 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="paine" />
-          <p class="site-author-name" itemprop="name">paine</p>
-          <p class="site-description motion-element" itemprop="description">paine1690</p>
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">65</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">28</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -738,6 +674,8 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -748,39 +686,50 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -804,52 +753,71 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
-  
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
   
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
 
 
   
@@ -875,143 +843,23 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 
 
 
+
+
+
+
+
+
+
   
 
 
 
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
 
 
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
   <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
   <script>
     function showTime(Counter) {
@@ -1121,6 +969,14 @@ TCP是因特网运输层的面向连接的可靠的运输协议，主要有一�
 
   
 
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

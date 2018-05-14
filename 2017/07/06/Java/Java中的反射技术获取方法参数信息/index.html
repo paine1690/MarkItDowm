@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,11 +10,19 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -37,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="Java基础知识,反射," />
@@ -80,31 +77,22 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="Java的反射技术并不陌生，它的一个应用就是获取方法的参数信息。
-1、传统方法获取参数类型比较常用的方法就是通过Method的getParameterTypes()方法：
-12345678910111213141516171819202122232425262728293031package hello.reflect;import java.lang.reflect.Method;import">
+<meta name="description" content="Java的反射技术并不陌生，它的一个应用就是获取方法的参数信息。 1、传统方法获取参数类型比较常用的方法就是通过Method的getParameterTypes()方法： 12345678910111213141516171819202122232425262728293031package hello.reflect;import java.lang.reflect.Method;import">
+<meta name="keywords" content="Java基础知识,反射">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java中的反射技术获取方法参数信息">
 <meta property="og:url" content="http://yoursite.com/2017/07/06/Java/Java中的反射技术获取方法参数信息/index.html">
 <meta property="og:site_name" content="paine1690">
-<meta property="og:description" content="Java的反射技术并不陌生，它的一个应用就是获取方法的参数信息。
-1、传统方法获取参数类型比较常用的方法就是通过Method的getParameterTypes()方法：
-12345678910111213141516171819202122232425262728293031package hello.reflect;import java.lang.reflect.Method;import">
+<meta property="og:description" content="Java的反射技术并不陌生，它的一个应用就是获取方法的参数信息。 1、传统方法获取参数类型比较常用的方法就是通过Method的getParameterTypes()方法： 12345678910111213141516171819202122232425262728293031package hello.reflect;import java.lang.reflect.Method;import">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/11.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/12.png?raw=true">
 <meta property="og:updated_time" content="2017-07-06T08:18:48.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java中的反射技术获取方法参数信息">
-<meta name="twitter:description" content="Java的反射技术并不陌生，它的一个应用就是获取方法的参数信息。
-1、传统方法获取参数类型比较常用的方法就是通过Method的getParameterTypes()方法：
-12345678910111213141516171819202122232425262728293031package hello.reflect;import java.lang.reflect.Method;import">
+<meta name="twitter:description" content="Java的反射技术并不陌生，它的一个应用就是获取方法的参数信息。 1、传统方法获取参数类型比较常用的方法就是通过Method的getParameterTypes()方法： 12345678910111213141516171819202122232425262728293031package hello.reflect;import java.lang.reflect.Method;import">
 <meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/java/11.png?raw=true">
 
 
@@ -114,11 +102,13 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
-      userId: 'undefined',
+      userId: '0',
       author: '博主'
     },
     algolia: {
@@ -139,11 +129,7 @@
 
 
 
-  <title> Java中的反射技术获取方法参数信息 | paine1690 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>Java中的反射技术获取方法参数信息 | paine1690</title>
   
 
 
@@ -163,42 +149,42 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">paine1690</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
   </div>
-    
-      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -219,7 +205,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -229,7 +215,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -239,7 +225,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -249,7 +235,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -259,32 +245,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
-    </div>
   
 </nav>
 
@@ -308,35 +271,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/Java/Java中的反射技术获取方法参数信息/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/Java/Java中的反射技术获取方法参数信息/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Java中的反射技术获取方法参数信息
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">Java中的反射技术获取方法参数信息</h1>
         
 
         <div class="post-meta">
@@ -348,7 +305,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-06T00:00:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T00:00:00+08:00">
                 2017-07-06
               </time>
             
@@ -394,7 +351,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -410,7 +367,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -419,24 +378,24 @@
       
         <p>Java的反射技术并不陌生，它的一个应用就是获取方法的参数信息。</p>
 <h1 id="1、传统方法获取参数类型"><a href="#1、传统方法获取参数类型" class="headerlink" title="1、传统方法获取参数类型"></a>1、传统方法获取参数类型</h1><p>比较常用的方法就是通过Method的getParameterTypes()方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> hello.reflect;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Parameter;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodInfo</span><span class="params">(String className)</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      Class clazz = Class.forName(className);</div><div class="line">      Method[] methods = clazz.getMethods();</div><div class="line">      <span class="keyword">for</span> (Method method : methods) &#123;</div><div class="line">        getMethodInfo(method);</div><div class="line">      &#125;      </div><div class="line">    &#125; <span class="keyword">catch</span>(Exception e) &#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">  &#125; </div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodInfo</span><span class="params">(Method method)</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"method name: "</span> + method.getName());</div><div class="line">    Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();</div><div class="line">    <span class="keyword">for</span> (Class&lt;?&gt; clas : parameterTypes) &#123;</div><div class="line">      System.out.println(<span class="string">"arg type: "</span> + clas.getName());</div><div class="line">    &#125;</div><div class="line">    System.out.println(<span class="string">"---------------------------------"</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    getMethodInfo(<span class="string">"java.lang.Object"</span>);    </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Parameter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodInfo</span><span class="params">(String className)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      Class clazz = Class.forName(className);</span><br><span class="line">      Method[] methods = clazz.getMethods();</span><br><span class="line">      <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">        getMethodInfo(method);</span><br><span class="line">      &#125;      </span><br><span class="line">    &#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodInfo</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"method name: "</span> + method.getName());</span><br><span class="line">    Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();</span><br><span class="line">    <span class="keyword">for</span> (Class&lt;?&gt; clas : parameterTypes) &#123;</span><br><span class="line">      System.out.println(<span class="string">"arg type: "</span> + clas.getName());</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"---------------------------------"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    getMethodInfo(<span class="string">"java.lang.Object"</span>);    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>来看一下Java中所有类的祖先Object。输出信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">method name: wait</div><div class="line">---------------------------------</div><div class="line">method name: wait</div><div class="line">arg type: long</div><div class="line">arg type: int</div><div class="line">---------------------------------</div><div class="line">method name: wait</div><div class="line">arg type: long</div><div class="line">---------------------------------</div><div class="line">method name: equals</div><div class="line">arg type: java.lang.Object</div><div class="line">---------------------------------</div><div class="line">method name: toString</div><div class="line">---------------------------------</div><div class="line">method name: hashCode</div><div class="line">---------------------------------</div><div class="line">method name: getClass</div><div class="line">---------------------------------</div><div class="line">method name: notify</div><div class="line">---------------------------------</div><div class="line">method name: notifyAll</div><div class="line">---------------------------------</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">method name: wait</span><br><span class="line">---------------------------------</span><br><span class="line">method name: wait</span><br><span class="line">arg type: long</span><br><span class="line">arg type: int</span><br><span class="line">---------------------------------</span><br><span class="line">method name: wait</span><br><span class="line">arg type: long</span><br><span class="line">---------------------------------</span><br><span class="line">method name: equals</span><br><span class="line">arg type: java.lang.Object</span><br><span class="line">---------------------------------</span><br><span class="line">method name: toString</span><br><span class="line">---------------------------------</span><br><span class="line">method name: hashCode</span><br><span class="line">---------------------------------</span><br><span class="line">method name: getClass</span><br><span class="line">---------------------------------</span><br><span class="line">method name: notify</span><br><span class="line">---------------------------------</span><br><span class="line">method name: notifyAll</span><br><span class="line">---------------------------------</span><br></pre></td></tr></table></figure>
 <p>可以看出，通过getParameterTypes()方法只能获取方法的参数类型，而无法获取参数名。</p>
 <h1 id="2、Java8新功能"><a href="#2、Java8新功能" class="headerlink" title="2、Java8新功能"></a>2、Java8新功能</h1><p>在jdk8中一个新特性就是它可以将方法参数的院信息存储到编译玩的class文件中（JEP 118）。利用这个特性就可以用反射技术来获取更多方法的参数信息。</p>
 <p>于是将程序改成下面这样：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> hello.reflect;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Parameter;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodInfo</span><span class="params">(String className)</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      Class clazz = Class.forName(className);</div><div class="line">      Method[] methods = clazz.getMethods();</div><div class="line">      <span class="keyword">for</span> (Method method : methods) &#123;</div><div class="line">        getMethodParametersinfo(method);</div><div class="line">      &#125;      </div><div class="line">    &#125; <span class="keyword">catch</span>(Exception e) &#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">  &#125; </div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodParametersinfo</span><span class="params">(Method method)</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"method name: "</span> + method.getName());</div><div class="line">    Parameter [] paramaters = method.getParameters();</div><div class="line">    <span class="keyword">for</span> (Parameter paramater : paramaters) &#123;</div><div class="line">      System.out.print(<span class="string">"arg name: "</span> + paramater.isNamePresent() + <span class="string">" "</span> + paramater.getName());</div><div class="line">      System.out.println(<span class="string">", arg type: "</span> + paramater.getParameterizedType());</div><div class="line">    &#125;</div><div class="line">    System.out.println(<span class="string">"---------------------------------"</span>);    </div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    getMethodInfo(<span class="string">"java.lang.Object"</span>);    </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Parameter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodInfo</span><span class="params">(String className)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      Class clazz = Class.forName(className);</span><br><span class="line">      Method[] methods = clazz.getMethods();</span><br><span class="line">      <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">        getMethodParametersinfo(method);</span><br><span class="line">      &#125;      </span><br><span class="line">    &#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodParametersinfo</span><span class="params">(Method method)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"method name: "</span> + method.getName());</span><br><span class="line">    Parameter [] paramaters = method.getParameters();</span><br><span class="line">    <span class="keyword">for</span> (Parameter paramater : paramaters) &#123;</span><br><span class="line">      System.out.print(<span class="string">"arg name: "</span> + paramater.isNamePresent() + <span class="string">" "</span> + paramater.getName());</span><br><span class="line">      System.out.println(<span class="string">", arg type: "</span> + paramater.getParameterizedType());</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"---------------------------------"</span>);    </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    getMethodInfo(<span class="string">"java.lang.Object"</span>);    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">method name: wait</div><div class="line">---------------------------------</div><div class="line">method name: wait</div><div class="line">arg name: false arg0, arg type: long</div><div class="line">arg name: false arg1, arg type: int</div><div class="line">---------------------------------</div><div class="line">method name: wait</div><div class="line">arg name: false arg0, arg type: long</div><div class="line">---------------------------------</div><div class="line">method name: equals</div><div class="line">arg name: false arg0, arg type: class java.lang.Object</div><div class="line">---------------------------------</div><div class="line">method name: toString</div><div class="line">---------------------------------</div><div class="line">method name: hashCode</div><div class="line">---------------------------------</div><div class="line">method name: getClass</div><div class="line">---------------------------------</div><div class="line">method name: notify</div><div class="line">---------------------------------</div><div class="line">method name: notifyAll</div><div class="line">---------------------------------</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">method name: wait</span><br><span class="line">---------------------------------</span><br><span class="line">method name: wait</span><br><span class="line">arg name: false arg0, arg type: long</span><br><span class="line">arg name: false arg1, arg type: int</span><br><span class="line">---------------------------------</span><br><span class="line">method name: wait</span><br><span class="line">arg name: false arg0, arg type: long</span><br><span class="line">---------------------------------</span><br><span class="line">method name: equals</span><br><span class="line">arg name: false arg0, arg type: class java.lang.Object</span><br><span class="line">---------------------------------</span><br><span class="line">method name: toString</span><br><span class="line">---------------------------------</span><br><span class="line">method name: hashCode</span><br><span class="line">---------------------------------</span><br><span class="line">method name: getClass</span><br><span class="line">---------------------------------</span><br><span class="line">method name: notify</span><br><span class="line">---------------------------------</span><br><span class="line">method name: notifyAll</span><br><span class="line">---------------------------------</span><br></pre></td></tr></table></figure>
 <p>可以看出，输出的参数名是从arg0开始一直增加，这显然不是我们想要的结果，比如Object类中的wait方法源码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public final void wait(long timeout, int nanos) throws InterruptedException &#123;</div><div class="line">    //省略</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public final void wait(long timeout, int nanos) throws InterruptedException &#123;</span><br><span class="line">    //省略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们想要的是timeout，nanos这两个参数名，显然输出的并不是。</p>
 <p>原因就在于输出中的那个false，它是paramater.isNamePresent()方法的返回值，false说明了改class文件中并没有提供方法的参数名。也就是说，想要让class文件中存储方法的参数名称信息，需要在编译的时候显示的声明。</p>
 <h1 id="3、javac的parameters选项"><a href="#3、javac的parameters选项" class="headerlink" title="3、javac的parameters选项"></a>3、javac的parameters选项</h1><p>显示声明的方式可以在编译命令的说明中找到，打开命令行，输入 javac -help：</p>
 <p><img src="https://github.com/paine1690/HelloWorld/blob/master/pic/java/11.png?raw=true" alt="1"></p>
 <p>上面说的明明白白，需要加入parameters参数才可以。</p>
 <p>但是显然Object的类是无法重新编译的，于是是自己新建了一个类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> hello.reflect;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ClassA</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addArrayOfStrings</span><span class="params">(String[] strings)</span> </span>&#123;&#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInt</span><span class="params">(<span class="keyword">int</span> count)</span> </span>&#123;&#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addString</span><span class="params">(String url, String argName)</span> </span>&#123;&#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"ClassA"</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ClassA</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addArrayOfStrings</span><span class="params">(String[] strings)</span> </span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInt</span><span class="params">(<span class="keyword">int</span> count)</span> </span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addString</span><span class="params">(String url, String argName)</span> </span>&#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"ClassA"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我用javac命令编译试了一下，加上parameters参数之后，class文件明显变大了几十k。</p>
 <h1 id="4、eclipse中加入parameters编译参数"><a href="#4、eclipse中加入parameters编译参数" class="headerlink" title="4、eclipse中加入parameters编译参数"></a>4、eclipse中加入parameters编译参数</h1><p>在eclipse中开发的时候编译默认是不带这个参数的，也就是说用上面的方法输出我新建的ClassA，参数名肯定还是arg0这些，需要额外设置一下才可以。</p>
 <p>具体方法就是右键工程，选择properties</p>
@@ -444,30 +403,24 @@
 <p>把最下面那个选项选上，再重新编译一下，就可以了。</p>
 <p>关于重新编译，这个问题也经常遇到，有时候如果少了某个class文件经常会输出找不到或无法加载主类的错误，这时候就需要重新编译了。选择最上面的project-clean，然后再选择要重新编译的工程。之后再次运行，就会重新编译。</p>
 <p>这是再运行，将ClassA作为参数就可以得到下面的输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">method name: toString</div><div class="line">---------------------------------</div><div class="line">method name: addArrayOfStrings</div><div class="line">arg name: true strings, arg type: class [Ljava.lang.String;</div><div class="line">---------------------------------</div><div class="line">method name: addString</div><div class="line">arg name: true url, arg type: class java.lang.String</div><div class="line">arg name: true argName, arg type: class java.lang.String</div><div class="line">---------------------------------</div><div class="line">method name: addInt</div><div class="line">arg name: true count, arg type: int</div><div class="line">---------------------------------</div><div class="line">method name: wait</div><div class="line">---------------------------------</div><div class="line">method name: wait</div><div class="line">arg name: false arg0, arg type: long</div><div class="line">arg name: false arg1, arg type: int</div><div class="line">---------------------------------</div><div class="line">method name: wait</div><div class="line">arg name: false arg0, arg type: long</div><div class="line">---------------------------------</div><div class="line">method name: equals</div><div class="line">arg name: false arg0, arg type: class java.lang.Object</div><div class="line">---------------------------------</div><div class="line">method name: hashCode</div><div class="line">---------------------------------</div><div class="line">method name: getClass</div><div class="line">---------------------------------</div><div class="line">method name: notify</div><div class="line">---------------------------------</div><div class="line">method name: notifyAll</div><div class="line">---------------------------------</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">method name: toString</span><br><span class="line">---------------------------------</span><br><span class="line">method name: addArrayOfStrings</span><br><span class="line">arg name: true strings, arg type: class [Ljava.lang.String;</span><br><span class="line">---------------------------------</span><br><span class="line">method name: addString</span><br><span class="line">arg name: true url, arg type: class java.lang.String</span><br><span class="line">arg name: true argName, arg type: class java.lang.String</span><br><span class="line">---------------------------------</span><br><span class="line">method name: addInt</span><br><span class="line">arg name: true count, arg type: int</span><br><span class="line">---------------------------------</span><br><span class="line">method name: wait</span><br><span class="line">---------------------------------</span><br><span class="line">method name: wait</span><br><span class="line">arg name: false arg0, arg type: long</span><br><span class="line">arg name: false arg1, arg type: int</span><br><span class="line">---------------------------------</span><br><span class="line">method name: wait</span><br><span class="line">arg name: false arg0, arg type: long</span><br><span class="line">---------------------------------</span><br><span class="line">method name: equals</span><br><span class="line">arg name: false arg0, arg type: class java.lang.Object</span><br><span class="line">---------------------------------</span><br><span class="line">method name: hashCode</span><br><span class="line">---------------------------------</span><br><span class="line">method name: getClass</span><br><span class="line">---------------------------------</span><br><span class="line">method name: notify</span><br><span class="line">---------------------------------</span><br><span class="line">method name: notifyAll</span><br><span class="line">---------------------------------</span><br></pre></td></tr></table></figure>
 <p>现在就可以获取方法的参数名称了。</p>
 <h1 id="5、总结"><a href="#5、总结" class="headerlink" title="5、总结"></a>5、总结</h1><p>这个功能看似很无聊，但是在实际开发中应用还是很广的 ，之所以记录下来就是因为最近在使用github上面一个cdp4j的库，下载到本地以后一直运行错误，最后排查原因才知道是这个原因。</p>
 <p>这个功能在使用动态代理时用于获取参数信息还是很有用的。</p>
-<h1 id="6、参考地址"><a href="#6、参考地址" class="headerlink" title="6、参考地址"></a>6、参考地址</h1><p><a href="http://deepinmind.iteye.com/blog/2046050" target="_blank" rel="external">http://deepinmind.iteye.com/blog/2046050</a></p>
-<p><a href="http://www.cnblogs.com/zhangshiwen/p/6022794.html" target="_blank" rel="external">http://www.cnblogs.com/zhangshiwen/p/6022794.html</a></p>
+<h1 id="6、参考地址"><a href="#6、参考地址" class="headerlink" title="6、参考地址"></a>6、参考地址</h1><p><a href="http://deepinmind.iteye.com/blog/2046050" target="_blank" rel="noopener">http://deepinmind.iteye.com/blog/2046050</a></p>
+<p><a href="http://www.cnblogs.com/zhangshiwen/p/6022794.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhangshiwen/p/6022794.html</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -481,7 +434,7 @@
       
 
       
-        
+      
       
 
       
@@ -509,6 +462,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -518,20 +475,15 @@
     </div>
   </div>
 
-          
+
           </div>
           
 
 
           
-  <div class="comments" id="comments">
-    
-	  
-        <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
-      
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -547,75 +499,80 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="paine" />
-          <p class="site-author-name" itemprop="name">paine</p>
-          <p class="site-description motion-element" itemprop="description">paine1690</p>
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">65</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">28</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -636,6 +593,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -646,39 +605,50 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -702,52 +672,71 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
-  
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
   
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
 
 
   
@@ -773,143 +762,23 @@
 
 
 
+
+
+
+
+
+
+
   
 
 
 
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
 
 
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
   <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
   <script>
     function showTime(Counter) {
@@ -1019,6 +888,14 @@
 
   
 
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

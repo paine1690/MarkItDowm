@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,11 +10,19 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -37,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="多线程," />
@@ -80,26 +77,20 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法：
-举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
+<meta name="description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法： 举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
+<meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多线程基础">
 <meta property="og:url" content="http://yoursite.com/2016/12/10/MultiThreading/多线程基础/index.html">
 <meta property="og:site_name" content="paine1690">
-<meta property="og:description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法：
-举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
+<meta property="og:description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法： 举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-03-14T12:20:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程基础">
-<meta name="twitter:description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法：
-举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
+<meta name="twitter:description" content="一、线程的两种实现方式Java提供了线程类Thread来创建多线程的程序。其实，创建线程与创建普通的类的对象的操作是一样的，而线程就是Thread类或其子类的实例对象。每个Thread对象描述了一个单独的线程。要产生一个线程，有两种方法： 举一个实际例子来说明:假设一个影院有三个售票口，分别用于向儿童、成人和老人售票。影院为每个窗口放有100张电影票，分别是儿童票、成人票和老人票。三个窗口需要同时">
 
 
 
@@ -108,11 +99,13 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
-      userId: 'undefined',
+      userId: '0',
       author: '博主'
     },
     algolia: {
@@ -133,11 +126,7 @@
 
 
 
-  <title> 多线程基础 | paine1690 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>多线程基础 | paine1690</title>
   
 
 
@@ -157,42 +146,42 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">paine1690</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
   </div>
-    
-      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -213,7 +202,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -223,7 +212,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -233,7 +222,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -243,7 +232,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -253,32 +242,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
-    </div>
   
 </nav>
 
@@ -302,35 +268,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/10/MultiThreading/多线程基础/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/10/MultiThreading/多线程基础/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                多线程基础
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">多线程基础</h1>
         
 
         <div class="post-meta">
@@ -342,7 +302,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-10T00:00:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-10T00:00:00+08:00">
                 2016-12-10
               </time>
             
@@ -388,7 +348,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -404,7 +364,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -418,7 +380,7 @@
 <li>创建Thread子类的实例，即创建了线程对象。</li>
 <li>调用线程对象的start()方法来启动该线程。</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        MyThread m1=<span class="keyword">new</span> MyThread(<span class="string">"Window 1"</span>);</div><div class="line">        MyThread m2=<span class="keyword">new</span> MyThread(<span class="string">"Window 2"</span>);</div><div class="line">        MyThread m3=<span class="keyword">new</span> MyThread(<span class="string">"Window 3"</span>);</div><div class="line">        m1.start();</div><div class="line">        m2.start();</div><div class="line">        m3.start();		</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;<span class="comment">//每个线程都拥有100张票</span></div><div class="line">    MyThread(String name)&#123;</div><div class="line">        <span class="keyword">super</span>(name);<span class="comment">//调用父类带参数的构造方法</span></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</div><div class="line">            System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</div><div class="line">        &#125;</div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyThread m1=<span class="keyword">new</span> MyThread(<span class="string">"Window 1"</span>);</span><br><span class="line">		MyThread m2=<span class="keyword">new</span> MyThread(<span class="string">"Window 2"</span>);</span><br><span class="line">		MyThread m3=<span class="keyword">new</span> MyThread(<span class="string">"Window 3"</span>);</span><br><span class="line">        m1.start();</span><br><span class="line">        m2.start();</span><br><span class="line">        m3.start();		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;<span class="comment">//每个线程都拥有100张票</span></span><br><span class="line">	MyThread(String name)&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);<span class="comment">//调用父类带参数的构造方法</span></span><br><span class="line">    &#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>程序中定义一个线程类，它扩展了Thread类。利用扩展的线程类在MutliThreadDemo类的主方法中创建了三个线程对象，并通过start()方法分别将它们启动。</p>
 <p>从结果可以看到，每个线程分别对应100张电影票，之间并无任何关系，这就说明每个线程之间是平等的，没有优先级关系，因此都有机会得到CPU的处理。但是结果显示这三个线程并不是依次交替执行，而是在三个线程同时被执行的情况下，有的线程被分配时间片的机会多，票被提前卖完，而有的线程被分配时间片的机会比较少，票迟一些卖完。</p>
 <p>可见，<strong>利用扩展Thread类创建的多个线程，虽然执行的是相同的代码，但彼此相互独立，且各自拥有自己的资源，互不干扰</strong>。 </p>
@@ -427,11 +389,11 @@
 <li>创建 Runnable实现类的实例，并依此实例作为Thread的target来创建Thread对象，该Thread对象才是真正的线程对象。</li>
 <li>调用线程对象的start()方法来启动该线程。</li>
 </ol>
-<h3 id="1-1例子1"><a href="#1-1例子1" class="headerlink" title="1.1例子1"></a>1.1例子1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        MyThread2 m1=<span class="keyword">new</span> MyThread2();</div><div class="line">        MyThread2 m2=<span class="keyword">new</span> MyThread2();</div><div class="line">        MyThread2 m3=<span class="keyword">new</span> MyThread2();</div><div class="line">        Thread t1=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 1"</span>);</div><div class="line">        Thread t2=<span class="keyword">new</span> Thread(m2, <span class="string">"Window 2"</span>);</div><div class="line">        Thread t3=<span class="keyword">new</span> Thread(m3, <span class="string">"Window 3"</span>);</div><div class="line">        t1.start();</div><div class="line">        t2.start();</div><div class="line">        t3.start();	</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread2</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">     <span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;<span class="comment">//每个线程都拥有100张票</span></div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">         <span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</div><div class="line">           	<span class="comment">//如果要访问当前线程，则必须使用Thread.currentThread()方法。</span></div><div class="line">             System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="1-1例子1"><a href="#1-1例子1" class="headerlink" title="1.1例子1"></a>1.1例子1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyThread2 m1=<span class="keyword">new</span> MyThread2();</span><br><span class="line">		MyThread2 m2=<span class="keyword">new</span> MyThread2();</span><br><span class="line">		MyThread2 m3=<span class="keyword">new</span> MyThread2();</span><br><span class="line">        Thread t1=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 1"</span>);</span><br><span class="line">        Thread t2=<span class="keyword">new</span> Thread(m2, <span class="string">"Window 2"</span>);</span><br><span class="line">        Thread t3=<span class="keyword">new</span> Thread(m3, <span class="string">"Window 3"</span>);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t3.start();	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread2</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	 <span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;<span class="comment">//每个线程都拥有100张票</span></span><br><span class="line">	 <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">	     <span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">           	<span class="comment">//如果要访问当前线程，则必须使用Thread.currentThread()方法。</span></span><br><span class="line">	         System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</span><br><span class="line">	     &#125;</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由于这三个线程也是彼此独立，各自拥有自己的资源，即100张电影票，因此程序输出的结果和（1）结果大同小异。均是各自线程对自己的100张票进行单独的处理，互不影响。</p>
 <p>可见，只要现实的情况要求保证新建线程彼此相互独立，各自拥有资源，且互不干扰，采用哪个方式来创建多线程都是可以的。因为这两种方式创建的多线程程序能够实现相同的功能。</p>
 <h3 id="1-2、例子2"><a href="#1-2、例子2" class="headerlink" title="1.2、例子2"></a>1.2、例子2</h3><p>现实中也存在这样的情况，比如模拟一个火车站的售票系统，假如当日从A地发往B地的火车票只有100张，且允许所有窗口卖这100张票，那么每一个窗口也相当于一个线程，但是这时和前面的例子不同之处就在于所有线程处理的资源是同一个资源，即100张车票。如果还用前面的方式来创建线程显然是无法实现的，这种情况该怎样处理呢？看下面这个程序，程序代码如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        MyThread3 m1=<span class="keyword">new</span> MyThread3();</div><div class="line">        Thread t1=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 1"</span>);</div><div class="line">        Thread t2=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 2"</span>);</div><div class="line">        Thread t3=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 3"</span>);</div><div class="line">        t1.start();</div><div class="line">        t2.start();</div><div class="line">        t3.start();	</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread3</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</div><div class="line">            System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</div><div class="line">        &#125;		</div><div class="line">    &#125;	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MutliThreadDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyThread3 m1=<span class="keyword">new</span> MyThread3();</span><br><span class="line">        Thread t1=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 1"</span>);</span><br><span class="line">        Thread t2=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 2"</span>);</span><br><span class="line">        Thread t3=<span class="keyword">new</span> Thread(m1, <span class="string">"Window 3"</span>);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t3.start();	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread3</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> ticket=<span class="number">100</span>;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">			System.out.println(ticket--+<span class="string">" is saled by "</span>+Thread.currentThread().getName());</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>结果正如前面分析的那样，程序在内存中仅创建了一个资源，而新建的三个线程都是基于访问这同一资源的，并且由于每个线程上所运行的是相同的代码，因此它们执行的功能也是相同的。</p>
 <h2 id="3、Thread与Runnable"><a href="#3、Thread与Runnable" class="headerlink" title="3、Thread与Runnable"></a>3、Thread与Runnable</h2><p>通过上面例子的对比，可以看出两种方法都可以创建新的线程，但是后者与前者相比有着更多的优势：</p>
 <ol>
@@ -466,15 +428,15 @@
 </ul>
 <h2 id="1、区别"><a href="#1、区别" class="headerlink" title="1、区别"></a>1、区别</h2><p>User和Daemon两者几乎没有区别，唯一的不同之处就在于虚拟机的离开：如果 User Thread已经全部退出运行了，只剩下Daemon Thread存在了，虚拟机也就退出了。 因为没有了被守护者，Daemon也就没有工作可做了，也就没有继续运行程序的必要了。</p>
 <h2 id="2、创建"><a href="#2、创建" class="headerlink" title="2、创建"></a>2、创建</h2><p> 守护线程与普通线程写法上基本没什么区别，调用线程对象的方法setDaemon(true)，则可以将其设置为守护线程。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Thread daemonTread = <span class="keyword">new</span> Thread();     </div><div class="line">  <span class="comment">// 设定 daemonThread 为 守护线程，default false(非守护线程)  </span></div><div class="line"> daemonThread.setDaemon(<span class="keyword">true</span>);     </div><div class="line"> <span class="comment">// 验证当前线程是否为守护线程，返回 true 则为守护线程  </span></div><div class="line"> daemonThread.isDaemon();</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Thread daemonTread = <span class="keyword">new</span> Thread();     </span><br><span class="line">  <span class="comment">// 设定 daemonThread 为 守护线程，default false(非守护线程)  </span></span><br><span class="line"> daemonThread.setDaemon(<span class="keyword">true</span>);     </span><br><span class="line"> <span class="comment">// 验证当前线程是否为守护线程，返回 true 则为守护线程  </span></span><br><span class="line"> daemonThread.isDaemon();</span><br></pre></td></tr></table></figure>
 <ol>
 <li>thread.setDaemon(true)必须在thread.start()之前设置，否则会抛出一个IllegalThreadStateException异常。你不能把正在运行的常规线程设置为守护线程。</li>
 <li>在Daemon线程中产生的新线程也是Daemon的。 </li>
 <li>不是所有的应用都可以分配给Daemon线程来进行服务，比如读写操作或者计算逻辑。因为在Daemon Thread还没来的及进行操作时，虚拟机可能已经退出了。 </li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    Thread threadA=<span class="keyword">new</span> Thread()&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">            System.out.println(<span class="string">"hello I am threadA"</span>);				</div><div class="line">            Thread threadB=<span class="keyword">new</span> Thread()&#123;</div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">                    System.out.println(<span class="string">"hello I am threadB"</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            System.out.println(<span class="string">"threadB is deamon: "</span>+threadB.isDaemon());</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    System.out.println(<span class="string">"threadA is deamon: "</span>+threadA.isDaemon());</div><div class="line">    threadA.setDaemon(<span class="keyword">true</span>);</div><div class="line">    threadA.start();</div><div class="line">    System.out.println(<span class="string">"threadA is deamon: "</span>+threadA.isDaemon());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Thread threadA=<span class="keyword">new</span> Thread()&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"hello I am threadA"</span>);				</span><br><span class="line">			Thread threadB=<span class="keyword">new</span> Thread()&#123;</span><br><span class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">					System.out.println(<span class="string">"hello I am threadB"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">			System.out.println(<span class="string">"threadB is deamon: "</span>+threadB.isDaemon());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	System.out.println(<span class="string">"threadA is deamon: "</span>+threadA.isDaemon());</span><br><span class="line">	threadA.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">	threadA.start();</span><br><span class="line">	System.out.println(<span class="string">"threadA is deamon: "</span>+threadA.isDaemon());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">threadA is deamon: false</div><div class="line">threadA is deamon: true</div><div class="line">hello I am threadA</div><div class="line">threadB is deamon: true</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">threadA is deamon: false</span><br><span class="line">threadA is deamon: true</span><br><span class="line">hello I am threadA</span><br><span class="line">threadB is deamon: true</span><br></pre></td></tr></table></figure>
 <p>可以看出，线程A初始状态下是非守护线程，设置后变成守护线程，而在线程A中产生的线程B，即使还没有start，但初始状态就已经是守护线程。</p>
 <h1 id="三、线程的5种状态"><a href="#三、线程的5种状态" class="headerlink" title="三、线程的5种状态"></a>三、线程的5种状态</h1><p>关于线程状态不同书上有不同的说法，一般来说有5种状态：</p>
 <ol>
@@ -510,26 +472,20 @@
 </ul>
 </li>
 </ol>
-<h1 id="三、参考地址"><a href="#三、参考地址" class="headerlink" title="三、参考地址"></a>三、参考地址</h1><p><a href="http://www.cnblogs.com/whgw/archive/2011/10/03/2198506.html" target="_blank" rel="external">http://www.cnblogs.com/whgw/archive/2011/10/03/2198506.html</a></p>
-<p><a href="http://blog.csdn.net/longshengguoji/article/details/41126119" target="_blank" rel="external">http://blog.csdn.net/longshengguoji/article/details/41126119</a></p>
+<h1 id="三、参考地址"><a href="#三、参考地址" class="headerlink" title="三、参考地址"></a>三、参考地址</h1><p><a href="http://www.cnblogs.com/whgw/archive/2011/10/03/2198506.html" target="_blank" rel="noopener">http://www.cnblogs.com/whgw/archive/2011/10/03/2198506.html</a></p>
+<p><a href="http://blog.csdn.net/longshengguoji/article/details/41126119" target="_blank" rel="noopener">http://blog.csdn.net/longshengguoji/article/details/41126119</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -541,7 +497,7 @@
       
 
       
-        
+      
       
 
       
@@ -569,6 +525,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -578,20 +538,15 @@
     </div>
   </div>
 
-          
+
           </div>
           
 
 
           
-  <div class="comments" id="comments">
-    
-	  
-        <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
-      
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -607,75 +562,80 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="paine" />
-          <p class="site-author-name" itemprop="name">paine</p>
-          <p class="site-description motion-element" itemprop="description">paine1690</p>
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">65</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">28</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -696,6 +656,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -706,39 +668,50 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -762,52 +735,71 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
-  
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
   
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
 
 
   
@@ -833,143 +825,23 @@
 
 
 
+
+
+
+
+
+
+
   
 
 
 
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
 
 
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
   <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
   <script>
     function showTime(Counter) {
@@ -1079,6 +951,14 @@
 
   
 
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

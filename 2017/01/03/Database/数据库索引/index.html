@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,11 +10,19 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -37,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="数据库,索引," />
@@ -80,23 +77,16 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。
-一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。
-最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
+<meta name="description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。 一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。 最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
+<meta name="keywords" content="数据库,索引">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库的索引">
 <meta property="og:url" content="http://yoursite.com/2017/01/03/Database/数据库索引/index.html">
 <meta property="og:site_name" content="paine1690">
-<meta property="og:description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。
-一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。
-最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
+<meta property="og:description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。 一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。 最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/6.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/7.png?raw=true">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/8.png?raw=true">
@@ -107,9 +97,7 @@
 <meta property="og:updated_time" content="2017-09-05T09:55:17.907Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库的索引">
-<meta name="twitter:description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。
-一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。
-最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
+<meta name="twitter:description" content="在了解索引之前，先了解一下MySQL的两种最常见的存储引擎。 一、基础知识1、MYSQL存储引擎–MyISAM与InnoDBInnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。 最常见的差别就是InnoDB支持事务处理和外键与行级锁。 MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供">
 <meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/Database/6.png?raw=true">
 
 
@@ -119,11 +107,13 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
-      userId: 'undefined',
+      userId: '0',
       author: '博主'
     },
     algolia: {
@@ -144,11 +134,7 @@
 
 
 
-  <title> 数据库的索引 | paine1690 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>数据库的索引 | paine1690</title>
   
 
 
@@ -168,42 +154,42 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">paine1690</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
   </div>
-    
-      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -224,7 +210,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -234,7 +220,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -244,7 +230,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -254,7 +240,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -264,32 +250,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
-    </div>
   
 </nav>
 
@@ -313,35 +276,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Database/数据库索引/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Database/数据库索引/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                数据库的索引
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">数据库的索引</h1>
         
 
         <div class="post-meta">
@@ -353,7 +310,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T00:00:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T00:00:00+08:00">
                 2017-01-03
               </time>
             
@@ -399,7 +356,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -415,7 +372,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -522,20 +481,20 @@
 <li><p>普通索引：这是最基本的MySQL数据库索引，它没有任何限制</p>
 <ul>
 <li><p>创建：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE INDEX indexName ON mytable(username(length));</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX indexName ON mytable(username(length));</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>删除：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DROP INDEX [indexName] ON mytable;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP INDEX [indexName] ON mytable;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p>唯一索引：它与前面的普通索引类似，不同的就是：MySQL数据库索引列的值必须唯一，但允许有空值。</p>
 <ul>
 <li><p>创建：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE UNIQUE INDEX indexName ON mytable(username(length))</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE UNIQUE INDEX indexName ON mytable(username(length))</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建表的时候直接指定：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE mytable( ID INT NOT NULL, username VARCHAR(16) NOT NULL, UNIQUE [indexName] (username(length)) );</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE mytable( ID INT NOT NULL, username VARCHAR(16) NOT NULL, UNIQUE [indexName] (username(length)) );</span><br></pre></td></tr></table></figure>
 <p>​</p>
 </li>
 </ul>
@@ -543,10 +502,10 @@
 <li><p>主键索引：它是一种特殊的唯一索引，不允许有空值。</p>
 <ul>
 <li><p>一般是在建表的时候同时创建主键索引</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE mytable( ID INT NOT NULL, username VARCHAR(16) NOT NULL, PRIMARY KEY(ID) );</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE mytable( ID INT NOT NULL, username VARCHAR(16) NOT NULL, PRIMARY KEY(ID) );</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>查看：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW INDEX FROM mytable;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW INDEX FROM mytable;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -554,10 +513,10 @@
 <p>也叫复合索引：Mysql从左到右的使用索引中的字段，一个查询可以只使用索引中的一部份，但<strong>只能是最左侧部分</strong>。例如索引是key index (a,b,c)。可以支持a | a, b |a, b, c 3种组合进行查找，但不支持b, c进行查找。当最左侧字段是常量引用时，索引就十分有效。</p>
 <ul>
 <li><p>创建：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">create index idx1 on table1(col1,col2,col3)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index idx1 on table1(col1,col2,col3)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>查询：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from table1 where col1= A and col2= B and col3 = C</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table1 where col1= A and col2= B and col3 = C</span><br></pre></td></tr></table></figure>
 <p>这时候查询优化器,不在扫描表了，而是直接的从索引中拿数据，因为索引中有这些数据，这叫覆盖式查询，这样的查询速度非常快。</p>
 </li>
 </ul>
@@ -567,7 +526,7 @@
 <p>关于复合索引的注意事项：</p>
 <ol>
 <li><p>对于复合索引，在查询使用时，最好将条件顺序按找索引的顺序，这样效率最高：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from table1 where col1=A AND col2=B AND col3=D</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table1 where col1=A AND col2=B AND col3=D</span><br></pre></td></tr></table></figure>
 <pre><code>如果使用` where col2=B AND col1=A` 或者 `where col2=B` 将不会使用索引
 </code></pre></li>
 <li><p>对一张表来说,如果有一个复合索引 on (col1,col2),就没有必要同时建立一个单索引 on col1;</p>
@@ -640,33 +599,27 @@
 <li>对于那些定义为text, image和bit数据类型的列不应该增加索引。这是因为，这些列的数据量要么相当大，要么取值很少。</li>
 <li>当修改操作比大于检索操作更频繁时，不应该创建索引。因为需要频繁的维护索引结构。</li>
 </ul>
-<h1 id="五、参考地址"><a href="#五、参考地址" class="headerlink" title="五、参考地址"></a>五、参考地址</h1><p><a href="http://blog.csdn.net/xifeijian/article/details/20316775" target="_blank" rel="external">http://blog.csdn.net/xifeijian/article/details/20316775</a></p>
-<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6530142/" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/article/details/6530142/</a></p>
-<p><a href="http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html" target="_blank" rel="external">http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html</a></p>
-<p><a href="http://blog.csdn.net/kennyrose/article/details/7532032" target="_blank" rel="external">http://blog.csdn.net/kennyrose/article/details/7532032</a></p>
-<p><a href="http://database.51cto.com/art/201005/202796.htm" target="_blank" rel="external">http://database.51cto.com/art/201005/202796.htm</a></p>
-<p><a href="http://www.cnblogs.com/zlcxbb/p/5757245.html" target="_blank" rel="external">http://www.cnblogs.com/zlcxbb/p/5757245.html</a></p>
-<p><a href="http://www.cnblogs.com/lovekingly/p/3962284.html" target="_blank" rel="external">http://www.cnblogs.com/lovekingly/p/3962284.html</a></p>
-<p><a href="http://blog.itpub.net/24383181/viewspace-692973/" target="_blank" rel="external">http://blog.itpub.net/24383181/viewspace-692973/</a></p>
-<p><a href="http://blog.csdn.net/u011534095/article/details/48552877" target="_blank" rel="external">http://blog.csdn.net/u011534095/article/details/48552877</a></p>
+<h1 id="五、参考地址"><a href="#五、参考地址" class="headerlink" title="五、参考地址"></a>五、参考地址</h1><p><a href="http://blog.csdn.net/xifeijian/article/details/20316775" target="_blank" rel="noopener">http://blog.csdn.net/xifeijian/article/details/20316775</a></p>
+<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6530142/" target="_blank" rel="noopener">http://blog.csdn.net/v_JULY_v/article/details/6530142/</a></p>
+<p><a href="http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html" target="_blank" rel="noopener">http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html</a></p>
+<p><a href="http://blog.csdn.net/kennyrose/article/details/7532032" target="_blank" rel="noopener">http://blog.csdn.net/kennyrose/article/details/7532032</a></p>
+<p><a href="http://database.51cto.com/art/201005/202796.htm" target="_blank" rel="noopener">http://database.51cto.com/art/201005/202796.htm</a></p>
+<p><a href="http://www.cnblogs.com/zlcxbb/p/5757245.html" target="_blank" rel="noopener">http://www.cnblogs.com/zlcxbb/p/5757245.html</a></p>
+<p><a href="http://www.cnblogs.com/lovekingly/p/3962284.html" target="_blank" rel="noopener">http://www.cnblogs.com/lovekingly/p/3962284.html</a></p>
+<p><a href="http://blog.itpub.net/24383181/viewspace-692973/" target="_blank" rel="noopener">http://blog.itpub.net/24383181/viewspace-692973/</a></p>
+<p><a href="http://blog.csdn.net/u011534095/article/details/48552877" target="_blank" rel="noopener">http://blog.csdn.net/u011534095/article/details/48552877</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -680,7 +633,7 @@
       
 
       
-        
+      
       
 
       
@@ -697,8 +650,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/07/MultiThreading/Java中的线程池/" rel="prev" title="Java中的线程池">
-                Java中的线程池 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" rel="prev" title="数据库中的乐观锁与悲观锁">
+                数据库中的乐观锁与悲观锁 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -708,6 +661,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -717,20 +674,15 @@
     </div>
   </div>
 
-          
+
           </div>
           
 
 
           
-  <div class="comments" id="comments">
-    
-	  
-        <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
-      
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -746,75 +698,80 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="paine" />
-          <p class="site-author-name" itemprop="name">paine</p>
-          <p class="site-description motion-element" itemprop="description">paine1690</p>
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">65</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">28</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -835,6 +792,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -845,39 +804,50 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -901,52 +871,71 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
-  
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
   
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
 
 
   
@@ -972,143 +961,23 @@
 
 
 
+
+
+
+
+
+
+
   
 
 
 
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
 
 
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
   <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
   <script>
     function showTime(Counter) {
@@ -1218,6 +1087,14 @@
 
   
 
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

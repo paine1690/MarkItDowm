@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,11 +10,19 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -37,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="Java虚拟机," />
@@ -80,51 +77,21 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="虚拟机类加载机制：虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。
-一、加载的时机1、类的生命周期　类的生命周期有一下7个阶段：
-
-加载 loading
-验证 verification
-准备 preparation
-解析 resolution
-初始化 initialization
-使用 using
-卸载 unloadi">
+<meta name="description" content="虚拟机类加载机制：虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。 一、加载的时机1、类的生命周期　类的生命周期有一下7个阶段：  加载 loading 验证 verification 准备 preparation 解析 resolution 初始化 initialization 使用 using 卸载 unloadi">
+<meta name="keywords" content="Java虚拟机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="虚拟机类加载机制">
 <meta property="og:url" content="http://yoursite.com/2016/11/02/JVM/虚拟机类加载机制/index.html">
 <meta property="og:site_name" content="paine1690">
-<meta property="og:description" content="虚拟机类加载机制：虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。
-一、加载的时机1、类的生命周期　类的生命周期有一下7个阶段：
-
-加载 loading
-验证 verification
-准备 preparation
-解析 resolution
-初始化 initialization
-使用 using
-卸载 unloadi">
+<meta property="og:description" content="虚拟机类加载机制：虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。 一、加载的时机1、类的生命周期　类的生命周期有一下7个阶段：  加载 loading 验证 verification 准备 preparation 解析 resolution 初始化 initialization 使用 using 卸载 unloadi">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/jvm/3.png?raw=true">
 <meta property="og:updated_time" content="2017-04-10T12:42:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="虚拟机类加载机制">
-<meta name="twitter:description" content="虚拟机类加载机制：虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。
-一、加载的时机1、类的生命周期　类的生命周期有一下7个阶段：
-
-加载 loading
-验证 verification
-准备 preparation
-解析 resolution
-初始化 initialization
-使用 using
-卸载 unloadi">
+<meta name="twitter:description" content="虚拟机类加载机制：虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。 一、加载的时机1、类的生命周期　类的生命周期有一下7个阶段：  加载 loading 验证 verification 准备 preparation 解析 resolution 初始化 initialization 使用 using 卸载 unloadi">
 <meta name="twitter:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/jvm/3.png?raw=true">
 
 
@@ -134,11 +101,13 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
-      userId: 'undefined',
+      userId: '0',
       author: '博主'
     },
     algolia: {
@@ -159,11 +128,7 @@
 
 
 
-  <title> 虚拟机类加载机制 | paine1690 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>虚拟机类加载机制 | paine1690</title>
   
 
 
@@ -183,42 +148,42 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">paine1690</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
   </div>
-    
-      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -239,7 +204,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -249,7 +214,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -259,7 +224,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -269,7 +234,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -279,32 +244,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
-    </div>
   
 </nav>
 
@@ -328,35 +270,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/02/JVM/虚拟机类加载机制/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/02/JVM/虚拟机类加载机制/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                虚拟机类加载机制
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">虚拟机类加载机制</h1>
         
 
         <div class="post-meta">
@@ -368,7 +304,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-02T00:00:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-02T00:00:00+08:00">
                 2016-11-02
               </time>
             
@@ -414,7 +350,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -430,7 +366,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -501,11 +439,11 @@
 <li><p>类变量的内存被分配在方法区中，而实例变量是在堆中</p>
 </li>
 <li><p>准备阶段变量的初始值都是零值，比如</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//在准备阶段value的值是0，初始化阶段才会赋值为123</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> calue=<span class="number">123</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在准备阶段value的值是0，初始化阶段才会赋值为123</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> calue=<span class="number">123</span>;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>有一种特殊情况：如果类变量的字段属性表中存在ConstantValue属性，那么在准备阶段就会被直接初始化为ConstantValue属性指定的值：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//准备阶段value值就是123</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> value=<span class="number">123</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//准备阶段value值就是123</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> value=<span class="number">123</span>;</span><br></pre></td></tr></table></figure>
 <h2 id="4、解析"><a href="#4、解析" class="headerlink" title="4、解析"></a>4、解析</h2><p>解析是将常量池内<strong>符号引用</strong>替换为<strong>直接引用</strong>的过程。</p>
 <p>首先区别下符号引用于直接引用：</p>
 <ul>
@@ -530,14 +468,14 @@
 <li><p><code>&lt;cinit&gt;()</code>不需要显示的调用，虚拟机会保证子类的<code>&lt;cinit&gt;()</code>之前，父类的<code>&lt;cinit&gt;()</code>已经执行完毕。所以虚拟机中第一个被执行的<code>&lt;cinit&gt;()</code>方法肯定是java.lang.Object。</p>
 </li>
 <li><p>编译器的收集顺序由代码顺序决定，静态语句块只能访问到之前的变量，对于之后的变量，只能赋值不能访问，比如</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">    <span class="keyword">static</span>&#123;</div><div class="line">    	i=<span class="number">0</span>;						<span class="comment">//给后面的变量赋值可以编译通过</span></div><div class="line">    	System.out.println(i);		<span class="comment">//这句编译器会提示“非法向前引用”</span></div><div class="line">    &#125;</div><div class="line">  	<span class="keyword">static</span> i=<span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">    	i=<span class="number">0</span>;						<span class="comment">//给后面的变量赋值可以编译通过</span></span><br><span class="line">    	System.out.println(i);		<span class="comment">//这句编译器会提示“非法向前引用”</span></span><br><span class="line">	&#125;</span><br><span class="line">  	<span class="keyword">static</span> i=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>​</p>
 </li>
 </ol>
 <h1 id="三、类加载器"><a href="#三、类加载器" class="headerlink" title="三、类加载器"></a>三、类加载器</h1><p>上面提到类的加载阶段需要完成三件事，这三件事就是通过类加载器完成的</p>
 <h2 id="1、类与类加载器"><a href="#1、类与类加载器" class="headerlink" title="1、类与类加载器"></a>1、类与类加载器</h2><p>在Java中，任何一个类都需要由加载它的类加载器和这个类本身一同确定其在Java虚拟机中的唯一性，每个类加载器都有独立的类名称空间。也就是说，比较两个类是否<strong>相等</strong>，只有这两个类是由同一个类加载器加载的前提下才有意义，否则，即使两个类来源于同一个Class文件，被同一个虚拟机加载，只要加载它们的加载器不同，那么这两个类就不<strong>相等</strong>。这里的<strong>相等</strong>包括类的Class对象的equals()方法、isAssignableFrom()方法、isInstance()方法和instanceof关键字的结果。</p>
 <p>比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassLoaderTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span><span class="keyword">throws</span> Exception</span>&#123;   	</div><div class="line">        ClassLoader myClassLoader = <span class="keyword">new</span> ClassLoader()&#123;  </div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="keyword">public</span> Class&lt;?&gt; loadClass(String name)<span class="keyword">throws</span> ClassNotFoundException&#123;    </div><div class="line">                 <span class="keyword">try</span>&#123;</div><div class="line">                     String filename = name.substring(name.lastIndexOf(<span class="string">"."</span>) + <span class="number">1</span>) +<span class="string">".class"</span>;    </div><div class="line">                     InputStream is = getClass().getResourceAsStream(filename);    </div><div class="line">                     <span class="keyword">if</span>(is==<span class="keyword">null</span>)&#123;</div><div class="line">                         <span class="keyword">return</span> <span class="keyword">super</span>.loadClass(name);</div><div class="line">                     &#125;</div><div class="line">                     <span class="keyword">byte</span>[] b=<span class="keyword">new</span> <span class="keyword">byte</span>[is.available()];</div><div class="line">                     is.read(b);</div><div class="line">                     <span class="keyword">return</span> defineClass(name, b, <span class="number">0</span>, b.length);</div><div class="line">                 &#125;<span class="keyword">catch</span>(IOException e)&#123;</div><div class="line">                     <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name);   </div><div class="line">                 &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;		</div><div class="line">        Object obj=myClassLoader.loadClass(<span class="string">"interview.ClassLoaderTest"</span>).newInstance();    </div><div class="line">        System.out.println(obj.getClass());    </div><div class="line">        System.out.println(obj <span class="keyword">instanceof</span> interview.ClassLoaderTest);    </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassLoaderTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span><span class="keyword">throws</span> Exception</span>&#123;   	</span><br><span class="line">		ClassLoader myClassLoader = <span class="keyword">new</span> ClassLoader()&#123;  </span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="keyword">public</span> Class&lt;?&gt; loadClass(String name)<span class="keyword">throws</span> ClassNotFoundException&#123;    </span><br><span class="line">				 <span class="keyword">try</span>&#123;</span><br><span class="line">					 String filename = name.substring(name.lastIndexOf(<span class="string">"."</span>) + <span class="number">1</span>) +<span class="string">".class"</span>;    </span><br><span class="line">					 InputStream is = getClass().getResourceAsStream(filename);    </span><br><span class="line">					 <span class="keyword">if</span>(is==<span class="keyword">null</span>)&#123;</span><br><span class="line">						 <span class="keyword">return</span> <span class="keyword">super</span>.loadClass(name);</span><br><span class="line">					 &#125;</span><br><span class="line">					 <span class="keyword">byte</span>[] b=<span class="keyword">new</span> <span class="keyword">byte</span>[is.available()];</span><br><span class="line">					 is.read(b);</span><br><span class="line">					 <span class="keyword">return</span> defineClass(name, b, <span class="number">0</span>, b.length);</span><br><span class="line">				 &#125;<span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">					 <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name);   </span><br><span class="line">				 &#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;;		</span><br><span class="line">		Object obj=myClassLoader.loadClass(<span class="string">"interview.ClassLoaderTest"</span>).newInstance();    </span><br><span class="line">		System.out.println(obj.getClass());    </span><br><span class="line">		System.out.println(obj <span class="keyword">instanceof</span> interview.ClassLoaderTest);    </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出为：</p>
 <p>class interview.ClassLoaderTest<br>false</p>
 <p>因为interview.ClassLoaderTest默认使用Application ClassLoader加载，而obj是通过自定义类加载器加载的，类加载不相同，因此不相等。</p>
@@ -568,26 +506,20 @@
 <li><strong>单一性</strong>：单一性原理是指仅加载一个类一次，这是由委托机制确保子类加载器不会再次加载父类加载器加载过的类。</li>
 </ul>
 <h2 id="4、如何显示加载一个类"><a href="#4、如何显示加载一个类" class="headerlink" title="4、如何显示加载一个类"></a>4、如何显示加载一个类</h2><p>Java提供了显式加载类的API：Class.forName(classname)和Class.forName(classname, initialized, classloader)。就像上面的例子中，你可以指定类加载器的名称以及要加载的类的名称。类的加载是通过调用java.lang.ClassLoader的loadClass()方法，而loadClass()方法则调用了findClass()方法来定位相应类的字节码。</p>
-<h2 id="5、参考地址"><a href="#5、参考地址" class="headerlink" title="5、参考地址"></a>5、参考地址</h2><p><a href="http://www.importnew.com/6581.html" target="_blank" rel="external">http://www.importnew.com/6581.html</a></p>
-<p><a href="http://blog.csdn.net/p10010/article/details/50448491" target="_blank" rel="external">http://blog.csdn.net/p10010/article/details/50448491</a></p>
+<h2 id="5、参考地址"><a href="#5、参考地址" class="headerlink" title="5、参考地址"></a>5、参考地址</h2><p><a href="http://www.importnew.com/6581.html" target="_blank" rel="noopener">http://www.importnew.com/6581.html</a></p>
+<p><a href="http://blog.csdn.net/p10010/article/details/50448491" target="_blank" rel="noopener">http://blog.csdn.net/p10010/article/details/50448491</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -599,15 +531,15 @@
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/31/ComputerNetworking/networking/" rel="next" title="计算机网络">
-                <i class="fa fa-chevron-left"></i> 计算机网络
+              <a href="/2016/11/02/JVM/JVM垃圾回收机制/" rel="next" title="JVM垃圾回收机制">
+                <i class="fa fa-chevron-left"></i> JVM垃圾回收机制
               </a>
             
           </div>
@@ -616,8 +548,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/02/JVM/JVM垃圾回收机制/" rel="prev" title="JVM垃圾回收机制">
-                JVM垃圾回收机制 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" rel="prev" title="ConcurrentHashMap源码分析">
+                ConcurrentHashMap源码分析 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -627,6 +559,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -636,20 +572,15 @@
     </div>
   </div>
 
-          
+
           </div>
           
 
 
           
-  <div class="comments" id="comments">
-    
-	  
-        <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
-      
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -665,75 +596,80 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="paine" />
-          <p class="site-author-name" itemprop="name">paine</p>
-          <p class="site-description motion-element" itemprop="description">paine1690</p>
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">65</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">28</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -754,6 +690,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -764,39 +702,50 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -820,52 +769,71 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
-  
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
   
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
 
 
   
@@ -891,143 +859,23 @@
 
 
 
+
+
+
+
+
+
+
   
 
 
 
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
 
 
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
   <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
   <script>
     function showTime(Counter) {
@@ -1137,6 +985,14 @@
 
   
 
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,11 +10,19 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -37,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="网络协议," />
@@ -80,33 +77,16 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="HTTP即 HyperText Transfer Protocol，web应用的基础，应该是最常用的应用层协议。有如下几个特点：
-
-客户/服务器模式
-基于TCP传输
-无连接：每次连接只处理一个请求，响应后断开。（keepalive）
-无状态：服务器不会保存客户的任何信息。（cookie与session）
-
-一、HTTP的报文格式HTTP报文分为请求报文和响应报文，二者的格式非常相似。都由三部分组成">
+<meta name="description" content="HTTP即 HyperText Transfer Protocol，web应用的基础，应该是最常用的应用层协议。有如下几个特点：  客户/服务器模式 基于TCP传输 无连接：每次连接只处理一个请求，响应后断开。（keepalive） 无状态：服务器不会保存客户的任何信息。（cookie与session）  一、HTTP的报文格式HTTP报文分为请求报文和响应报文，二者的格式非常相似。都由三部分组成">
+<meta name="keywords" content="网络协议">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析HTTP协议">
 <meta property="og:url" content="http://yoursite.com/2016/10/31/ComputerNetworking/http/index.html">
 <meta property="og:site_name" content="paine1690">
-<meta property="og:description" content="HTTP即 HyperText Transfer Protocol，web应用的基础，应该是最常用的应用层协议。有如下几个特点：
-
-客户/服务器模式
-基于TCP传输
-无连接：每次连接只处理一个请求，响应后断开。（keepalive）
-无状态：服务器不会保存客户的任何信息。（cookie与session）
-
-一、HTTP的报文格式HTTP报文分为请求报文和响应报文，二者的格式非常相似。都由三部分组成">
+<meta property="og:description" content="HTTP即 HyperText Transfer Protocol，web应用的基础，应该是最常用的应用层协议。有如下几个特点：  客户/服务器模式 基于TCP传输 无连接：每次连接只处理一个请求，响应后断开。（keepalive） 无状态：服务器不会保存客户的任何信息。（cookie与session）  一、HTTP的报文格式HTTP报文分为请求报文和响应报文，二者的格式非常相似。都由三部分组成">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://incdn1.b0.upaiyun.com/2017/06/26c00ce7be17e6d0e5418459312b234b.png">
 <meta property="og:image" content="http://incdn1.b0.upaiyun.com/2017/06/76f787c1d137fbabc1debe6852d93db1.png">
 <meta property="og:image" content="https://github.com/paine1690/HelloWorld/blob/master/pic/ComputerNetworking/1.png?raw=true">
@@ -114,14 +94,7 @@
 <meta property="og:updated_time" content="2017-06-05T01:29:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析HTTP协议">
-<meta name="twitter:description" content="HTTP即 HyperText Transfer Protocol，web应用的基础，应该是最常用的应用层协议。有如下几个特点：
-
-客户/服务器模式
-基于TCP传输
-无连接：每次连接只处理一个请求，响应后断开。（keepalive）
-无状态：服务器不会保存客户的任何信息。（cookie与session）
-
-一、HTTP的报文格式HTTP报文分为请求报文和响应报文，二者的格式非常相似。都由三部分组成">
+<meta name="twitter:description" content="HTTP即 HyperText Transfer Protocol，web应用的基础，应该是最常用的应用层协议。有如下几个特点：  客户/服务器模式 基于TCP传输 无连接：每次连接只处理一个请求，响应后断开。（keepalive） 无状态：服务器不会保存客户的任何信息。（cookie与session）  一、HTTP的报文格式HTTP报文分为请求报文和响应报文，二者的格式非常相似。都由三部分组成">
 <meta name="twitter:image" content="http://incdn1.b0.upaiyun.com/2017/06/26c00ce7be17e6d0e5418459312b234b.png">
 
 
@@ -131,11 +104,13 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
-      userId: 'undefined',
+      userId: '0',
       author: '博主'
     },
     algolia: {
@@ -156,11 +131,7 @@
 
 
 
-  <title> 浅析HTTP协议 | paine1690 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>浅析HTTP协议 | paine1690</title>
   
 
 
@@ -180,42 +151,42 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">paine1690</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
   </div>
-    
-      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -236,7 +207,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -246,7 +217,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -256,7 +227,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -266,7 +237,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -276,32 +247,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
-    </div>
   
 </nav>
 
@@ -325,35 +273,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/http/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/http/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                浅析HTTP协议
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">浅析HTTP协议</h1>
         
 
         <div class="post-meta">
@@ -365,7 +307,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-31T00:00:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-31T00:00:00+08:00">
                 2016-10-31
               </time>
             
@@ -411,7 +353,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -427,7 +369,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -450,7 +394,7 @@
 </blockquote>
 <p>请求报文的起始行包含方法，请求URL以及版本号。<br>接下一行的是首部，首部可以有一后者多行。<br>并不是所有报文都包含主体部分，主体和前面的首部之间有一个空行。如下：</p>
 <blockquote>
-<p>GEt /special/te.html HTTP/1.0<br>HOST:  www.som.com<br>Connection: close<br>User-agent: Mozilla/5.0<br>Accept-language: fr</p>
+<p>GEt /special/te.html HTTP/1.0<br>HOST:  <a href="http://www.som.com" target="_blank" rel="noopener">www.som.com</a><br>Connection: close<br>User-agent: Mozilla/5.0<br>Accept-language: fr</p>
 </blockquote>
 <h2 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h2><p>服务器发回给客户端的叫响应报文</p>
 <blockquote>
@@ -478,7 +422,7 @@
 </ul>
 <h4 id="get与post的区别"><a href="#get与post的区别" class="headerlink" title="get与post的区别"></a>get与post的区别</h4><ol>
 <li>get用于从服务器获取资源，post重点在于向服务器发送数据</li>
-<li>get传输数据是通过URL请求，以field（字段）= value的形式，置于URL后，并用”?”连接，多个请求数据间用”&amp;”连接，如<a href="http://127.0.0.1/Test/login.action?name=admin&amp;password=admin，这个过程用户是可见的；" target="_blank" rel="external">http://127.0.0.1/Test/login.action?name=admin&amp;password=admin，这个过程用户是可见的；</a><pre><code>post传输数据通过Http的post机制，将字段与对应值封存在请求实体中发送给服务器，这个过程对用户是不可见的；
+<li>get传输数据是通过URL请求，以field（字段）= value的形式，置于URL后，并用”?”连接，多个请求数据间用”&amp;”连接，如<a href="http://127.0.0.1/Test/login.action?name=admin&amp;password=admin，这个过程用户是可见的；" target="_blank" rel="noopener">http://127.0.0.1/Test/login.action?name=admin&amp;password=admin，这个过程用户是可见的；</a><pre><code>post传输数据通过Http的post机制，将字段与对应值封存在请求实体中发送给服务器，这个过程对用户是不可见的；
 </code></pre></li>
 <li>Get传输的数据量小，因为受URL长度限制，但效率较高；<pre><code>Post可以传输大量数据，所以上传文件时只能用Post方式；
 </code></pre></li>
@@ -550,11 +494,11 @@
 <h2 id="缓存控制"><a href="#缓存控制" class="headerlink" title="缓存控制"></a>缓存控制</h2><p>HTTP的缓存可以有效减少数据的传输，提高效率。有一种实现方式就是通过请求头If-None-Match、响应头ETag配合。</p>
 <p><strong>响应头ETag</strong></p>
 <p>ETag全称Entity Tag，用来标识一个资源。在具体的实现中，ETag可以是资源的hash值，也可以是一个内部维护的版本号。但不管怎样，ETag应该能反映出资源内容的变化，这是Http缓存可以正常工作的基础。</p>
-<p><a href="http://www.importnew.com/24907.html/httpcacheetag" target="_blank" rel="external"><img src="http://incdn1.b0.upaiyun.com/2017/06/26c00ce7be17e6d0e5418459312b234b.png" alt="HttpCacheEtag"></a></p>
+<p><a href="http://www.importnew.com/24907.html/httpcacheetag" target="_blank" rel="noopener"><img src="http://incdn1.b0.upaiyun.com/2017/06/26c00ce7be17e6d0e5418459312b234b.png" alt="HttpCacheEtag"></a></p>
 <p>如上例中所展示的，服务器在返回响应时，通常会在Http头中包含一些关于响应的元数据信息，其中，ETag就是其中一个，本例中返回了值为x1323ddx的ETag。当资源/file的内容发生变化时，服务器应当返回不同的ETag。</p>
 <p><strong>请求头If-None-Match</strong></p>
 <p>对于同一个资源，比如上一例中的/file，在进行了一次请求之后，浏览器就已经有了/file的一个版本的内容，和这个版本的ETag，当下次用户再需要这个资源，浏览器再次向服务器请求的时候，可以利用请求头If-None-Match来告诉服务器自己已经有个ETag为x1323ddx的/file，这样，如果服务器上的/file没有变化，也就是说服务器上的/file的ETag也是x1323ddx的话，服务器就不会再返回/file的内容，而是返回一个304的响应，告诉浏览器该资源没有变化，缓存有效。</p>
-<p><a href="http://www.importnew.com/24907.html/httpcacheifnonematch-1" target="_blank" rel="external"><img src="http://incdn1.b0.upaiyun.com/2017/06/76f787c1d137fbabc1debe6852d93db1.png" alt="HttpCacheIfNoneMatch (1)"></a></p>
+<p><a href="http://www.importnew.com/24907.html/httpcacheifnonematch-1" target="_blank" rel="noopener"><img src="http://incdn1.b0.upaiyun.com/2017/06/76f787c1d137fbabc1debe6852d93db1.png" alt="HttpCacheIfNoneMatch (1)"></a></p>
 <p>如上例中所示，在使用了If-None-Match之后，服务器只需要很小的响应就可以达到相同的结果，从而优化了性能。</p>
 <h1 id="二、持续连接与非持续连接"><a href="#二、持续连接与非持续连接" class="headerlink" title="二、持续连接与非持续连接"></a>二、持续连接与非持续连接</h1><p>由于HTTP协议是基于TCP的，所以客户端与服务器响应的时候必须要考虑连接问题。</p>
 <h2 id="1、定义"><a href="#1、定义" class="headerlink" title="1、定义"></a>1、定义</h2><p><strong>非持续连接</strong>：每个请求/响应对都是经一个单独的TCP连接发送<br><strong>持续连接</strong>：所有的请求及响应经相同的TCP连接发送</p>
@@ -593,10 +537,10 @@
 <h3 id="sessionid的存储"><a href="#sessionid的存储" class="headerlink" title="sessionid的存储"></a>sessionid的存储</h3><ol>
 <li><p>保存这个session id的方式可以采用cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识返回给服务器。一般这个cookie的名字都是类似于SEEESIONID，而。比如weblogic对于web应用程序生成的cookie，JSESSIONID=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764，它的名字就是JSESSIONID。 </p>
 </li>
-<li><p>由于cookie可以被人为的禁止，必须有其他机制以便在cookie被禁止时仍然能够把session id传递回服务器。经常被使用的一种技术叫做URL重写，就是把session id直接附加在URL路径的后面，附加方式也有两种，一种是作为URL路径的附加信息，表现形式为<a href="http://...../xxx;jsessionid=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764" target="_blank" rel="external">http://...../xxx;jsessionid=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764</a><br>另一种是作为查询字符串附加在URL后面，表现形式为<a href="http://...../xxx?jsessionid=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764" target="_blank" rel="external">http://...../xxx?jsessionid=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764</a><br>这两种方式对于用户来说是没有区别的，只是服务器在解析的时候处理的方式不同，采用第一种方式也有利于把session id的信息和正常程序参数区分开来。 </p>
+<li><p>由于cookie可以被人为的禁止，必须有其他机制以便在cookie被禁止时仍然能够把session id传递回服务器。经常被使用的一种技术叫做URL重写，就是把session id直接附加在URL路径的后面，附加方式也有两种，一种是作为URL路径的附加信息，表现形式为http://…../xxx;jsessionid=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764<br>另一种是作为查询字符串附加在URL后面，表现形式为http://…../xxx?jsessionid=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764<br>这两种方式对于用户来说是没有区别的，只是服务器在解析的时候处理的方式不同，采用第一种方式也有利于把session id的信息和正常程序参数区分开来。 </p>
 </li>
 <li><p>另一种技术叫做表单隐藏字段。就是服务器会自动修改表单，添加一个隐藏字段，以便在表单提交时能够把session id传递回服务器。比如下面的表单： </p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"testform"</span> <span class="attr">action</span>=<span class="string">"/xxx"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span> </div><div class="line"></div><div class="line">在被传递给客户端之前将被改写成： </div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"testform"</span> <span class="attr">action</span>=<span class="string">"/xxx"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"jsessionid"</span> <span class="attr">value</span>=<span class="string">"ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"testform"</span> <span class="attr">action</span>=<span class="string">"/xxx"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span> </span><br><span class="line"></span><br><span class="line">在被传递给客户端之前将被改写成： </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"testform"</span> <span class="attr">action</span>=<span class="string">"/xxx"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"jsessionid"</span> <span class="attr">value</span>=<span class="string">"ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h2 id="3、cookie与session的区别"><a href="#3、cookie与session的区别" class="headerlink" title="3、cookie与session的区别"></a>3、cookie与session的区别</h2><h3 id="存取方式不同"><a href="#存取方式不同" class="headerlink" title="存取方式不同"></a>存取方式不同</h3><p>Cookie中只能保管ASCII字符串，假如需求存取Unicode字符或者二进制数据，需求先进行编码。Cookie中也不能直接存取Java对象。若要存储略微复杂的信息，运用Cookie是比拟艰难的。<br>而Session中能够存取任何类型的数据，包括而不限于String、Integer、List、Map等。Session中也能够直接保管Java Bean乃至任何Java类，对象等，运用起来十分便当。能够把Session看做是一个Java容器类。</p>
@@ -606,28 +550,22 @@
 <h3 id="浏览器支持不同"><a href="#浏览器支持不同" class="headerlink" title="浏览器支持不同"></a>浏览器支持不同</h3><p>Cookie是需要客户端浏览器支持的。假如客户端禁用了Cookie，或者不支持Cookie，则会话跟踪会失效。关于WAP上的应用，常规的Cookie就派不上用场了。</p>
 <p>假如客户端浏览器不支持Cookie，需要运用Session以及URL地址重写。需要注意的是一切的用到Session程序的URL都要进行URL地址重写，否则Session会话跟踪还会失效。关于WAP应用来说，Session+URL地址重写或许是它唯一的选择。</p>
 <h3 id="跨域支持不同"><a href="#跨域支持不同" class="headerlink" title="跨域支持不同"></a>跨域支持不同</h3><p>Cookie支持跨域名访问，例如将domain属性设置为“.biaodianfu.com”，则以“.biaodianfu.com”为后缀的一切域名均能够访问该Cookie。跨域名Cookie如今被普遍用在网络中，例如Google、Baidu、Sina等。而Session则不会支持跨域名访问。Session仅在他所在的域名内有效。<br>仅运用Cookie或者仅运用Session可能完成不了理想的效果。这时应该尝试一下同时运用Cookie与Session。Cookie与Session的搭配运用在实践项目中会完成很多意想不到的效果。</p>
-<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://justsee.iteye.com/blog/1570652" target="_blank" rel="external">http://justsee.iteye.com/blog/1570652</a></p>
-<p><a href="http://www.lai18.com/content/407204.html" target="_blank" rel="external">http://www.lai18.com/content/407204.html</a></p>
-<p><a href="http://m.blog.csdn.net/article/details?id=51336564" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=51336564</a></p>
-<p><a href="http://www.importnew.com/24907.html" target="_blank" rel="external">http://www.importnew.com/24907.html</a></p>
+<h1 id="四、参考地址"><a href="#四、参考地址" class="headerlink" title="四、参考地址"></a>四、参考地址</h1><p><a href="http://justsee.iteye.com/blog/1570652" target="_blank" rel="noopener">http://justsee.iteye.com/blog/1570652</a></p>
+<p><a href="http://www.lai18.com/content/407204.html" target="_blank" rel="noopener">http://www.lai18.com/content/407204.html</a></p>
+<p><a href="http://m.blog.csdn.net/article/details?id=51336564" target="_blank" rel="noopener">http://m.blog.csdn.net/article/details?id=51336564</a></p>
+<p><a href="http://www.importnew.com/24907.html" target="_blank" rel="noopener">http://www.importnew.com/24907.html</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -639,15 +577,15 @@
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/31/ComputerNetworking/ARP/" rel="next" title="浅析ARP协议">
-                <i class="fa fa-chevron-left"></i> 浅析ARP协议
+              <a href="/2016/10/31/ComputerNetworking/tcp/" rel="next" title="浅析TCP协议">
+                <i class="fa fa-chevron-left"></i> 浅析TCP协议
               </a>
             
           </div>
@@ -656,8 +594,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/10/31/ComputerNetworking/dns/" rel="prev" title="浅析DNS协议">
-                浅析DNS协议 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/10/31/ComputerNetworking/HTTPS/" rel="prev" title="浅析HTTPS协议">
+                浅析HTTPS协议 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -667,6 +605,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -676,20 +618,15 @@
     </div>
   </div>
 
-          
+
           </div>
           
 
 
           
-  <div class="comments" id="comments">
-    
-	  
-        <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
-      
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -705,75 +642,80 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="paine" />
-          <p class="site-author-name" itemprop="name">paine</p>
-          <p class="site-description motion-element" itemprop="description">paine1690</p>
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">65</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">28</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -794,6 +736,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -804,39 +748,50 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -860,52 +815,71 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
-  
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
   
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
 
 
   
@@ -931,143 +905,23 @@
 
 
 
+
+
+
+
+
+
+
   
 
 
 
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
 
 
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
   <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
   <script>
     function showTime(Counter) {
@@ -1177,6 +1031,14 @@
 
   
 
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

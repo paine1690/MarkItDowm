@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,11 +10,19 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
 
 
 
@@ -37,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="多线程," />
@@ -80,38 +77,20 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="大多数并发应用程序是以执行任务（task）为基本单位进行管理的。通常情况下，我们会为每个任务单独创建一个线程来执行。这样会带来两个问题：
-
-大量的线程（&amp;gt;100）会消耗系统资源，使线程调度的开销变大，引起性能下降；
-对于生命周期短暂的任务，频繁地创建和消亡线程并不是明智的选择。因为创建和消亡线程的开销可能会大于使用多线程带来的性能好处。
-
-一种更加合理的使用多线程的方法是使用线程池（Thre">
+<meta name="description" content="大多数并发应用程序是以执行任务（task）为基本单位进行管理的。通常情况下，我们会为每个任务单独创建一个线程来执行。这样会带来两个问题：  大量的线程（&amp;gt;100）会消耗系统资源，使线程调度的开销变大，引起性能下降； 对于生命周期短暂的任务，频繁地创建和消亡线程并不是明智的选择。因为创建和消亡线程的开销可能会大于使用多线程带来的性能好处。  一种更加合理的使用多线程的方法是使用线程池（Thre">
+<meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java中的线程池">
 <meta property="og:url" content="http://yoursite.com/2017/01/07/MultiThreading/Java中的线程池/index.html">
 <meta property="og:site_name" content="paine1690">
-<meta property="og:description" content="大多数并发应用程序是以执行任务（task）为基本单位进行管理的。通常情况下，我们会为每个任务单独创建一个线程来执行。这样会带来两个问题：
-
-大量的线程（&amp;gt;100）会消耗系统资源，使线程调度的开销变大，引起性能下降；
-对于生命周期短暂的任务，频繁地创建和消亡线程并不是明智的选择。因为创建和消亡线程的开销可能会大于使用多线程带来的性能好处。
-
-一种更加合理的使用多线程的方法是使用线程池（Thre">
+<meta property="og:description" content="大多数并发应用程序是以执行任务（task）为基本单位进行管理的。通常情况下，我们会为每个任务单独创建一个线程来执行。这样会带来两个问题：  大量的线程（&amp;gt;100）会消耗系统资源，使线程调度的开销变大，引起性能下降； 对于生命周期短暂的任务，频繁地创建和消亡线程并不是明智的选择。因为创建和消亡线程的开销可能会大于使用多线程带来的性能好处。  一种更加合理的使用多线程的方法是使用线程池（Thre">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-02-10T12:41:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java中的线程池">
-<meta name="twitter:description" content="大多数并发应用程序是以执行任务（task）为基本单位进行管理的。通常情况下，我们会为每个任务单独创建一个线程来执行。这样会带来两个问题：
-
-大量的线程（&amp;gt;100）会消耗系统资源，使线程调度的开销变大，引起性能下降；
-对于生命周期短暂的任务，频繁地创建和消亡线程并不是明智的选择。因为创建和消亡线程的开销可能会大于使用多线程带来的性能好处。
-
-一种更加合理的使用多线程的方法是使用线程池（Thre">
+<meta name="twitter:description" content="大多数并发应用程序是以执行任务（task）为基本单位进行管理的。通常情况下，我们会为每个任务单独创建一个线程来执行。这样会带来两个问题：  大量的线程（&amp;gt;100）会消耗系统资源，使线程调度的开销变大，引起性能下降； 对于生命周期短暂的任务，频繁地创建和消亡线程并不是明智的选择。因为创建和消亡线程的开销可能会大于使用多线程带来的性能好处。  一种更加合理的使用多线程的方法是使用线程池（Thre">
 
 
 
@@ -120,11 +99,13 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
-      userId: 'undefined',
+      userId: '0',
       author: '博主'
     },
     algolia: {
@@ -145,11 +126,7 @@
 
 
 
-  <title> Java中的线程池 | paine1690 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+  <title>Java中的线程池 | paine1690</title>
   
 
 
@@ -169,42 +146,42 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">paine1690</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">paine1690</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而时习之不亦说乎 ？</p>
+      
   </div>
-    
-      <p class="site-subtitle">学而时习之不亦说乎 ？</p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -225,7 +202,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -235,7 +212,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -245,7 +222,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -255,7 +232,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -265,32 +242,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
-    </div>
   
 </nav>
 
@@ -314,35 +268,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/07/MultiThreading/Java中的线程池/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/07/MultiThreading/Java中的线程池/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Java中的线程池
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">Java中的线程池</h1>
         
 
         <div class="post-meta">
@@ -354,7 +302,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-07T00:00:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-07T00:00:00+08:00">
                 2017-01-07
               </time>
             
@@ -400,7 +348,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -416,7 +364,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -431,17 +381,17 @@
 <p>一种更加合理的使用多线程的方法是使用线程池（Thread Pool）。 java.util.concurrent 提供了一个灵活的线程池实现：Executor 框架。</p>
 <h1 id="一、Executor"><a href="#一、Executor" class="headerlink" title="一、Executor"></a>一、Executor</h1><p>Executor框架可以用于异步任务执行，而且支持很多不同类型的任务执行策略。它还为任务提交和任务执行之间的解耦提供了标准的方法，为使用 Runnable 描述任务提供了通用的方式。 Executor 的实现还提供了对生命周期的支持和 hook 函数，可以添加如统计收集、应用程序管理机制和监视器等扩展。</p>
 <h2 id="1、Executor接口"><a href="#1、Executor接口" class="headerlink" title="1、Executor接口"></a>1、Executor接口</h2><p>并发编程的一种编程方式是把任务拆分为一些列的小任务，即Runnable，然后在提交给一个Executor执行，<strong>Executor.execute(Runnalbe)</strong> 。Executor在执行时使用内部的线程池完成操作。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Executor</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Executor</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>该接口只有一个execute方法，执行已提交的 Runnable 任务对象。此接口提供一种将任务提交与每个任务将如何运行的机制（包括线程使用的细节、调度等）分离开来的方法。通常使用 Executor 而不是显式地创建线程。</p>
 <p>Executor基于生产者消费者模式，提交任务的操作相当于生产者（生产待完成的工作单元），执行任务的线程则相当于消费者（执行完这些工作单元）。如果在程序中实现一个生产者消费者的设计，那么最简单的方式通常就是使用Executor。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    Executor executor=Executors.newCachedThreadPool();</div><div class="line">    executor.execute(<span class="keyword">new</span> Runnable()&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">            System.out.println(<span class="string">"hello"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Executor executor=Executors.newCachedThreadPool();</span><br><span class="line">	executor.execute(<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上面代码有两个问题：</p>
 <ol>
 <li>使用了Executors类的工厂方法来获得了一个Executor的实例，这个类会在下面详细介绍</li>
 <li>这个程序会一直运行下去，不会终止。因为这个接口中并没有用于管理生命周期的方法。</li>
 </ol>
 <h2 id="2、ExecutorService接口"><a href="#2、ExecutorService接口" class="headerlink" title="2、ExecutorService接口"></a>2、ExecutorService接口</h2><p>ExecutorService继承自Executor接口，添加了一些用于生命周期管理的方法，同时还有一些用于任务提交的遍历方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ExecutorService</span> <span class="keyword">extends</span> <span class="title">Executor</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shutdown</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">List&lt;Runnable&gt; <span class="title">shutdownNow</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isShutdown</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isTerminated</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">awaitTermination</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></div><div class="line">        <span class="keyword">throws</span> InterruptedException;</div><div class="line">    &lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Callable&lt;T&gt; task)</span></span>;</div><div class="line">    &lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Runnable task, T result)</span></span>;</div><div class="line">    Future&lt;?&gt; submit(Runnable task);</div><div class="line">    &lt;T&gt; List&lt;Future&lt;T&gt;&gt; invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)</div><div class="line">        <span class="keyword">throws</span> InterruptedException;</div><div class="line">    &lt;T&gt; List&lt;Future&lt;T&gt;&gt; invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks,</div><div class="line">                                  <span class="keyword">long</span> timeout, TimeUnit unit)</div><div class="line">        <span class="keyword">throws</span> InterruptedException;</div><div class="line">    &lt;T&gt; <span class="function">T <span class="title">invokeAny</span><span class="params">(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)</span></span></div><div class="line">        <span class="keyword">throws</span> InterruptedException, ExecutionException;</div><div class="line">    &lt;T&gt; <span class="function">T <span class="title">invokeAny</span><span class="params">(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks,</span></span></div><div class="line">                    <span class="keyword">long</span> timeout, TimeUnit unit)</div><div class="line">        <span class="keyword">throws</span> InterruptedException, ExecutionException, TimeoutException;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ExecutorService</span> <span class="keyword">extends</span> <span class="title">Executor</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shutdown</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">List&lt;Runnable&gt; <span class="title">shutdownNow</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isShutdown</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isTerminated</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">awaitTermination</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    &lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Callable&lt;T&gt; task)</span></span>;</span><br><span class="line">    &lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Runnable task, T result)</span></span>;</span><br><span class="line">    Future&lt;?&gt; submit(Runnable task);</span><br><span class="line">    &lt;T&gt; List&lt;Future&lt;T&gt;&gt; invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)</span><br><span class="line">        <span class="keyword">throws</span> InterruptedException;</span><br><span class="line">    &lt;T&gt; List&lt;Future&lt;T&gt;&gt; invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks,</span><br><span class="line">                                  <span class="keyword">long</span> timeout, TimeUnit unit)</span><br><span class="line">        <span class="keyword">throws</span> InterruptedException;</span><br><span class="line">    &lt;T&gt; <span class="function">T <span class="title">invokeAny</span><span class="params">(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException, ExecutionException</span>;</span><br><span class="line">    &lt;T&gt; <span class="function">T <span class="title">invokeAny</span><span class="params">(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException, ExecutionException, TimeoutException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="2-1、shutdown与shutdownNow"><a href="#2-1、shutdown与shutdownNow" class="headerlink" title="2.1、shutdown与shutdownNow"></a>2.1、shutdown与shutdownNow</h3><p>这两个方法都用于终止ExecutorService。</p>
 <ul>
 <li><p>shutdown方法将执行平缓的关闭过程：不再接受新的任务，同时等待已经提交的任务执行完成（包括那些还没开始执行的任务）。</p>
@@ -458,7 +408,7 @@
 <li>Future&lt;?&gt; submit(Runnable task)：提交一个 Runnable 任务用于执行，并返回一个表示该任务的 Future。该 Future 的 get 方法在成功完成时将会返回 null。</li>
 </ul>
 <h2 id="3、Excutors类"><a href="#3、Excutors类" class="headerlink" title="3、Excutors类"></a>3、Excutors类</h2><p>Executors类，提供了一系列工厂方法用于创建线程池，返回的线程池都实现了ExecutorService接口。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    ExecutorService executor1=Executors.newFixedThreadPool(nThreads);</div><div class="line">    ExecutorService executor2=Executors.newCachedThreadPool();</div><div class="line">    ExecutorService executor3=Executors.newSingleThreadExecutor();</div><div class="line">    ExecutorService executor4=Executors.newScheduledThreadPool(corePoolSize);		</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	ExecutorService executor1=Executors.newFixedThreadPool(nThreads);</span><br><span class="line">	ExecutorService executor2=Executors.newCachedThreadPool();</span><br><span class="line">	ExecutorService executor3=Executors.newSingleThreadExecutor();</span><br><span class="line">	ExecutorService executor4=Executors.newScheduledThreadPool(corePoolSize);		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li><p>newFixedThreadPool：</p>
 <p>创建一个固定长度的线程池，每当提交一个任务时就创建一个线程，直到达到线程池的最大数量，这时线程池的规模将不再变化。如果某个线程由于发生了未预期的Exception而结束，那么线程池会补充一个新的线程。</p>
@@ -487,7 +437,7 @@
 </li>
 </ul>
 <p>通过Executors类获取的三种上面已经介绍过，它们为大多数使用场景预定义了设置。如果需要自己定制属性，那么就需要通过构造函数显式的创建，构造函数如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></div><div class="line">                          <span class="keyword">int</span> maximumPoolSize,</div><div class="line">                          <span class="keyword">long</span> keepAliveTime,</div><div class="line">                          TimeUnit unit,</div><div class="line">                          BlockingQueue&lt;Runnable&gt; workQueue,</div><div class="line">                          ThreadFactory threadFactory,</div><div class="line">                          RejectedExecutionHandler handler) &#123;&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                          ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">                          RejectedExecutionHandler handler)</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="1、线程池的大小"><a href="#1、线程池的大小" class="headerlink" title="1、线程池的大小"></a>1、线程池的大小</h2><p>线程池的大小由一下两个参数决定：</p>
 <ul>
 <li>corePoolSize：线程池的基本大小，</li>
@@ -538,33 +488,27 @@
 <h3 id="3-3、CallerRuns-调用者运行"><a href="#3-3、CallerRuns-调用者运行" class="headerlink" title="3.3、CallerRuns 调用者运行"></a>3.3、CallerRuns 调用者运行</h3><p>CallerRunsPolicy是“调用者运行”策略，实现了一种调节机制 。它不会抛弃任务，也不会抛出异常。 而是将任务回退到调用者。它不会在线程池中执行任务，而是在一个调用了Executor的线程中执行该任务。</p>
 <h2 id="4、线程工厂"><a href="#4、线程工厂" class="headerlink" title="4、线程工厂"></a>4、线程工厂</h2><p>每当线程池需要创建一个线程时，都是通过线程工厂方法来完成的。而不是传统的new Thread。</p>
 <p>默认情况下为Executors.defaultThreadFactory()，ThreadFactory接口：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ThreadFactory</span> </span>&#123;  </div><div class="line">    <span class="function">Thread <span class="title">newThread</span><span class="params">(Runnable r)</span></span>;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ThreadFactory</span> </span>&#123;  </span><br><span class="line">    <span class="function">Thread <span class="title">newThread</span><span class="params">(Runnable r)</span></span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们也可以采用自定义的ThreadFactory工厂，增加对线程创建与销毁等更多的控制，并且作为参数来传入线程池中，这样就可以使用自己定义的线程工厂来创建线程。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.ThreadFactory;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadFactoryDemo</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WorkerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">        <span class="keyword">private</span> Runnable target;</div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">WorkerThread</span><span class="params">(Runnable target, <span class="keyword">int</span> cnt)</span></span>&#123;</div><div class="line">            <span class="keyword">super</span>(String.valueOf(cnt));</div><div class="line">            <span class="keyword">this</span>.target=target;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="keyword">try</span>&#123;</div><div class="line">                target.run();</div><div class="line">            &#125;<span class="keyword">finally</span>&#123;				</div><div class="line">                System.out.println(Thread.currentThread().getName()+<span class="string">"end"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;		</div><div class="line">    &#125;	</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        ExecutorService executorService=Executors.newCachedThreadPool(<span class="keyword">new</span> ThreadFactory()&#123;</div><div class="line">            <span class="keyword">private</span> AtomicInteger count=<span class="keyword">new</span> AtomicInteger();			</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</div><div class="line">                <span class="keyword">int</span> cnt=count.incrementAndGet();</div><div class="line">                System.out.println(<span class="string">"Thread: "</span>+cnt+<span class="string">" created"</span>);						</div><div class="line">                <span class="keyword">return</span> <span class="keyword">new</span> WorkerThread(r, cnt);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        </div><div class="line">        executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</div><div class="line">        executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</div><div class="line">        executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</div><div class="line">        executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</div><div class="line">        executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</div><div class="line">        executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</div><div class="line">        executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</div><div class="line">      	System.out.println(<span class="string">"shutdown"</span>);</div><div class="line">        executorService.shutdown();</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Thread: "</span>+Thread.currentThread().getName()+<span class="string">" run"</span>);		</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ThreadFactory;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadFactoryDemo</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WorkerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">		<span class="keyword">private</span> Runnable target;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">WorkerThread</span><span class="params">(Runnable target, <span class="keyword">int</span> cnt)</span></span>&#123;</span><br><span class="line">			<span class="keyword">super</span>(String.valueOf(cnt));</span><br><span class="line">			<span class="keyword">this</span>.target=target;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">try</span>&#123;</span><br><span class="line">				target.run();</span><br><span class="line">			&#125;<span class="keyword">finally</span>&#123;				</span><br><span class="line">				System.out.println(Thread.currentThread().getName()+<span class="string">"end"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;	</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">		ExecutorService executorService=Executors.newCachedThreadPool(<span class="keyword">new</span> ThreadFactory()&#123;</span><br><span class="line">			<span class="keyword">private</span> AtomicInteger count=<span class="keyword">new</span> AtomicInteger();			</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</span><br><span class="line">				<span class="keyword">int</span> cnt=count.incrementAndGet();</span><br><span class="line">				System.out.println(<span class="string">"Thread: "</span>+cnt+<span class="string">" created"</span>);						</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">new</span> WorkerThread(r, cnt);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">		</span><br><span class="line">		executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</span><br><span class="line">		executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</span><br><span class="line">		executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</span><br><span class="line">		executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</span><br><span class="line">		executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</span><br><span class="line">		executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</span><br><span class="line">		executorService.execute(<span class="keyword">new</span> ThreadFactoryDemo());</span><br><span class="line">      	System.out.println(<span class="string">"shutdown"</span>);</span><br><span class="line">		executorService.shutdown();</span><br><span class="line"> </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Thread: "</span>+Thread.currentThread().getName()+<span class="string">" run"</span>);		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Thread: 1 created</div><div class="line">Thread: 2 created</div><div class="line">Thread: 1 run</div><div class="line">Thread: 2 run</div><div class="line">Thread: 3 created</div><div class="line">Thread: 3 run</div><div class="line">Thread: 2 run</div><div class="line">Thread: 1 run</div><div class="line">Thread: 4 created</div><div class="line">Thread: 3 run</div><div class="line">shutdown</div><div class="line">Thread: 4 run</div><div class="line">4end</div><div class="line">2end</div><div class="line">1end</div><div class="line">3end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Thread: 1 created</span><br><span class="line">Thread: 2 created</span><br><span class="line">Thread: 1 run</span><br><span class="line">Thread: 2 run</span><br><span class="line">Thread: 3 created</span><br><span class="line">Thread: 3 run</span><br><span class="line">Thread: 2 run</span><br><span class="line">Thread: 1 run</span><br><span class="line">Thread: 4 created</span><br><span class="line">Thread: 3 run</span><br><span class="line">shutdown</span><br><span class="line">Thread: 4 run</span><br><span class="line">4end</span><br><span class="line">2end</span><br><span class="line">1end</span><br><span class="line">3end</span><br></pre></td></tr></table></figure>
 <p>每次的输出都不确定，因为线程池不一定会创建多少个线程，由于任务执行的比较快，有可能一个线程执行多次任务，这样虽然打印出的run与输入的相同，但是却不一定创建了那么多个数量的线程，这也体现出了使用线程池的优势，就是减少了多次线程创建与销毁所消耗的时间。</p>
-<h1 id="三、参考地址"><a href="#三、参考地址" class="headerlink" title="三、参考地址"></a>三、参考地址</h1><p><a href="http://blog.csdn.net/linghu_java/article/details/17123057" target="_blank" rel="external">http://blog.csdn.net/linghu_java/article/details/17123057</a></p>
-<p><a href="http://www.cnblogs.com/xingele0917/p/4110634.html" target="_blank" rel="external">http://www.cnblogs.com/xingele0917/p/4110634.html</a></p>
-<p><a href="http://guojuanjun.blog.51cto.com/277646/650981/" target="_blank" rel="external">http://guojuanjun.blog.51cto.com/277646/650981/</a></p>
+<h1 id="三、参考地址"><a href="#三、参考地址" class="headerlink" title="三、参考地址"></a>三、参考地址</h1><p><a href="http://blog.csdn.net/linghu_java/article/details/17123057" target="_blank" rel="noopener">http://blog.csdn.net/linghu_java/article/details/17123057</a></p>
+<p><a href="http://www.cnblogs.com/xingele0917/p/4110634.html" target="_blank" rel="noopener">http://www.cnblogs.com/xingele0917/p/4110634.html</a></p>
+<p><a href="http://guojuanjun.blog.51cto.com/277646/650981/" target="_blank" rel="noopener">http://guojuanjun.blog.51cto.com/277646/650981/</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -576,15 +520,15 @@
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/03/Database/数据库索引/" rel="next" title="数据库的索引">
-                <i class="fa fa-chevron-left"></i> 数据库的索引
+              <a href="/2017/01/03/Database/数据库中乐观锁与悲观锁​/" rel="next" title="数据库中的乐观锁与悲观锁">
+                <i class="fa fa-chevron-left"></i> 数据库中的乐观锁与悲观锁
               </a>
             
           </div>
@@ -604,6 +548,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -613,20 +561,15 @@
     </div>
   </div>
 
-          
+
           </div>
           
 
 
           
-  <div class="comments" id="comments">
-    
-	  
-        <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
-      
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -642,75 +585,80 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="paine" />
-          <p class="site-author-name" itemprop="name">paine</p>
-          <p class="site-description motion-element" itemprop="description">paine1690</p>
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">paine</p>
+              <p class="site-description motion-element" itemprop="description">paine1690</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">65</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">28</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -731,6 +679,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -741,39 +691,50 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">paine</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -797,52 +758,71 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
-  
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
   
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
 
 
   
@@ -868,143 +848,23 @@
 
 
 
+
+
+
+
+
+
+
   
 
 
 
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
 
 
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
   <script>AV.initialize("4rmuj5wS96EPAVAUp7yLKM1e-gzGzoHsz", "7fLiqpJUf1cq3qcST5X8ChAy");</script>
   <script>
     function showTime(Counter) {
@@ -1114,6 +974,14 @@
 
   
 
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>
