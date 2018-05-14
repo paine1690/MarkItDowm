@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -326,8 +326,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">
-                  LinkedHashMap源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="url">
+                  Java的fail-fast机制
                 </a>
               
             
@@ -384,8 +384,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/Java的fail-fast机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +393,7 @@
 
           
           
-             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
+             <span id="/2016/11/12/Java/JDK/Java的fail-fast机制/" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -424,12 +424,12 @@
       
         
           
-          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
-LinkedHashMap继承自HashMap，关于map的操作基本一样
+          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
+1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/Java的fail-fast机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -643,7 +643,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -668,8 +668,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="url">
-                  Java的fail-fast机制
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">
+                  LinkedHashMap源码分析
                 </a>
               
             
@@ -726,8 +726,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/Java的fail-fast机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -735,7 +735,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/Java的fail-fast机制/" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
+             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -766,12 +766,12 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
-1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
+          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
+LinkedHashMap继承自HashMap，关于map的操作基本一样
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/Java的fail-fast机制/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -814,7 +814,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/PriorityQueue源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedList源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -839,8 +839,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="url">
-                  PriorityQueue源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="url">
+                  LinkedList源码分析
                 </a>
               
             
@@ -897,8 +897,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/LinkedList源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -906,7 +906,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/PriorityQueue源码分析/" class="leancloud_visitors" data-flag-title="PriorityQueue源码分析">
+             <span id="/2016/11/12/Java/JDK/LinkedList源码分析/" class="leancloud_visitors" data-flag-title="LinkedList源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -937,12 +937,11 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          Priorityqueue是Java7后加入的优先级队列，继承自AbstractQueue，而AbstractQueue，实现了Queue接口，也就是说Priorityqueue是实现了Queue接口的，带有优先级的队列。
-内部实现上采用的是最小堆，即每次取出优先级最小的元素。相对来说实现上比较简单
+          分析完Arraylist后来看一下List的另一种实现LinkedList。LinkedList底层使用的是双向链表结构，内部类定义了节点结构，一个头结点和尾节点表示队列的开始和结尾。与ArrayList不同的是，LinkedList除了实现了List接口外，还实现了Deque接口，而Deque接口
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/LinkedList源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1155,7 +1154,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedList源码分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/PriorityQueue源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1180,8 +1179,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="url">
-                  LinkedList源码分析
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="url">
+                  PriorityQueue源码分析
                 </a>
               
             
@@ -1238,8 +1237,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/12/Java/JDK/LinkedList源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1247,7 +1246,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/LinkedList源码分析/" class="leancloud_visitors" data-flag-title="LinkedList源码分析">
+             <span id="/2016/11/12/Java/JDK/PriorityQueue源码分析/" class="leancloud_visitors" data-flag-title="PriorityQueue源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1278,11 +1277,12 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          分析完Arraylist后来看一下List的另一种实现LinkedList。LinkedList底层使用的是双向链表结构，内部类定义了节点结构，一个头结点和尾节点表示队列的开始和结尾。与ArrayList不同的是，LinkedList除了实现了List接口外，还实现了Deque接口，而Deque接口
+          Priorityqueue是Java7后加入的优先级队列，继承自AbstractQueue，而AbstractQueue，实现了Queue接口，也就是说Priorityqueue是实现了Queue接口的，带有优先级的队列。
+内部实现上采用的是最小堆，即每次取出优先级最小的元素。相对来说实现上比较简单
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/LinkedList源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1678,7 +1678,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/HTTPS/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/ARP/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -1703,8 +1703,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
             
               
                 
-                <a class="post-title-link" href="/2016/10/31/ComputerNetworking/HTTPS/" itemprop="url">
-                  浅析HTTPS协议
+                <a class="post-title-link" href="/2016/10/31/ComputerNetworking/ARP/" itemprop="url">
+                  浅析ARP协议
                 </a>
               
             
@@ -1761,8 +1761,8 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/10/31/ComputerNetworking/HTTPS/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/31/ComputerNetworking/HTTPS/" itemprop="commentCount"></span>
+                <a href="/2016/10/31/ComputerNetworking/ARP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/31/ComputerNetworking/ARP/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1770,7 +1770,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/10/31/ComputerNetworking/HTTPS/" class="leancloud_visitors" data-flag-title="浅析HTTPS协议">
+             <span id="/2016/10/31/ComputerNetworking/ARP/" class="leancloud_visitors" data-flag-title="浅析ARP协议">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1801,14 +1801,12 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          一、基本概念1、HTTPSHTTPS，也称作HTTP over TLS。TLS的前身是SSL。端口为443。
-下图描述了在TCP/IP协议栈中TLS(各子协议）和HTTP的关系
-
-其中Handshake protocol，Change Ciper Spec protocol和Alert protoc
+          一、ARP协议 ARP (Address Resolution Protocol) 是个地址解析协议。ARP协议的基本功能就是通过目标设备的IP地址，查询目标设备的MAC地址，以保证通信的顺利进行。
+二、工作过程1、同一网段假设主机A和B在同一个网段，主机A要向主机B发送信息。具体的地址解析过程如下
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/10/31/ComputerNetworking/HTTPS/#more" rel="contents">
+            <a class="btn" href="/2016/10/31/ComputerNetworking/ARP/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
