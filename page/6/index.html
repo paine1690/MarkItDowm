@@ -272,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/PriorityQueue源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -291,7 +291,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">LinkedHashMap源码分析</a></h1>
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="url">PriorityQueue源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -343,7 +343,7 @@
 
           
           
-             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
+             <span id="/2016/11/12/Java/JDK/PriorityQueue源码分析/" class="leancloud_visitors" data-flag-title="PriorityQueue源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,174 +376,12 @@
       
         
           
-          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
-LinkedHashMap继承自HashMap，关于map的操作基本一样
+          Priorityqueue是Java7后加入的优先级队列，继承自AbstractQueue，而AbstractQueue，实现了Queue接口，也就是说Priorityqueue是实现了Queue接口的，带有优先级的队列。
+内部实现上采用的是最小堆，即每次取出优先级最小的元素。相对来说实现上比较简单
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ArrayList源码分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="paine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="paine1690">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/ArrayList源码分析/" itemprop="url">ArrayList源码分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
-                2016-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/11/12/Java/JDK/ArrayList源码分析/" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          ArrayList是Java集合中最常用的，基于一个数组实现的，容量可以动态增长。
-ArrayList不是线程安全的，只能在单线程环境下使用。        
-本文以jdk1.8的源码为例，分析其实现机制。
-一、基本属性与构造函数12345678910111213141516171819202122
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/ArrayList源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -703,6 +541,166 @@ ArrayList不是线程安全的，只能在单线程环境下使用。
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2016/11/12/Java/JDK/LinkedList源码分析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="url">Java的fail-fast机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
+                2016-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/11/12/Java/JDK/Java的fail-fast机制/" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
+1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/12/Java/JDK/Java的fail-fast机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1072,7 +1070,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/PriorityQueue源码分析/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -1091,7 +1089,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="url">PriorityQueue源码分析</a></h1>
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">LinkedHashMap源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -1143,7 +1141,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/PriorityQueue源码分析/" class="leancloud_visitors" data-flag-title="PriorityQueue源码分析">
+             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1176,12 +1174,12 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          Priorityqueue是Java7后加入的优先级队列，继承自AbstractQueue，而AbstractQueue，实现了Queue接口，也就是说Priorityqueue是实现了Queue接口的，带有优先级的队列。
-内部实现上采用的是最小堆，即每次取出优先级最小的元素。相对来说实现上比较简单
+          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
+LinkedHashMap继承自HashMap，关于map的操作基本一样
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1232,7 +1230,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ArrayList源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -1251,7 +1249,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="url">Java的fail-fast机制</a></h1>
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/ArrayList源码分析/" itemprop="url">ArrayList源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -1303,7 +1301,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/11/12/Java/JDK/Java的fail-fast机制/" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
+             <span id="/2016/11/12/Java/JDK/ArrayList源码分析/" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1336,12 +1334,179 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
-1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
+          ArrayList是Java集合中最常用的，基于一个数组实现的，容量可以动态增长。
+ArrayList不是线程安全的，只能在单线程环境下使用。        
+本文以jdk1.8的源码为例，分析其实现机制。
+一、基本属性与构造函数12345678910111213141516171819202122
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/Java的fail-fast机制/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/ArrayList源码分析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/02/JVM/虚拟机类加载机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/02/JVM/虚拟机类加载机制/" itemprop="url">虚拟机类加载机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-02T00:00:00+08:00">
+                2016-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/11/02/JVM/虚拟机类加载机制/" class="leancloud_visitors" data-flag-title="虚拟机类加载机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          虚拟机类加载机制：虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。
+一、加载的时机1、类的生命周期　类的生命周期有一下7个阶段：
+
+加载 loading
+验证 verification
+准备 preparation
+解析
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/02/JVM/虚拟机类加载机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1558,7 +1723,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/02/JVM/虚拟机类加载机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/HTTPS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -1577,172 +1742,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/02/JVM/虚拟机类加载机制/" itemprop="url">虚拟机类加载机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-02T00:00:00+08:00">
-                2016-11-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JVM/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/11/02/JVM/虚拟机类加载机制/" class="leancloud_visitors" data-flag-title="虚拟机类加载机制">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          虚拟机类加载机制：虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。
-一、加载的时机1、类的生命周期　类的生命周期有一下7个阶段：
-
-加载 loading
-验证 verification
-准备 preparation
-解析
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/11/02/JVM/虚拟机类加载机制/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/31/ComputerNetworking/ARP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="paine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="paine1690">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/31/ComputerNetworking/ARP/" itemprop="url">浅析ARP协议</a></h1>
+                <a class="post-title-link" href="/2016/10/31/ComputerNetworking/HTTPS/" itemprop="url">浅析HTTPS协议</a></h1>
         
 
         <div class="post-meta">
@@ -1794,7 +1794,7 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
           
-             <span id="/2016/10/31/ComputerNetworking/ARP/" class="leancloud_visitors" data-flag-title="浅析ARP协议">
+             <span id="/2016/10/31/ComputerNetworking/HTTPS/" class="leancloud_visitors" data-flag-title="浅析HTTPS协议">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1827,12 +1827,14 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
       
         
           
-          一、ARP协议 ARP (Address Resolution Protocol) 是个地址解析协议。ARP协议的基本功能就是通过目标设备的IP地址，查询目标设备的MAC地址，以保证通信的顺利进行。
-二、工作过程1、同一网段假设主机A和B在同一个网段，主机A要向主机B发送信息。具体的地址解析过程如下
+          一、基本概念1、HTTPSHTTPS，也称作HTTP over TLS。TLS的前身是SSL。端口为443。
+下图描述了在TCP/IP协议栈中TLS(各子协议）和HTTP的关系
+
+其中Handshake protocol，Change Ciper Spec protocol和Alert protoc
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/10/31/ComputerNetworking/ARP/#more" rel="contents">
+            <a class="btn" href="/2016/10/31/ComputerNetworking/HTTPS/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
