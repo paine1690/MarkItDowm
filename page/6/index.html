@@ -272,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/ca4438af.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/475fb381.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -291,7 +291,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/ca4438af.html" itemprop="url">HashMap源码分析</a></h1>
+                <a class="post-title-link" href="/post/475fb381.html" itemprop="url">LinkedList源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -343,7 +343,7 @@
 
           
           
-             <span id="/post/ca4438af.html" class="leancloud_visitors" data-flag-title="HashMap源码分析">
+             <span id="/post/475fb381.html" class="leancloud_visitors" data-flag-title="LinkedList源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,494 +376,11 @@
       
         
           
-          Hashmap是Java中非常常用的容器，在网上看见很多源码分析都是以前版本的，本文章结合JDK1.8的源码对HashMap进行简单的分析，在学习的过程中发现HashMap的源码远比前面的List要复杂的多，花了好长时间才理清关系。
-O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈希冲突的解决
+          分析完Arraylist后来看一下List的另一种实现LinkedList。LinkedList底层使用的是双向链表结构，内部类定义了节点结构，一个头结点和尾节点表示队列的开始和结尾。与ArrayList不同的是，LinkedList除了实现了List接口外，还实现了Deque接口，而Deque接口
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/post/ca4438af.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/acd78768.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="paine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="paine1690">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/acd78768.html" itemprop="url">Java的fail-fast机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
-                2016-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/post/acd78768.html" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
-1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/acd78768.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/c352a0f3.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="paine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="paine1690">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/c352a0f3.html" itemprop="url">ArrayList源码分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
-                2016-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/post/c352a0f3.html" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          ArrayList是Java集合中最常用的，基于一个数组实现的，容量可以动态增长。
-ArrayList不是线程安全的，只能在单线程环境下使用。        
-本文以jdk1.8的源码为例，分析其实现机制。
-一、基本属性与构造函数12345678910111213141516171819202122
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/c352a0f3.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/1589a25a.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="paine">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="paine1690">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/1589a25a.html" itemprop="url">PriorityQueue源码分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
-                2016-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/post/1589a25a.html" class="leancloud_visitors" data-flag-title="PriorityQueue源码分析">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          Priorityqueue是Java7后加入的优先级队列，继承自AbstractQueue，而AbstractQueue，实现了Queue接口，也就是说Priorityqueue是实现了Queue接口的，带有优先级的队列。
-内部实现上采用的是最小堆，即每次取出优先级最小的元素。相对来说实现上比较简单
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/1589a25a.html#more" rel="contents">
+            <a class="btn" href="/post/475fb381.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1074,7 +591,7 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/475fb381.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/acd78768.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -1093,7 +610,7 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/475fb381.html" itemprop="url">LinkedList源码分析</a></h1>
+                <a class="post-title-link" href="/post/acd78768.html" itemprop="url">Java的fail-fast机制</a></h1>
         
 
         <div class="post-meta">
@@ -1145,7 +662,7 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
 
           
           
-             <span id="/post/475fb381.html" class="leancloud_visitors" data-flag-title="LinkedList源码分析">
+             <span id="/post/acd78768.html" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1178,11 +695,172 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
       
         
           
-          分析完Arraylist后来看一下List的另一种实现LinkedList。LinkedList底层使用的是双向链表结构，内部类定义了节点结构，一个头结点和尾节点表示队列的开始和结尾。与ArrayList不同的是，LinkedList除了实现了List接口外，还实现了Deque接口，而Deque接口
+          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
+1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/post/475fb381.html#more" rel="contents">
+            <a class="btn" href="/post/acd78768.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/ca4438af.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/ca4438af.html" itemprop="url">HashMap源码分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
+                2016-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/post/ca4438af.html" class="leancloud_visitors" data-flag-title="HashMap源码分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Hashmap是Java中非常常用的容器，在网上看见很多源码分析都是以前版本的，本文章结合JDK1.8的源码对HashMap进行简单的分析，在学习的过程中发现HashMap的源码远比前面的List要复杂的多，花了好长时间才理清关系。
+O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈希冲突的解决
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/ca4438af.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1342,6 +1020,168 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/e32c9fec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/c352a0f3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/c352a0f3.html" itemprop="url">ArrayList源码分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
+                2016-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/post/c352a0f3.html" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          ArrayList是Java集合中最常用的，基于一个数组实现的，容量可以动态增长。
+ArrayList不是线程安全的，只能在单线程环境下使用。        
+本文以jdk1.8的源码为例，分析其实现机制。
+一、基本属性与构造函数12345678910111213141516171819202122
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/c352a0f3.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1723,7 +1563,7 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/72d02924.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/e255a10a.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="paine">
@@ -1742,7 +1582,144 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/72d02924.html" itemprop="url">浅析HTTP协议</a></h1>
+                <a class="post-title-link" href="/post/e255a10a.html" itemprop="url">计算机网络</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-31T00:00:00+08:00">
+                2016-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/post/e255a10a.html" class="leancloud_visitors" data-flag-title="计算机网络">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          网络分层
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/e255a10a.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/b2163fed.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="paine">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="paine1690">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/b2163fed.html" itemprop="url">浅析TCP协议</a></h1>
         
 
         <div class="post-meta">
@@ -1794,7 +1771,7 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
 
           
           
-             <span id="/post/72d02924.html" class="leancloud_visitors" data-flag-title="浅析HTTP协议">
+             <span id="/post/b2163fed.html" class="leancloud_visitors" data-flag-title="浅析TCP协议">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1827,16 +1804,18 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
       
         
           
-          HTTP即 HyperText Transfer Protocol，web应用的基础，应该是最常用的应用层协议。有如下几个特点：
+          一、TCP简介1、TCP与UDPTCP与UDP作为运输层的协议，经常被用来比较，它们有着各自的特点。
+UDP是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。
 
-客户/服务器模式
-基于TCP传输
-无连接：每次连接只处理一个请求，响应后断开。（keepalive）
-无状态：服务器不会保存客户的任何信息。（cookie与sessio
+UDP是无连接的，因此在两个进程通信前没有握手过程。
+UDP提供不可靠的数据传送服务。
+UDP也不保证输出顺序。
+
+TCP是因特网
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/post/72d02924.html#more" rel="contents">
+            <a class="btn" href="/post/b2163fed.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1924,7 +1903,7 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
