@@ -301,7 +301,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/ArrayList源码分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="paine">
@@ -326,8 +326,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="url">
-                  Java的fail-fast机制
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/ArrayList源码分析/" itemprop="url">
+                  ArrayList源码分析
                 </a>
               
             
@@ -379,21 +379,11 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/12/Java/JDK/Java的fail-fast机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
           
-             <span id="/2016/11/12/Java/JDK/Java的fail-fast机制/" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
+             <span id="/2016/11/12/Java/JDK/ArrayList源码分析/" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -424,183 +414,14 @@
       
         
           
-          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
-1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
+          ArrayList是Java集合中最常用的，基于一个数组实现的，容量可以动态增长。
+ArrayList不是线程安全的，只能在单线程环境下使用。        
+本文以jdk1.8的源码为例，分析其实现机制。
+一、基本属性与构造函数12345678910111213141516171819202122
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/Java的fail-fast机制/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/LinkedHashMap源码分析/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="paine">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="paine1690">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="url">
-                  LinkedHashMap源码分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
-                2016-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedHashMap源码分析/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2016/11/12/Java/JDK/LinkedHashMap源码分析/" class="leancloud_visitors" data-flag-title="LinkedHashMap源码分析">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          LinkedHashMap是前面分析过的HashMap的子类，主要的作用就是在HashMap的基础上可以保证元素的插入顺序或访问顺序，内存访问算法中很经典的LRU算法就可以基于LinkedHashMap实现，在面试中也很常见。
-LinkedHashMap继承自HashMap，关于map的操作基本一样
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/11/12/Java/JDK/LinkedHashMap源码分析/#more" rel="contents">
+            <a class="btn" href="/2016/11/12/Java/JDK/ArrayList源码分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -721,16 +542,6 @@ LinkedHashMap继承自HashMap，关于map的操作基本一样
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/12/Java/JDK/HashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/HashMap源码分析/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -772,6 +583,167 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2016/11/12/Java/JDK/HashMap源码分析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/12/Java/JDK/Java的fail-fast机制/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="paine">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="paine1690">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="paine1690" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/12/Java/JDK/Java的fail-fast机制/" itemprop="url">
+                  Java的fail-fast机制
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-12T00:00:00+08:00">
+                2016-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/11/12/Java/JDK/Java的fail-fast机制/" class="leancloud_visitors" data-flag-title="Java的fail-fast机制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          一、fail-fast机制本来准备看一下concurrentHashMap，但是发现对多线程的一些机制还不是很清楚，比如fail-fast机制，在List和HashMap中都遇到了，但是当时都是直接略过，所以在此总结一下该机制。
+1、定义“快速失败”也就是fail-fast，它是Java集合的一种错
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/12/Java/JDK/Java的fail-fast机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -891,16 +863,6 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
           
 
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/12/Java/JDK/PriorityQueue源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/PriorityQueue源码分析/" itemprop="commentCount"></span>
-                </a>
-              </span>
             
           
 
@@ -1063,16 +1025,6 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/12/Java/JDK/ConcurrentHashMap源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/ConcurrentHashMap源码分析/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -1233,16 +1185,6 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/12/Java/JDK/LinkedList源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/12/Java/JDK/LinkedList源码分析/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -1402,16 +1344,6 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
           
 
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/02/JVM/虚拟机类加载机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/02/JVM/虚拟机类加载机制/" itemprop="commentCount"></span>
-                </a>
-              </span>
             
           
 
@@ -1578,16 +1510,6 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
           
 
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/02/JVM/JVM垃圾回收机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/02/JVM/JVM垃圾回收机制/" itemprop="commentCount"></span>
-                </a>
-              </span>
             
           
 
@@ -1756,16 +1678,6 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/10/31/ComputerNetworking/HTTPS/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/31/ComputerNetworking/HTTPS/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -1928,16 +1840,6 @@ O、哈希函数的构造方法与冲突处理在面试的时候经常见到哈�
           
 
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/10/31/ComputerNetworking/tcp/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/31/ComputerNetworking/tcp/" itemprop="commentCount"></span>
-                </a>
-              </span>
             
           
 
@@ -2219,22 +2121,18 @@ TCP是因特网
 
   
 
-  
-    
+
+
   
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"paine1690"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
+
+
+
+	
+
+
+
+
 
   
 
@@ -2242,11 +2140,24 @@ TCP是因特网
 
 
 
+  
 
 
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
 
 
 
