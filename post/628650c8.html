@@ -87,16 +87,16 @@
 <meta property="og:site_name" content="paine1690">
 <meta property="og:description" content="两年前搭建的博客，当做是自己记笔记的地方，一直没有写教程，昨天在百度统计发现原来每天都有人访问所以完善了一下留言系统同时升级了hexo，顺着修改的思路大体补充下整个博客的搭建过程。 一、hexo与环境搭建因为时间比较长有些细节可能无法完全回忆起来，所以前面的环境搭建就不详细介绍了 1、环境介绍1.1、nodejs必须安装的环境，windows下直接到官网下载最新的稳定版，安装一路next就可以了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://p8rcxqzck.bkt.clouddn.com/hexo_1.png">
-<meta property="og:image" content="http://p8rcxqzck.bkt.clouddn.com/hexo_2.png">
-<meta property="og:image" content="http://p8rcxqzck.bkt.clouddn.com/hexo_5.png">
-<meta property="og:image" content="http://p8rcxqzck.bkt.clouddn.com/hexo_7.png">
-<meta property="og:image" content="http://p8rcxqzck.bkt.clouddn.com/hexo_8.png">
-<meta property="og:updated_time" content="2018-05-15T07:47:53.779Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/8.png">
+<meta property="og:updated_time" content="2018-05-15T08:11:44.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用hexo与github搭建博客">
 <meta name="twitter:description" content="两年前搭建的博客，当做是自己记笔记的地方，一直没有写教程，昨天在百度统计发现原来每天都有人访问所以完善了一下留言系统同时升级了hexo，顺着修改的思路大体补充下整个博客的搭建过程。 一、hexo与环境搭建因为时间比较长有些细节可能无法完全回忆起来，所以前面的环境搭建就不详细介绍了 1、环境介绍1.1、nodejs必须安装的环境，windows下直接到官网下载最新的稳定版，安装一路next就可以了。">
-<meta name="twitter:image" content="http://p8rcxqzck.bkt.clouddn.com/hexo_1.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/1.png">
 
 
 
@@ -393,7 +393,7 @@
 <h1 id="一、hexo与环境搭建"><a href="#一、hexo与环境搭建" class="headerlink" title="一、hexo与环境搭建"></a>一、hexo与环境搭建</h1><p>因为时间比较长有些细节可能无法完全回忆起来，所以前面的环境搭建就不详细介绍了</p>
 <h2 id="1、环境介绍"><a href="#1、环境介绍" class="headerlink" title="1、环境介绍"></a>1、环境介绍</h2><h3 id="1-1、nodejs"><a href="#1-1、nodejs" class="headerlink" title="1.1、nodejs"></a>1.1、nodejs</h3><p>必须安装的环境，windows下直接到<a href="https://nodejs.org/en/" target="_blank" rel="noopener">官网</a>下载最新的稳定版，安装一路next就可以了。</p>
 <p>之后添加环境变量</p>
-<p><img src="http://p8rcxqzck.bkt.clouddn.com/hexo_1.png" alt="1"></p>
+<p><img src="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/1.png" alt="1"></p>
 <p>在命令行使用<code>node -v</code>和<code>npm -v</code>两个命令，显示出对应的版本，说明安装成功。</p>
 <h3 id="1-2、git"><a href="#1-2、git" class="headerlink" title="1.2、git"></a>1.2、git</h3><p>同样在<a href="https://git-scm.com/downloads/" target="_blank" rel="noopener">官网</a>下载最新版本，安装。</p>
 <p>之后在任意路径下都可以右键中选择git bash here ，即可打开git命令窗口。</p>
@@ -402,14 +402,14 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli  # g代表全局,npm默认为当前项目安装</span><br></pre></td></tr></table></figure>
 <p>安装成功之后会显示安装路径，将对应的路径添加到环境变量。网上很多人的hexo安装路径都是在nodejs文件夹下面，但是我在安装的时候显示是在个人文件夹的AppData下面，总之安装安装成功之后的路径添加到环境变量就可以了。</p>
 <p>同样用<code>hexo -v</code>来检测是否安装成功。</p>
-<p><img src="http://p8rcxqzck.bkt.clouddn.com/hexo_2.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/2.png" alt=""></p>
 <h2 id="2、hexo建站"><a href="#2、hexo建站" class="headerlink" title="2、hexo建站"></a>2、hexo建站</h2><p>安装好环境之后就可以利用hexo来快速搭建一个网站了。</p>
 <p>在桌面加新建一个blog文件夹，来保存网站的相关文件，下面统一称这个blog目录为根目录。执行下列命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo init #稍等几秒，完成之后会发现blog文件夹下面多了很多文件。</span><br><span class="line">npm install</span><br><span class="line">hexo g  #hexo generate命令的简化版  生成public文件夹(浏览器访问资源)</span><br><span class="line">hexo s  #hexo server命令的简化版    启动hexo，这时候就可以通过浏览器访问了</span><br></pre></td></tr></table></figure>
 <p>hexo的默认端口是4000，我在本地尝试的时候访问不到该端口，将端口改到8080就可以访问了。关于在启动的时候指定端口，可以通过<code>hexo --h</code>与<code>hexo help [command]</code>来查看命令的相关参数。</p>
-<p><img src="http://p8rcxqzck.bkt.clouddn.com/hexo_5.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/5.png" alt=""></p>
 <p>这两个命令是命令行下使用一个新工具最常用的，通过查看help文档来学习相关命令的使用，比直接在网上看教程更有意义。通过命令<code>hexo s -p 8080</code>来指定到8080端口，就可以访问到hexo的默认主题了。里面后一篇自带的文章。</p>
-<p><img src="http://p8rcxqzck.bkt.clouddn.com/hexo_7.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/7.png" alt=""></p>
 <h2 id="3、next主题"><a href="#3、next主题" class="headerlink" title="3、next主题"></a>3、next主题</h2><p>hexo支持不同的主题，也就是不同的界面形式，这里使用next主题。在根目录下，执行命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
 <p>可以发现在根目录的themes文件夹下面多了一个next文件夹，也就是改主题的文件夹，修改文件夹下的_config.yml文件就可以修改主题对应的配置。</p>
@@ -422,7 +422,7 @@
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">landscape</span>   <span class="comment">#修改前</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span>        <span class="comment">#修改后</span></span><br></pre></td></tr></table></figure>
 <p>修改后保存配置文件，重新生成文件并在8080端口运行，即可看到全新主题的博客。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s -p 8080</span><br></pre></td></tr></table></figure>
-<p><img src="http://p8rcxqzck.bkt.clouddn.com/hexo_8.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/paine1690/HelloWorld/master/pic/hexo/8.png" alt=""></p>
 <h2 id="4、托管到github"><a href="#4、托管到github" class="headerlink" title="4、托管到github"></a>4、托管到github</h2><p>到目前为止博客还只能在本地运行，想要有一个公有的域名，需要借助Github Pages来实现。</p>
 <p><a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a>是面向用户、组织和项目开放的公共静态页面搭建托管服务，站点可以被免费托管在Github上，你可以选择使用Github Pages默认提供的域名github.io或者自定义域名来发布站点。</p>
 <h3 id="4-1、新建一个github仓库"><a href="#4-1、新建一个github仓库" class="headerlink" title="4.1、新建一个github仓库"></a>4.1、新建一个github仓库</h3><p>这里因为仓库很早之前就建好了有些地方记不清，但是基本原理就是这样的。在自己的github中新建一个xxx.github.io的public仓库，比如对应我自己的就是paine1690.github.io。</p>
